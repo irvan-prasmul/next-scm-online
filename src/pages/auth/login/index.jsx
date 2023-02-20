@@ -1,29 +1,60 @@
 import Head from "next/head";
 import Image from "next/image";
 
-import {
-  Alert,
-  Button,
-  Card,
-  Col,
-  Form,
-  InputGroup,
-  Row,
-} from "react-bootstrap";
 import profilePic from "/public/logo-prasetiyamulya.png";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useRouter } from "next/router";
+import {
+  Card,
+  Typography,
+  CardContent,
+  TextField,
+  MenuItem,
+  Button,
+  IconButton,
+  FormControl,
+  Select,
+  Box,
+  InputAdornment,
+  InputLabel,
+  Input,
+} from "@mui/material/";
+import Grid from "@mui/material/Unstable_Grid2";
+import {
+  EmailOutlined,
+  LockOutlined,
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material/";
 
-export default function Home() {
-  const [validated, setValidated] = useState(false);
+export default function Login() {
+  // const [validated, setValidated] = useState(false);
+  const [emailSelect, setEmailSelect] = React.useState("@prasetiyamulya.ac.id");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
     event.preventDefault();
-    event.stopPropagation();
-    // }
+  };
 
-    setValidated(true);
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleEmailSelect = (event) => {
+    setEmailSelect(event.target.value);
+  };
+
+  const handlePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const router = useRouter();
+  const login = () => {
+    router.replace("/home/dashboard");
   };
 
   //   useEffect(() => {
@@ -37,57 +68,174 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <div
-        className="d-flex align-items-center justify-content-center"
-        style={{ height: "100vh" }}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          height: "100vh",
+        }}
       >
-        <Card body className="shadow rounded" style={{ width: "600px" }}>
-          <Row>
-            <Col className="text-center">
-              <Image
-                src={profilePic}
-                alt="logo"
-                className="login-logo"
-                priority
-              />
-            </Col>
-          </Row>
-          <div>
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
-              <Row className="mb-3">
-                <Form.Group as={Col} md="5" controlId="validationCustom01">
-                  <Form.Label>First name</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="First name"
-                    defaultValue="Mark"
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    E-mail is required
-                  </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group
-                  as={Col}
-                  md="5"
-                  controlId="validationCustomUsername"
-                >
-                  <Form.Label>Username</Form.Label>
-                  <InputGroup>
-                    <Form.Select>
-                      <option value="@prasetiyamulya.ac.id">
-                        @prasetiyamulya.ac.id
-                      </option>
-                      <option value="@pmbs.ac.id">@pmbs.ac.id</option>
-                    </Form.Select>
-                  </InputGroup>
-                </Form.Group>
-              </Row>
-              <Button type="submit">Submit form</Button>
-            </Form>
-          </div>
-        </Card>
-      </div>
+        <Grid container spacing={2}>
+          <Grid xs={6} xsOffset={3}>
+            <Card sx={{ width: 600 }}>
+              <CardContent>
+                <Grid container spacing={2}>
+                  <Grid
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Image
+                      src={profilePic}
+                      alt="logo"
+                      className="login-logo"
+                      priority
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                  <Grid xs={5} xsOffset={1}>
+                    <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                      <EmailOutlined
+                        sx={{ color: "action.active", mr: 1, my: 0.5 }}
+                      />
+                      <TextField
+                        required
+                        value={email}
+                        label="Email"
+                        variant="standard"
+                        onChange={handleEmail}
+                      />
+                    </Box>
+                  </Grid>
+                  <Grid xs={5} display="flex">
+                    <FormControl
+                      variant="standard"
+                      sx={{ width: "100%" }}
+                      display="flex"
+                      margin="normal"
+                    >
+                      <Select value={emailSelect} onChange={handleEmailSelect}>
+                        <MenuItem value={"@prasetiyamulya.ac.id"}>
+                          @prasetiyamulya.ac.id
+                        </MenuItem>
+                        <MenuItem value={"@pmbs.ac.id"}>@pmbs.ac.id</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                  <Grid xs={10} xsOffset={1}>
+                    <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                      <LockOutlined
+                        sx={{ color: "action.active", mr: 1, my: 0.5 }}
+                      />
+                      <FormControl variant="standard" fullWidth>
+                        <InputLabel>Password</InputLabel>
+                        <Input
+                          value={password}
+                          fullWidth
+                          type={showPassword ? "text" : "password"}
+                          onChange={handlePassword}
+                          endAdornment={
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                              >
+                                {showPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          }
+                        />
+                      </FormControl>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Grid container sx={{ pt: 3, mx: 1, mb: 0, pb: 0 }}>
+                  <Grid xs={12} sx={{ mb: 0, pb: 0 }}>
+                    <Button
+                      onClick={login}
+                      variant="contained"
+                      fullWidth
+                      color="primary"
+                      sx={{ borderRadius: "100px" }}
+                    >
+                      SIGN IN
+                    </Button>
+                  </Grid>
+                  <Grid xs sx={{ pt: 0, mt: 0 }}>
+                    <Button
+                      variant="text"
+                      size="small"
+                      color="error"
+                      sx={{
+                        p: 0,
+                        m: 0,
+                        pl: 1,
+                        textTransform: "unset !important",
+                      }}
+                    >
+                      <i>Forgot password?</i>
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center">
+                  <Grid xs={3} sx={{ py: 1 }}>
+                    <hr />
+                  </Grid>
+                  <Grid xs="auto" sx={{ py: 0 }}>
+                    <Typography variant="body2">OR</Typography>
+                  </Grid>
+                  <Grid xs={3} sx={{ py: 1 }}>
+                    <hr />
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center">
+                  <Grid xs="auto">
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      color="info"
+                      startIcon={
+                        <Image
+                          src="/next-scm/microsoft-azure.svg"
+                          alt="azure"
+                          width={24}
+                          height={24}
+                        />
+                      }
+                      sx={{ textTransform: "unset !important" }}
+                    >
+                      Microsoft sign in
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Grid container justifyContent="center">
+                  <Grid xs="auto">
+                    <Typography
+                      variant="span"
+                      color="#1ba0ea"
+                      fontFamily="sans-serif"
+                    >
+                      Copyright © Prasetiya Mulya
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Box>
     </>
   );
 }
