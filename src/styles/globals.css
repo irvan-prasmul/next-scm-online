@@ -5,13 +5,13 @@
   height: auto;
 }
 
-#sidebar-child-selected > .Mui-selected {
+#sidebar-child-selected.Mui-selected {
   background-color: #494e53 !important;
 }
 
-/* .Mui-selected {
+.Mui-selected {
   background-color: #007bff !important;
-} */
+}
 
 :root {
   --max-width: 1100px;
