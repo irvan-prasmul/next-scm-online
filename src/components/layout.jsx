@@ -1,5 +1,6 @@
 import * as React from "react";
-import { responsiveFontSizes, styled, useTheme } from "@mui/material/styles";
+import { useRouter } from "next/router";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -15,18 +16,27 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Unstable_Grid2";
 import {
   Home,
   QuestionMark,
   ShoppingCart,
   ExpandLess,
   ExpandMore,
+  Shortcut,
 } from "@mui/icons-material/";
-import Grid from "@mui/material/Unstable_Grid2";
-// import roles from "./roles";
+import DropboxIcon from "mdi-react/DropboxIcon";
+import TableIcon from "mdi-react/TableIcon";
+import NewspaperVariantMultipleOutlineIcon from "mdi-react/NewspaperVariantMultipleOutlineIcon";
+import PackageVariantClosedIcon from "mdi-react/PackageVariantClosedIcon";
+import CircleOutlineIcon from "mdi-react/CircleOutlineIcon";
+import ChartAreasplineVariantIcon from "mdi-react/ChartAreasplineVariantIcon";
+import ArrowTopRightBoldBoxIcon from "mdi-react/ArrowTopRightBoldBoxIcon";
+import { roles } from "./roles";
+import { useSelector, useDispatch } from "react-redux";
 
-const drawerWidth = 240;
+const drawerWidth = 256;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -94,68 +104,17 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function Layout({ children }) {
-  //   const theme = useTheme();
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(!open);
   };
-
-  const [roleMenus, setRolesMenu] = React.useState([
-    {
-      href: "/home/dashboard",
-      name: "Home",
-      icon: "Home",
-    },
-    {
-      href: "/fpb",
-      name: "FPB",
-      icon: "Cart",
-    },
-    {
-      name: "Master",
-      icon: "mdi-dropbox",
-      isOpen: false,
-      child: [
-        {
-          icon: "mdi-package-variant-closed",
-          name: "Material",
-          isOpen: false,
-          child: [
-            {
-              href: "/material/head",
-              name: "Material Head",
-              icon: "mdi-circle-outline",
-            },
-            {
-              href: "/material/det",
-              name: "Material Det",
-              icon: "mdi-circle-outline",
-            },
-            {
-              href: "/material/type",
-              name: "Material Type",
-              icon: "mdi-circle-outline",
-            },
-            {
-              href: "/material/group",
-              name: "Material Group",
-              icon: "mdi-circle-outline",
-            },
-          ],
-        },
-        {
-          href: "/department",
-          name: "Department",
-          icon: "mdi-share",
-        },
-      ],
-    },
-  ]);
-
+  const router = useRouter();
+  const [roleMenus, setRolesMenu] = React.useState([...roles.Requester]);
   const handleClickMenu = (menu) => {
-    console.log(menu);
+    router.replace(menu.href);
   };
-
   const handleOpenSubmenu = (menu) => {
     menu.isOpen = !menu.isOpen;
     const tempMenu = [...roleMenus];
@@ -165,11 +124,27 @@ export default function Layout({ children }) {
   const generateIcon = (icon) => {
     switch (icon) {
       case "Home":
-        return <Home sx={{ color: "#c2c7d0" }} />;
-      case "Cart":
-        return <ShoppingCart sx={{ color: "#c2c7d0" }} />;
+        return <Home className="sidebar-icon" />;
+      case "ShoppingCart":
+        return <ShoppingCart className="sidebar-icon" />;
+      case "Shortcut":
+        return <Shortcut className="sidebar-icon" />;
+      case "DropboxIcon":
+        return <DropboxIcon className="sidebar-icon" />;
+      case "TableIcon":
+        return <TableIcon className="sidebar-icon" />;
+      case "NewspaperVariantMultipleOutlineIcon":
+        return <NewspaperVariantMultipleOutlineIcon className="sidebar-icon" />;
+      case "PackageVariantClosedIcon":
+        return <PackageVariantClosedIcon className="sidebar-icon" />;
+      case "CircleOutlineIcon":
+        return <CircleOutlineIcon className="sidebar-icon" />;
+      case "ChartAreasplineVariantIcon":
+        return <ChartAreasplineVariantIcon className="sidebar-icon" />;
+      case "ArrowTopRightBoldBoxIcon":
+        return <ArrowTopRightBoldBoxIcon className="sidebar-icon" />;
       default:
-        return <QuestionMark sx={{ color: "#c2c7d0" }} />;
+        return <QuestionMark className="sidebar-icon" />;
     }
   };
 
@@ -202,7 +177,6 @@ export default function Layout({ children }) {
           <Collapse in={menu.isOpen} timeout="auto" unmountOnExit>
             <List component="div" sx={{ pl: 1 }}>
               {menu.child.map((menu, index) => {
-                console.log(index, menu);
                 return generateMenus(menu);
               })}
             </List>
@@ -210,10 +184,10 @@ export default function Layout({ children }) {
         </ListItem>
       );
     } else {
-      console.log(menu);
       return (
         <ListItem key={menu.name} disablePadding sx={{ display: "block" }}>
           <ListItemButton
+            selected={menu.href == router.pathname}
             sx={{
               minHeight: 48,
               justifyContent: open ? "initial" : "center",
@@ -237,10 +211,24 @@ export default function Layout({ children }) {
     }
   };
 
+  React.useEffect(() => {
+    if (!auth.isAuth) router.replace("/auth/login");
+    if (auth.userToken == "") {
+      // CALL GET USER DATA API
+      dispatch({
+        type: "setAuth",
+        payload: {
+          userToken: "dummy token",
+          userName: "Login name",
+        },
+      });
+    }
+  }, [router, auth, dispatch]);
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar color="lighBg" position="fixed" open={open}>
         <Toolbar>
           <Grid container spacing={2} sx={{ width: "100%" }}>
             <Grid xs="auto">
@@ -269,6 +257,7 @@ export default function Layout({ children }) {
         variant="permanent"
         open={open}
         PaperProps={{
+          // id: "main-drawer",
           sx: {
             color: "#c2c7d0",
             backgroundColor: "#343a40",
@@ -296,89 +285,16 @@ export default function Layout({ children }) {
           </Typography>
         </DrawerHeader>
         <Divider sx={{ backgroundColor: "#c2c7d0" }} />
-        <List>
-          {roleMenus.map(
-            (menu, index) => {
-              console.log(index, menu);
-              return generateMenus(menu);
-            }
-            // <ListItem key={text} disablePadding sx={{ display: "block" }}>
-            //   <ListItemButton
-            //     sx={{
-            //       minHeight: 48,
-            //       justifyContent: open ? "initial" : "center",
-            //       px: 2.5,
-            //     }}
-            //     onClick={() => handleClickMenu(text)}
-            //   >
-            //     <ListItemIcon
-            //       sx={{
-            //         minWidth: 0,
-            //         mr: open ? 3 : "auto",
-            //         justifyContent: "center",
-            //       }}
-            //     >
-            //       {text == "Home" ? (
-            //         <Home sx={{ color: "#c2c7d0" }} />
-            //       ) : text == "FPB" ? (
-            //         <ShoppingCart sx={{ color: "#c2c7d0" }} />
-            //       ) : (
-            //         <QuestionMark sx={{ color: "#c2c7d0" }} />
-            //       )}
-            //     </ListItemIcon>
-            //     <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            //   </ListItemButton>
-            // </ListItem>
-          )}
-          {/* <ListItem disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <Home sx={{ color: "#c2c7d0" }} />
-              </ListItemIcon>
-              <ListItemText primary={"Home"} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem> */}
+        <List id="main-drawer">
+          {roleMenus.map((menu, index) => {
+            return generateMenus(menu);
+          })}
         </List>
-        {/* <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List> */}
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <main>{children}</main>
+      <Box sx={{ flex: 1 }}>
+        <Paper variant="outlined" elevation={0} square className="main-box">
+          {children}
+        </Paper>
       </Box>
     </Box>
   );

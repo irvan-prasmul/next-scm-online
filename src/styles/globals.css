@@ -5,12 +5,77 @@
   height: auto;
 }
 
+.sidebar-icon {
+  color: #c2c7d0 !important;
+}
+
+#main-drawer {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#main-drawer::-webkit-scrollbar {
+  width: 4px;
+}
+/* Track */
+#main-drawer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+/* Handle */
+#main-drawer::-webkit-scrollbar-thumb {
+  background: #888;
+}
+/* Handle on hover */
+#main-drawer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 #sidebar-child-selected.Mui-selected {
   background-color: #494e53 !important;
 }
 
 .Mui-selected {
   background-color: #007bff !important;
+}
+
+.main-box {
+  border-width: 10px;
+  border-color: #808080;
+  margin-top: 64px;
+  min-height: calc(100vh - 64px);
+}
+
+.carousel-img-1 {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: calc(100vh - 84px);
+}
+.carousel-img-2 {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: calc(100vh - 84px);
+}
+.carousel-img-3 {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: calc(100vh - 84px);
+}
+.carousel-img-4 {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: calc(100vh - 84px);
 }
 
 :root {
@@ -57,8 +122,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    /* --background-start-rgb: 1, 65, 255;
+    /* --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 1, 65, 255;
     --background-end-rgb: 1, 65, 255; */
 
     --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));

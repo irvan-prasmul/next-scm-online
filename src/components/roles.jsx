@@ -8,7 +8,7 @@ export const roles = {
     {
       href: "/fpb",
       name: "FPB",
-      icon: "mdi-cart",
+      icon: "ShoppingCart",
     },
   ],
   PJK: [
@@ -33,37 +33,37 @@ export const roles = {
     },
     {
       name: "FPB",
-      icon: "mdi-cart",
+      icon: "ShoppingCart",
       isOpen: false,
       child: [
         {
           href: "/fpb/receipt",
-          icon: "mdi-share",
+          icon: "Shortcut",
           name: "Receipt",
         },
       ],
     },
     {
       name: "Master",
-      icon: "mdi-dropbox",
+      icon: "DropboxIcon",
       isOpen: false,
       child: [
         {
           href: "/master/material",
-          icon: "mdi-share",
+          icon: "Shortcut",
           name: "Material",
         },
       ],
     },
     {
       name: "Reports",
-      icon: "mdi-table",
+      icon: "TableIcon",
       isOpen: false,
       child: [
         {
           href: "/reports/status",
           name: "Status",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
       ],
     },
@@ -77,130 +77,130 @@ export const roles = {
     {
       href: "/fpb/approval",
       name: "Approval FPB",
-      icon: "mdi-newspaper-variant-outline",
+      icon: "NewspaperVariantMultipleOutlineIcon",
     },
     {
       name: "Master",
-      icon: "mdi-dropbox",
+      icon: "DropboxIcon",
       isOpen: false,
       child: [
         {
-          icon: "mdi-package-variant-closed",
+          icon: "PackageVariantClosedIcon",
           name: "Material",
           isOpen: false,
           child: [
             {
               href: "/material/head",
               name: "Material Head",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/material/det",
               name: "Material Det",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/material/type",
               name: "Material Type",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/material/group",
               name: "Material Group",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
           ],
         },
         {
           href: "/department",
           name: "Department",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
         {
           href: "/cost-center",
           name: "Cost Center",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
         {
           href: "/user",
           name: "User",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
         {
           href: "/config-pjb",
           name: "Config PJB",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
         {
           href: "/vendor",
           name: "Vendor",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
       ],
     },
     {
       name: "Reports",
-      icon: "mdi-table",
+      icon: "TableIcon",
       isOpen: false,
       child: [
         {
           href: "/reports/price-compare",
           name: "Price Comparison",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
         {
           name: "request",
-          icon: "mdi-share",
+          icon: "Shortcut",
           isOpen: false,
           child: [
             {
               href: "/reports/request/vendor",
               name: "Vendor",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/reports/request/material",
               name: "Material",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/reports/request/pic",
               name: "PIC",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/reports/request/department",
               name: "Department",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/reports/request/status",
               name: "Status",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
           ],
         },
         {
           href: "/reports/fpb-history",
           name: "FPB History",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
         {
           href: "/reports/fpb-all",
           name: "FPB All",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
       ],
     },
     {
       name: "Chart",
-      icon: "mdi-chart-areaspline-variant",
+      icon: "ChartAreasplineVariantIcon",
       isOpen: false,
       child: [
         {
           href: "/chart/fpb",
           name: "FPB",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
       ],
     },
@@ -214,88 +214,88 @@ export const roles = {
     {
       href: "/fpb/list",
       name: "FPB List",
-      icon: "mdi-cart",
+      icon: "ShoppingCart",
     },
     {
       name: "Master",
-      icon: "mdi-dropbox",
+      icon: "DropboxIcon",
       isOpen: false,
       child: [
         {
           href: "/master/user",
           name: "User",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
         {
           href: "/master/config-pjb",
           name: "Config PJB",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
       ],
     },
     {
       name: "Reports",
-      icon: "mdi-table",
+      icon: "TableIcon",
       isOpen: false,
       child: [
         {
           href: "/reports/price-compare",
           name: "Price Comparison",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
         {
           name: "request",
-          icon: "mdi-share",
+          icon: "Shortcut",
           isOpen: false,
           child: [
             {
               href: "/reports/request/vendor",
               name: "Vendor",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/reports/request/material",
               name: "Material",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/reports/request/pic",
               name: "PIC",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/reports/request/department",
               name: "Department",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
             {
               href: "/reports/request/status",
               name: "Status",
-              icon: "mdi-circle-outline",
+              icon: "CircleOutlineIcon",
             },
           ],
         },
         {
           href: "/reports/fpb-history",
           name: "FPB History",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
         {
           href: "/reports/fpb-all",
           name: "FPB All",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
       ],
     },
     {
       name: "Chart",
-      icon: "mdi-chart-areaspline-variant",
+      icon: "ChartAreasplineVariantIcon",
       isOpen: false,
       child: [
         {
           href: "/chart/fpb",
           name: "FPB",
-          icon: "mdi-share",
+          icon: "Shortcut",
         },
       ],
     },
@@ -309,7 +309,7 @@ export const roles = {
     {
       href: "/fpb/review",
       name: "Review FPB",
-      icon: "mdi-cart",
+      icon: "ShoppingCart",
     },
   ],
   "PIC Purchasing": [
@@ -321,7 +321,7 @@ export const roles = {
     {
       href: "/sap",
       name: "SAP",
-      icon: "mdi-arrow-top-right-bold-box",
+      icon: "ArrowTopRightBoldBoxIcon",
     },
   ],
   "Reviewer Purchasing": [
