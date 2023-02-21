@@ -13,7 +13,7 @@ export default function App({ Component, pageProps }) {
   const theme = createTheme({
     palette: {
       primary: { main: "#1d256a" },
-      primaryAlt: { main: "#007bff" },
+      primaryAlt: { main: "#007bff", contrastText: "#fff" },
       secondary: { main: "#11cb5f" },
       tertiary: { main: "#343a40" },
       lighBg: { main: "white" },
