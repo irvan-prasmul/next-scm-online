@@ -189,12 +189,16 @@ export default function Fpb() {
     let headerGroup = [
       {
         name: "Upload Document",
-        length: "2",
+        CustomElementRegistry: "2",
       },
     ];
-    // headerGroupList.forEach(element => {
-    //   if(headerGroup)
-    // });
+    headerGroupList.forEach((element) => {
+      if (headerGroup.length == 0)
+        headerGroup.push({
+          name: element,
+          count: 1,
+        });
+    });
 
     return <div></div>;
   };
