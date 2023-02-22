@@ -10,7 +10,7 @@ export default function Root() {
   useEffect(() => {
     console.log(`Component mounted`);
     router.replace("/auth/login");
-  }, [router]);
+  }, []);
   return (
     <>
       <Head>

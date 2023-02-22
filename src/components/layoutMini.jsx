@@ -39,26 +39,6 @@ import { useSelector, useDispatch } from "react-redux";
 const drawerWidth = 256;
 const closedWidth = 65;
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: 0, // `-${closedWidth}px`,
-    width: `calc(100% - ${closedWidth}px)`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-      width: `calc(100% - ${drawerWidth}px)`,
-    }),
-  })
-);
-
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -311,11 +291,25 @@ export default function Layout({ children }) {
           })}
         </List>
       </Drawer>
-      <Main open={open}>
+      <Box
+        sx={{
+          flex: 1,
+          maxWidth: {
+            sm: `calc(100% - ${open ? drawerWidth : closedWidth}px)`,
+          },
+          ...(!open && {
+            // transform: "scaleX(calc(100% - ${closedWidth}px)",
+            transition: theme.transitions.create("width", {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.leavingScreen,
+            }),
+          }),
+        }}
+      >
         <Paper variant="outlined" elevation={0} square className="main-box">
           {children}
         </Paper>
-      </Main>
+      </Box>
     </Box>
   );
 }

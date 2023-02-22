@@ -38,6 +38,42 @@
   background-color: #007bff !important;
 }
 
+.MuiTableHead-root tr > th {
+  background-color: #e9ecef;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #dee2e6;
+}
+
+.MuiTableCell-root {
+  background-color: #f2f2f2;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #dee2e6;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+/* .main-table {
+  overflow-x: hidden;
+} */
+
+.MuiTableContainer-root::-webkit-scrollbar {
+  height: 7px;
+}
+/* Track */
+.MuiTableContainer-root::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+/* Handle */
+.MuiTableContainer-root::-webkit-scrollbar-thumb {
+  background: #888;
+}
+/* Handle on hover */
+.MuiTableContainer-root::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .main-box {
   border-width: 10px;
   border-color: #808080;

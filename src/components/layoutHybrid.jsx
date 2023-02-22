@@ -16,6 +16,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
+import Drawer from "@mui/material/Drawer";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
 import {
@@ -37,7 +38,6 @@ import { roles } from "./roles";
 import { useSelector, useDispatch } from "react-redux";
 
 const drawerWidth = 256;
-const closedWidth = 65;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -46,15 +46,13 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: 0, // `-${closedWidth}px`,
-    width: `calc(100% - ${closedWidth}px)`,
+    marginLeft: `-${drawerWidth}px`,
     ...(open && {
       transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
       marginLeft: 0,
-      width: `calc(100% - ${drawerWidth}px)`,
     }),
   })
 );
@@ -92,14 +90,14 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
+  zIndex: { xs: 0, sm: theme.zIndex.drawer + 1 },
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: { xs: "0px", sm: drawerWidth },
+    width: { xs: "0px", sm: `calc(100% - ${drawerWidth}px)` },
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -107,7 +105,7 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, {
+const Drawer2 = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   width: drawerWidth,
@@ -152,12 +150,19 @@ const generateIcon = (icon) => {
 };
 
 export default function Layout({ children }) {
-  const auth = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const { window } = children;
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(!open);
   };
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const router = useRouter();
   const [roleMenus, setRolesMenu] = React.useState([...roles.Requester]);
   const handleClickMenu = (menu) => {
@@ -192,7 +197,7 @@ export default function Layout({ children }) {
             >
               {generateIcon(menu.icon)}
             </ListItemIcon>
-            <ListItemText primary={menu.name} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primary={menu.name} sx={{ opacity: 1 }} />
             {open ? menu.isOpen ? <ExpandLess /> : <ExpandMore /> : <></>}
           </ListItemButton>
           <Collapse in={menu.isOpen} timeout="auto" unmountOnExit>
@@ -232,6 +237,37 @@ export default function Layout({ children }) {
     }
   };
 
+  const drawer = (
+    <div>
+      <DrawerHeader
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <Typography
+          variant="body1"
+          component="div"
+          sx={{
+            fontWeight: "300",
+            fontSize: "24px",
+            color: "#808081",
+            fontFamily: "Impact",
+          }}
+        >
+          SCM ONLINE
+        </Typography>
+      </DrawerHeader>
+      <Divider sx={{ backgroundColor: "#c2c7d0" }} />
+      <List id="main-drawer">
+        {roleMenus.map((menu, index) => {
+          return generateMenus(menu);
+        })}
+      </List>
+    </div>
+  );
+
   React.useEffect(() => {
     if (!auth.isAuth) router.replace("/auth/login");
     if (auth.userToken == "") {
@@ -244,14 +280,33 @@ export default function Layout({ children }) {
         },
       });
     }
-  }, [router, auth, dispatch]);
+  }, [router, auth]);
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar color="lighBg" position="fixed" open={open}>
+      <AppBar
+        color="lighBg"
+        position="fixed"
+        sx={{
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+        }}
+        open={open}
+      >
         <Toolbar>
           <Grid container spacing={2} sx={{ width: "100%" }}>
+            <Grid xs="auto">
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ display: { sm: "none" } }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Grid>
             <Grid xs="auto">
               <IconButton
                 color="inherit"
@@ -259,7 +314,7 @@ export default function Layout({ children }) {
                 onClick={handleDrawerOpen}
                 edge="start"
                 sx={{
-                  marginRight: 5,
+                  display: { xs: "none", sm: "block" },
                 }}
               >
                 <MenuIcon />
@@ -267,51 +322,68 @@ export default function Layout({ children }) {
             </Grid>
             <Grid xs></Grid>
             <Grid xs="auto">
-              <Typography variant="h6" noWrap component="div">
+              <Typography variant="h6" component="div">
                 Avatar here
               </Typography>
             </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        open={open}
-        PaperProps={{
-          sx: {
-            color: "#c2c7d0",
-            backgroundColor: "#343a40",
-          },
-        }}
+      <Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="mailbox folders"
       >
-        <DrawerHeader
+        {/* MOBILE DRAWER */}
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+          PaperProps={{
+            sx: {
+              color: "#c2c7d0",
+              backgroundColor: "#343a40",
+            },
+          }}
+          disableScrollLock={true}
+        >
+          {drawer}
+        </Drawer>
+        {/* DESKTOP DRAWER */}
+        <Drawer2
+          variant="permanent"
+          open={open}
+          sx={{
+            display: { xs: "none", sm: "block" },
+          }}
+          PaperProps={{
+            sx: {
+              color: "#c2c7d0",
+              backgroundColor: "#343a40",
+            },
           }}
         >
-          <Typography
-            variant="body1"
-            component="div"
-            sx={{
-              fontWeight: "300",
-              fontSize: "24px",
-              color: "#808081",
-              fontFamily: "Impact",
-            }}
-          >
-            SCM ONLINE
-          </Typography>
-        </DrawerHeader>
-        <Divider sx={{ backgroundColor: "#c2c7d0" }} />
-        <List id="main-drawer">
-          {roleMenus.map((menu, index) => {
-            return generateMenus(menu);
-          })}
-        </List>
-      </Drawer>
-      <Main open={open}>
+          {drawer}
+        </Drawer2>
+      </Box>
+      <Main
+        open={open}
+        // sx={{
+        //   flexGrow: 1,
+        //   width: { sm: `calc(100% - ${drawerWidth}px)` },
+        // }}
+      >
         <Paper variant="outlined" elevation={0} square className="main-box">
           {children}
         </Paper>

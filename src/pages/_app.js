@@ -9,32 +9,34 @@ import Layout from "@/components/layout";
 import { Provider } from "react-redux";
 import { useStore } from "@/store";
 
+const theme = createTheme({
+  palette: {
+    primary: { main: "#1d256a" },
+    secondary: { main: "#11cb5f" },
+    tertiary: { main: "#343a40" },
+    lighBg: { main: "white" },
+    primaryButton: { main: "#007bff", contrastText: "#fff" },
+    secondaryButton: { main: "#6c757d", contrastText: "#fff" },
+  },
+  typography: {
+    allVariants: {
+      fontFamily: [
+        "-apple-system",
+        "BlinkMacSystemFont",
+        '"Segoe UI"',
+        "Roboto",
+        '"Helvetica Neue"',
+        "Arial",
+        "sans-serif",
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(","),
+    },
+  },
+});
+
 export default function App({ Component, pageProps }) {
-  const theme = createTheme({
-    palette: {
-      primary: { main: "#1d256a" },
-      primaryAlt: { main: "#007bff", contrastText: "#fff" },
-      secondary: { main: "#11cb5f" },
-      tertiary: { main: "#343a40" },
-      lighBg: { main: "white" },
-    },
-    typography: {
-      allVariants: {
-        fontFamily: [
-          "-apple-system",
-          "BlinkMacSystemFont",
-          '"Segoe UI"',
-          "Roboto",
-          '"Helvetica Neue"',
-          "Arial",
-          "sans-serif",
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-        ].join(","),
-      },
-    },
-  });
   const store = useStore(pageProps.initialReduxState);
 
   switch (Component.name) {
