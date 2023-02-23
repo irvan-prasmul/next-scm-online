@@ -311,7 +311,7 @@ export default function Layout({ children }) {
           })}
         </List>
       </Drawer>
-      <Main open={open}>
+      <Main open={open} sx={{ background: "#808080" }}>
         <Paper variant="outlined" elevation={0} square className="main-box">
           {children}
         </Paper>

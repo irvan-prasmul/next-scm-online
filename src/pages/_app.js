@@ -8,6 +8,7 @@ import Layout from "@/components/layout";
 // import store from "@/store";
 import { Provider } from "react-redux";
 import { useStore } from "@/store";
+import { blue, green, orange, red } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
@@ -17,6 +18,11 @@ const theme = createTheme({
     lighBg: { main: "white" },
     primaryButton: { main: "#007bff", contrastText: "#fff" },
     secondaryButton: { main: "#6c757d", contrastText: "#fff" },
+    // cancel: { main: orange },
+    // approve: { main: green },
+    // rejected: { main: red },
+    // process: { main: blue },
+    // ready: { main: "#4DA7C6" },
   },
   typography: {
     allVariants: {
@@ -32,6 +38,17 @@ const theme = createTheme({
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
       ].join(","),
+    },
+    h7: {
+      fontWeight: 600,
+    },
+    bodyCst1: {
+      fontSize: "1rem",
+      fontWeight: 400,
+    },
+    bodyTable1: {
+      fontSize: "0.875rem",
+      fontWeight: 400,
     },
   },
 });

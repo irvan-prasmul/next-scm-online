@@ -1,8 +1,6 @@
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
-import { useRouter } from "next/router";
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import {
   Box,
   Button,
@@ -15,7 +13,6 @@ import {
   OutlinedInput,
   Select,
   Typography,
-  Checkbox,
   TableContainer,
   Table,
   TableHead,
@@ -24,184 +21,303 @@ import {
   TableBody,
   TablePagination,
   Paper,
+  ButtonGroup,
+  Popper,
+  Grow,
+  ClickAwayListener,
+  MenuList,
 } from "@mui/material";
-import { Add, Refresh, ShoppingCart } from "@mui/icons-material";
+import {
+  Add,
+  Refresh,
+  ShoppingCart,
+  ArrowDropDown,
+  HourglassFullTwoTone,
+  Cancel,
+  CloseRounded,
+  ShoppingCartCheckoutRounded,
+  CheckBox,
+  Inventory2Rounded,
+  Flag,
+  EditRounded,
+} from "@mui/icons-material";
 import TableIcon from "mdi-react/TableIcon";
 import Moment from "react-moment";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 6.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-  sx: {
-    "&& .Mui-selected": {
-      backgroundColor: "#007bff !important",
-      color: "white !important",
-    },
-  },
-};
-
-// const columnsSelect = [
-//   "#",
-//   "Created",
-//   "FPB Number",
-//   "PTA",
-//   "IO",
-//   "Other",
-//   "Material Name",
-//   "Category",
-//   "Price",
-//   "Qty PB",
-//   "UOM",
-//   "Total",
-//   "Cost Center",
-//   "Plan Date",
-//   "File",
-//   "Requester Note",
-//   "ICT Note",
-//   "PIC Purc.",
-//   "Purchasing Notes",
-//   "No. PO",
-//   "Approval",
-//   "Purchase",
-//   "Information Status",
-//   "Track Status",
-// ];
-
-const columnsGroup = ["Upload Document", "Status"];
+import MainTable from "@/components/mainTable";
+import _ from "lodash";
+import moment from "moment/moment";
 
 const columns = [
-  { id: "id", label: "#", minWidth: 22 },
+  { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
   {
     id: "created",
     label: "Created",
     minWidth: 100,
+    isShow: true,
+    format: (value) => moment(value).format("YYYY-MM-DD"),
   },
   {
     id: "fpbnumber",
     label: "FPB Number",
-    minWidth: 100,
-    // align: 'right',
-    // format: (value) => value.toLocaleString("en-US"),
+    minWidth: 162,
+    isShow: true,
   },
   {
     id: "pta",
     label: "PTA",
     minWidth: 100,
+    isShow: true,
     group: "Upload Document",
   },
   {
     id: "io",
     label: "IO",
     minWidth: 100,
+    isShow: true,
     group: "Upload Document",
   },
   {
     id: "other",
     label: "Other",
     minWidth: 100,
+    isShow: true,
     group: "Upload Document",
   },
   {
     id: "materialName",
     label: "Material Name",
     minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "category",
+    label: "Category",
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "price",
+    label: "Price",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "qtyPB",
+    label: "Qty PB",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "uom",
+    label: "UOM",
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "total",
+    label: "Total",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "constCenter",
+    label: "Cost Center",
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "planDate",
+    label: "Plan Date",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => moment(value).format("YYYY-MM-DD"),
+  },
+  {
+    id: "file",
+    label: "File",
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "requesterNotes",
+    label: "Requester Notes",
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "ictNotes",
+    label: "ICT Notes",
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "picPurc",
+    label: "PIC Purc.",
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "purchasingNotes",
+    label: "Purchasing Notes",
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "noPo",
+    label: "No. PO",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "approval",
+    label: "Approval",
+    minWidth: 100,
+    isShow: true,
+    group: "Status",
+  },
+  {
+    id: "purchase",
+    label: "Purchase",
+    minWidth: 100,
+    isShow: true,
+    group: "Status",
+  },
+  {
+    id: "informationStatus",
+    label: "Information Status",
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "trackStatus",
+    label: "Track Status",
+    minWidth: 100,
+    isShow: true,
   },
 ];
-function createData(id, created, fpbnumber, pta, io, other, materialName) {
-  return {
-    id,
-    created,
-    fpbnumber,
-    pta,
-    io,
-    other,
-    materialName,
-  };
-}
 
 const rows = [
-  createData(
-    1,
-    "1976-04-19T12:59-0500",
-    "F23100468",
-    null,
-    null,
-    null,
-    "Fuel Cell"
-  ),
-  createData(
-    2,
-    "1976-05-19T12:59-0500",
-    "F23100469",
-    null,
-    null,
-    null,
-    "Battery"
-  ),
+  {
+    id: 1,
+    created: "1976-04-19T12:59-0500",
+    fpbnumber: "F23100468",
+    pta: null,
+    io: null,
+    other: null,
+    materialName: "Fuel Cell",
+    category: "Non-ICT",
+    price: 898987,
+    qtyPB: 1,
+    uom: "UN",
+    total: 898989,
+    constCenter: "SBE Dekanat",
+    planDate: "1976-04-19T12:59-0500",
+    file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
+    requesterNotes: "test",
+    ictNotes: "ictNotes",
+    picPurc: "bukan aku",
+    purchasingNotes: "tes",
+    noPo: 123,
+    approval: "pending",
+    purchase: "pending",
+    informationStatus: "none",
+  },
+  {
+    id: 2,
+    created: "1976-04-19T12:59-0500",
+    fpbnumber: "F23100469",
+    pta: null,
+    io: null,
+    other: null,
+    materialName: "Fuel Cell",
+    category: "Non-ICT",
+    price: 898987,
+    qtyPB: 1,
+    uom: "UN",
+    total: 898989,
+    constCenter: "SBE Dekanat",
+    planDate: "1976-04-19T12:59-0500",
+    file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
+    requesterNotes: "test",
+    ictNotes: "ictNotes",
+    picPurc: "bukan aku",
+    purchasingNotes: "tes",
+    noPo: 123,
+    approval: "pending",
+    purchase: "pending",
+    informationStatus: "none",
+  },
+];
+
+function handleEdit(event) {
+  console.log("handle edit:", event);
+}
+
+const customCell = [
+  {
+    id: "fpbnumber",
+    element: (value) => (
+      <TableCell key="fpbnumber" align="left">
+        <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+          {value}
+        </Typography>
+        <br />
+        <Button variant="text" size="small" onClick={handleEdit}>
+          <EditRounded color="primaryButton" /> Edit
+        </Button>
+        <Button variant="text" size="small">
+          <CloseRounded color="error" /> Cancel
+        </Button>
+      </TableCell>
+    ),
+  },
 ];
 
 export default function Fpb() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   // const router = useRouter();
-
   const [statusSelect, setStatusSelect] = React.useState("All");
   const handleStatusSelect = (event) => {
     setStatusSelect(event.target.value);
   };
 
-  const [columnName, setColumnName] = React.useState([...columns]);
-  const handleColumnChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    console.log(value);
-    const temp = value.find((element) => {
-      return element.id === "reset";
-    });
-    console.log("temp:", temp);
-    if (temp) setColumnName([...columns]);
-    else setColumnName(value);
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
+  };
+  const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
+  const handleColumnChange = (id) => {
+    console.log("ddl click: ", id);
+    if (id == "reset") {
+      setColumnSelect(_.cloneDeep(columns));
+    } else {
+      let temp = [...columnSelect];
+      const index = columnSelect.findIndex((h) => {
+        return h.id == id;
+      });
+      temp[index].isShow = !temp[index].isShow;
+      setColumnSelect(temp);
+    }
+    // console.log("col: ", columns);
+    // console.log("columnSelect: ", columnSelect);
   };
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  const generateTableRow = () => {
-    const headerGroupList = columns.filter((x) =>
-      x.find((element) => {
-        return element.group;
-      })
-    );
-    let headerGroup = [
-      {
-        name: "Upload Document",
-        CustomElementRegistry: "2",
-      },
-    ];
-    headerGroupList.forEach((element) => {
-      if (headerGroup.length == 0)
-        headerGroup.push({
-          name: element,
-          count: 1,
-        });
-    });
-
-    return <div></div>;
-  };
   return (
     <>
       <Head>
@@ -235,7 +351,7 @@ export default function Fpb() {
               flexWrap: "wrap",
             }}
           >
-            <Typography variant="subtitle1">FPB</Typography>
+            <Typography variant="h7">FPB</Typography>
           </Grid>
           <Grid item xs={12} md={11}>
             <Button
@@ -260,7 +376,7 @@ export default function Fpb() {
               flexWrap: "wrap",
             }}
           >
-            <Typography variant="subtitle1">Status</Typography>
+            <Typography variant="h7">Status</Typography>
           </Grid>
           <Grid item xs={12} md={11}>
             <FormControl
@@ -292,113 +408,147 @@ export default function Fpb() {
               pr: 2,
             }}
           >
-            <Button
-              variant="contained"
-              color="secondaryButton"
+            <ButtonGroup variant="contained" color="secondaryButton">
+              <Button>
+                <Refresh sx={{ mr: 1 }} /> Refresh Table
+              </Button>
+              <Button
+                size="small"
+                aria-controls={open ? "split-button-menu" : "none"}
+                aria-expanded={open ? "true" : "false"}
+                aria-label="select merge strategy"
+                aria-haspopup="menu"
+                onClick={handleToggle}
+                ref={anchorRef}
+              >
+                Select Columns
+                <ArrowDropDown sx={{ ml: 1 }} />
+              </Button>
+            </ButtonGroup>
+            <Popper
               sx={{
-                display: "flex",
-                alignItems: "center",
-                flexWrap: "wrap",
+                zIndex: 1,
               }}
+              open={open}
+              anchorEl={anchorRef.current}
+              transition
+              disablePortal
             >
-              <Refresh sx={{ mr: 1 }} /> Refresh Table
-            </Button>
-          </Grid>
-          <Grid item xs="auto">
-            <Select
-              multiple
-              displayEmpty
-              size="small"
-              value={columnName}
-              onChange={handleColumnChange}
-              renderValue={() => "Select Columns"}
-              sx={{
-                backgroundColor: "#6c757d",
-                color: "white",
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#6c757d",
-                },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#6c757d",
-                },
-              }}
-              MenuProps={MenuProps}
-            >
-              {[...columns, { id: "reset", label: "Restore Columns" }].map(
-                (col) => (
-                  <MenuItem key={col.id} value={col}>
-                    <ListItemText primary={col.label} />
-                  </MenuItem>
-                )
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === "bottom" ? "center top" : "center bottom",
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleClose}>
+                      <MenuList
+                        id="split-button-menu"
+                        autoFocusItem
+                        sx={{ minWidth: 250 }}
+                      >
+                        {[
+                          ...columnSelect,
+                          { id: "reset", label: "Restore Columns" },
+                        ].map((col) => (
+                          <MenuItem
+                            onClick={() => handleColumnChange(col.id)}
+                            key={col.id}
+                            selected={col.isShow}
+                          >
+                            <ListItemText primary={col.label} />
+                          </MenuItem>
+                        ))}
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
               )}
-            </Select>
+            </Popper>
           </Grid>
         </Grid>
         <Paper sx={{ width: "100%", mt: 2 }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader>
+          <MainTable
+            columns={columnSelect}
+            rows={rows}
+            maxHeight={1000}
+            customCell={customCell}
+          />
+        </Paper>
+        <Paper sx={{ width: 300, mt: 2 }}>
+          <TableContainer>
+            <Table size="small">
               <TableHead>
-                {generateTableRow}
                 <TableRow>
                   <TableCell align="center" colSpan={2}>
-                    Country
+                    <Typography variant="h5">Information Status</Typography>
                   </TableCell>
-                  <TableCell align="center" colSpan={3}>
-                    Details
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ top: 57, minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.id}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number" ? (
-                                column.format(value)
-                              ) : column.id == "created" ? (
-                                <Moment date={value} format="YYYY-MM-DD" />
-                              ) : (
-                                value
-                              )}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
+                <TableRow>
+                  <TableCell align="center" width={60}>
+                    <HourglassFullTwoTone />
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="bodyCst1">Waiting</Typography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center" width={60}>
+                    <Cancel color="warning" />
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="bodyCst1">Canceled by User</Typography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center" width={60}>
+                    <CheckBox color="success" />
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="bodyCst1">Approved</Typography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center" width={60}>
+                    <CloseRounded color="error" />
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="bodyCst1">Rejected</Typography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center" width={60}>
+                    <ShoppingCartCheckoutRounded color="primaryButton" />
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="bodyCst1">PO Process</Typography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center" width={60}>
+                    <Inventory2Rounded color="info" />
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="bodyCst1">
+                      Ready for pick up
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="center" width={60}>
+                    <Flag color="success" />
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="bodyCst1">Delivered</Typography>
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
         </Paper>
       </Box>
     </>

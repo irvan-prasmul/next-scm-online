@@ -19,6 +19,7 @@
     "@reduxjs/toolkit": "^1.9.2",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "lodash": "^4.17.21",
     "mdi-react": "^9.1.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.40",
