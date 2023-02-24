@@ -279,7 +279,7 @@ export default function Layout({ children }) {
         open={open}
         PaperProps={{
           sx: {
-            color: "#c2c7d0",
+            color: "white",
             backgroundColor: "#343a40",
           },
         }}

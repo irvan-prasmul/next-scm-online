@@ -61,6 +61,10 @@
   overflow-x: hidden;
 } */
 
+.plain-table {
+  background-color: white !important;
+}
+
 .MuiTableContainer-root::-webkit-scrollbar {
   height: 7px;
 }
@@ -75,6 +79,10 @@
 /* Handle on hover */
 .MuiTableContainer-root::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.MuiButton-root {
+  text-transform: unset !important;
 }
 
 .main-box {

@@ -7,9 +7,7 @@ import {
   TableCell,
   TableBody,
   TablePagination,
-  Grid,
 } from "@mui/material";
-import Moment from "react-moment";
 
 export default function MainTable({ columns, rows, maxHeight, customCell }) {
   const [page, setPage] = useState(0);
@@ -116,7 +114,7 @@ export default function MainTable({ columns, rows, maxHeight, customCell }) {
                             return i.id == column.id;
                           });
                           if (ccIndex >= 0)
-                            return customCell[ccIndex].element(value);
+                            return customCell[ccIndex].element(row, value);
                         }
                         return (
                           <TableCell key={column.id} align={column.align}>

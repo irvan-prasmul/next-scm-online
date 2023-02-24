@@ -26,6 +26,12 @@ import {
   Grow,
   ClickAwayListener,
   MenuList,
+  Link,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import {
   Add,
@@ -40,12 +46,17 @@ import {
   Inventory2Rounded,
   Flag,
   EditRounded,
+  FileUploadRounded,
+  ImageOutlined,
+  AccountTreeRounded,
 } from "@mui/icons-material";
 import TableIcon from "mdi-react/TableIcon";
 import Moment from "react-moment";
 import MainTable from "@/components/mainTable";
 import _ from "lodash";
 import moment from "moment/moment";
+import ActionDialogFpb from "@/components/actionDialogFpb";
+import ConfirmationDialog from "@/components/confirmationDialog";
 
 const columns = [
   { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
@@ -67,6 +78,7 @@ const columns = [
     label: "PTA",
     minWidth: 100,
     isShow: true,
+    align: "center",
     group: "Upload Document",
   },
   {
@@ -227,7 +239,7 @@ const rows = [
     purchasingNotes: "tes",
     noPo: 123,
     approval: "pending",
-    purchase: "pending",
+    purchase: "approved",
     informationStatus: "none",
   },
   {
@@ -251,35 +263,37 @@ const rows = [
     picPurc: "bukan aku",
     purchasingNotes: "tes",
     noPo: 123,
-    approval: "pending",
-    purchase: "pending",
+    approval: "cancelled",
+    purchase: "rejected",
     informationStatus: "none",
   },
 ];
 
-function handleEdit(event) {
-  console.log("handle edit:", event);
+const testParam = "testParam";
+
+function renderStatusIcon(status) {
+  return status == "pending" ? (
+    <HourglassFullTwoTone />
+  ) : status == "approved" ? (
+    <CheckBox color="success" />
+  ) : status == "cancelled" ? (
+    <Cancel color="warning" />
+  ) : (
+    <CloseRounded color="error" />
+  );
 }
 
-const customCell = [
-  {
-    id: "fpbnumber",
-    element: (value) => (
-      <TableCell key="fpbnumber" align="left">
-        <Typography variant="bodyTable1" sx={{ pl: 1 }}>
-          {value}
-        </Typography>
-        <br />
-        <Button variant="text" size="small" onClick={handleEdit}>
-          <EditRounded color="primaryButton" /> Edit
-        </Button>
-        <Button variant="text" size="small">
-          <CloseRounded color="error" /> Cancel
-        </Button>
-      </TableCell>
-    ),
-  },
-];
+function handleEdit(row, col) {
+  console.log("handle edit:", col);
+  console.log(row);
+}
+
+function handleTrackStatus(event) {
+  console.log("handle track:", event);
+  console.log(testParam);
+}
+
+const dialogTypes = { pta: "PTA", other: "Other", track: "Track" };
 
 export default function Fpb() {
   // const auth = useSelector((state) => state.auth);
@@ -290,17 +304,18 @@ export default function Fpb() {
     setStatusSelect(event.target.value);
   };
 
-  const [open, setOpen] = React.useState(false);
+  const [openColumnList, setOpenColumnList] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
+  const handleToggleColumnList = () => {
+    setOpenColumnList((prevOpen) => !prevOpen);
   };
-  const handleClose = (event) => {
+  const handleCloseColumnList = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-    setOpen(false);
+    setOpenColumnList(false);
   };
+
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
     console.log("ddl click: ", id);
@@ -317,6 +332,154 @@ export default function Fpb() {
     // console.log("col: ", columns);
     // console.log("columnSelect: ", columnSelect);
   };
+
+  const [dialogType, setDialogType] = React.useState(dialogTypes.pta);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const handleCloseDialog = (event) => {
+    setOpenDialog(false);
+  };
+
+  const [confirmDialog, setConfirmDialog] = React.useState(false);
+  const handleConfirmDialog = (event) => {
+    setConfirmDialog(false);
+  };
+
+  function dialogAction() {
+    console.log("dialogAction");
+  }
+
+  const customCell = [
+    {
+      id: "fpbnumber",
+      element: (row, col) => {
+        return (
+          <TableCell key="fpbnumber" align="left">
+            <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+              {col}
+            </Typography>
+            <br />
+            <Button
+              variant="text"
+              size="small"
+              onClick={(e) => handleEdit(row, col)}
+            >
+              <EditRounded color="primaryButton" /> Edit
+            </Button>
+            <Button
+              variant="text"
+              size="small"
+              onClick={(e) => setConfirmDialog(true)}
+            >
+              <CloseRounded color="error" /> Cancel
+            </Button>
+          </TableCell>
+        );
+      },
+    },
+    {
+      id: "pta",
+      element: (row, col) => {
+        return (
+          <TableCell key="pta" align="center">
+            <Button
+              variant="text"
+              size="small"
+              onClick={(e) => {
+                setDialogType(dialogTypes.pta);
+                setOpenDialog(!openDialog);
+              }}
+            >
+              <FileUploadRounded color="primaryButton" /> Upload
+            </Button>
+          </TableCell>
+        );
+      },
+    },
+    {
+      id: "other",
+      element: (row, col) => {
+        return (
+          <TableCell key="other" align="center">
+            <Button
+              variant="text"
+              size="small"
+              onClick={(e) => {
+                setDialogType(dialogTypes.other);
+                setOpenDialog(!openDialog);
+              }}
+            >
+              <FileUploadRounded color="primaryButton" /> Upload
+            </Button>
+          </TableCell>
+        );
+      },
+    },
+    {
+      id: "file",
+      element: (row, col) => {
+        return (
+          <TableCell key="file" align="center">
+            <Link
+              href={col}
+              target="_blank"
+              underline="none"
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <ImageOutlined color="primaryButton" fontSize="small" />
+              <Typography variant="bodyTable1" color="blue">
+                View
+              </Typography>
+            </Link>
+          </TableCell>
+        );
+      },
+    },
+    {
+      id: "approval",
+      element: (row, col) => {
+        return (
+          <TableCell key="approval" align="center">
+            {renderStatusIcon(col)}
+          </TableCell>
+        );
+      },
+    },
+    {
+      id: "purchase",
+      element: (row, col) => {
+        return (
+          <TableCell key="purchase" align="center">
+            {renderStatusIcon(col)}
+          </TableCell>
+        );
+      },
+    },
+    {
+      id: "trackStatus",
+      element: (row, col) => {
+        return (
+          <TableCell key="trackStatus" align="center">
+            <Button
+              variant="contained"
+              size="small"
+              color="secondaryButton"
+              onClick={(e) => {
+                setDialogType(dialogTypes.track);
+                setOpenDialog(!openDialog);
+              }}
+            >
+              <AccountTreeRounded fontSize="small" />
+              <Typography variant="bodyTable1">Tracking</Typography>
+            </Button>
+          </TableCell>
+        );
+      },
+    },
+  ];
 
   return (
     <>
@@ -410,18 +573,19 @@ export default function Fpb() {
           >
             <ButtonGroup variant="contained" color="secondaryButton">
               <Button>
-                <Refresh sx={{ mr: 1 }} /> Refresh Table
+                <Refresh sx={{ mr: 1 }} />
+                <Typography variant="bodyCst1">Refresh Table</Typography>
               </Button>
               <Button
                 size="small"
-                aria-controls={open ? "split-button-menu" : "none"}
-                aria-expanded={open ? "true" : "false"}
+                aria-controls={openColumnList ? "split-button-menu" : "none"}
+                aria-expanded={openColumnList ? "true" : "false"}
                 aria-label="select merge strategy"
                 aria-haspopup="menu"
-                onClick={handleToggle}
+                onClick={handleToggleColumnList}
                 ref={anchorRef}
               >
-                Select Columns
+                <Typography variant="bodyCst1">Select Columns</Typography>
                 <ArrowDropDown sx={{ ml: 1 }} />
               </Button>
             </ButtonGroup>
@@ -429,7 +593,7 @@ export default function Fpb() {
               sx={{
                 zIndex: 1,
               }}
-              open={open}
+              open={openColumnList}
               anchorEl={anchorRef.current}
               transition
               disablePortal
@@ -443,7 +607,7 @@ export default function Fpb() {
                   }}
                 >
                   <Paper>
-                    <ClickAwayListener onClickAway={handleClose}>
+                    <ClickAwayListener onClickAway={handleCloseColumnList}>
                       <MenuList
                         id="split-button-menu"
                         autoFocusItem
@@ -482,67 +646,67 @@ export default function Fpb() {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" colSpan={2}>
+                  <TableCell className="plain-table" align="center" colSpan={2}>
                     <Typography variant="h5">Information Status</Typography>
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell align="center" width={60}>
+                  <TableCell className="plain-table" align="center" width={60}>
                     <HourglassFullTwoTone />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="plain-table">
                     <Typography variant="bodyCst1">Waiting</Typography>
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center" width={60}>
+                  <TableCell className="plain-table" align="center" width={60}>
                     <Cancel color="warning" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="plain-table">
                     <Typography variant="bodyCst1">Canceled by User</Typography>
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center" width={60}>
+                  <TableCell className="plain-table" align="center" width={60}>
                     <CheckBox color="success" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="plain-table">
                     <Typography variant="bodyCst1">Approved</Typography>
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center" width={60}>
+                  <TableCell className="plain-table" align="center" width={60}>
                     <CloseRounded color="error" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="plain-table">
                     <Typography variant="bodyCst1">Rejected</Typography>
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center" width={60}>
+                  <TableCell className="plain-table" align="center" width={60}>
                     <ShoppingCartCheckoutRounded color="primaryButton" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="plain-table">
                     <Typography variant="bodyCst1">PO Process</Typography>
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center" width={60}>
+                  <TableCell className="plain-table" align="center" width={60}>
                     <Inventory2Rounded color="info" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="plain-table">
                     <Typography variant="bodyCst1">
                       Ready for pick up
                     </Typography>
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell align="center" width={60}>
+                  <TableCell className="plain-table" align="center" width={60}>
                     <Flag color="success" />
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="plain-table">
                     <Typography variant="bodyCst1">Delivered</Typography>
                   </TableCell>
                 </TableRow>
@@ -551,6 +715,18 @@ export default function Fpb() {
           </TableContainer>
         </Paper>
       </Box>
+      <ActionDialogFpb
+        type={dialogType}
+        isOpen={openDialog}
+        handleClose={handleCloseDialog}
+        action={dialogAction}
+      />
+      <ConfirmationDialog
+        type={"cancel"}
+        isOpen={confirmDialog}
+        handleClose={handleConfirmDialog}
+        action={dialogAction}
+      />
     </>
   );
 }

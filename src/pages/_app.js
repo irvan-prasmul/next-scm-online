@@ -8,21 +8,18 @@ import Layout from "@/components/layout";
 // import store from "@/store";
 import { Provider } from "react-redux";
 import { useStore } from "@/store";
-import { blue, green, orange, red } from "@mui/material/colors";
+import { gray } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
     primary: { main: "#1d256a" },
     secondary: { main: "#11cb5f" },
     tertiary: { main: "#343a40" },
-    lighBg: { main: "white" },
+    lighBg: { main: "#fff" },
+    darkBg: { main: "#000000" },
     primaryButton: { main: "#007bff", contrastText: "#fff" },
     secondaryButton: { main: "#6c757d", contrastText: "#fff" },
-    // cancel: { main: orange },
-    // approve: { main: green },
-    // rejected: { main: red },
-    // process: { main: blue },
-    // ready: { main: "#4DA7C6" },
+    lightBlueHeader: { main: "#17a2b8", contrastText: "#fff" },
   },
   typography: {
     allVariants: {
