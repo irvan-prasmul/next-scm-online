@@ -82,7 +82,7 @@ export default function ActionDialogAddNewItem({ isOpen, handleClose }) {
             >
               <Typography variant="h6">Add an item</Typography>
             </Grid>
-            <Grid item xs="1">
+            <Grid item xs={1}>
               <IconButton variant="text" color="darkBg" onClick={handleClose}>
                 <HighlightOff />
               </IconButton>

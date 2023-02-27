@@ -1,67 +1,34 @@
 import Head from "next/head";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Box,
-  Button,
-  Divider,
-  FormControl,
-  Grid,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Typography,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TablePagination,
-  Paper,
-  ButtonGroup,
-  Popper,
-  Grow,
-  ClickAwayListener,
-  MenuList,
-  Link,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  TextField,
-} from "@mui/material";
-import {
-  Add,
-  Refresh,
-  ShoppingCart,
-  ArrowDropDown,
-  HourglassFullTwoTone,
-  Cancel,
-  CloseRounded,
-  ShoppingCartCheckoutRounded,
-  CheckBox,
-  Inventory2Rounded,
-  Flag,
-  EditRounded,
-  FileUploadRounded,
-  ImageOutlined,
-  AccountTreeRounded,
-  ArrowRight,
-  ArrowForward,
-  SaveRounded,
-  DoNotDisturbOutlined,
-  DeleteRounded,
-} from "@mui/icons-material";
-import TableIcon from "mdi-react/TableIcon";
-import Moment from "react-moment";
+import TextField from "@mui/material/TextField";
+import MenuList from "@mui/material/MenuList";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Grow from "@mui/material/Grow";
+import Popper from "@mui/material/Popper";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Paper from "@mui/material/Paper";
+import TableCell from "@mui/material/TableCell";
+import Typography from "@mui/material/Typography";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemText from "@mui/material/ListItemText";
+import Grid from "@mui/material/Grid";
+import FormControl from "@mui/material/FormControl";
+import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Add from "@mui/icons-material/Add";
+import Refresh from "@mui/icons-material/Refresh";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
+import EditRounded from "@mui/icons-material/EditRounded";
+import ArrowForward from "@mui/icons-material/ArrowForward";
+import SaveRounded from "@mui/icons-material/SaveRounded";
+import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
+import DeleteRounded from "@mui/icons-material/DeleteRounded";
 import MainTable from "@/components/mainTable";
 import _ from "lodash";
-import moment from "moment/moment";
-import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import ActionDialogAddNewItem from "@/components/fpb/actionDialogAddNewItem";
 
@@ -105,12 +72,14 @@ const columns = [
 
 const rows = [
   {
+    id: 1,
     materialName: "Fuel Cell",
     price: 321312312,
     qtyPB: 11111,
     uom: "UN",
   },
   {
+    id: 2,
     materialName: "C Clamp Cell",
     price: 1133334455,
     qtyPB: 11111,
