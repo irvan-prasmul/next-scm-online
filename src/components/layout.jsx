@@ -18,14 +18,12 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
-import {
-  Home,
-  QuestionMark,
-  ShoppingCart,
-  ExpandLess,
-  ExpandMore,
-  Shortcut,
-} from "@mui/icons-material/";
+import Home from "@mui/icons-material/Home";
+import QuestionMark from "@mui/icons-material/QuestionMark";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import Shortcut from "@mui/icons-material/Shortcut";
 import DropboxIcon from "mdi-react/DropboxIcon";
 import TableIcon from "mdi-react/TableIcon";
 import NewspaperVariantMultipleOutlineIcon from "mdi-react/NewspaperVariantMultipleOutlineIcon";

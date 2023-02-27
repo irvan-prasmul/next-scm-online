@@ -3,28 +3,24 @@ import Image from "next/image";
 import profilePic from "/public/logo-prasetiyamulya.png";
 import React from "react";
 import { useRouter } from "next/router";
-import {
-  Card,
-  Typography,
-  CardContent,
-  TextField,
-  MenuItem,
-  Button,
-  IconButton,
-  FormControl,
-  Select,
-  Box,
-  InputAdornment,
-  InputLabel,
-  Input,
-} from "@mui/material/";
+import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
+import CardContent from "@mui/material/CardContent";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import Input from "@mui/material/Input";
 import Grid from "@mui/material/Unstable_Grid2";
-import {
-  EmailOutlined,
-  LockOutlined,
-  Visibility,
-  VisibilityOff,
-} from "@mui/icons-material/";
+import EmailOutlined from "@mui/icons-material/EmailOutlined";
+import LockOutlined from "@mui/icons-material/LockOutlined";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function Login() {

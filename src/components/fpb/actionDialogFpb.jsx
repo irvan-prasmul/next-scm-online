@@ -1,32 +1,19 @@
 import React from "react";
-import {
-  AccountTreeRounded,
-  Cancel,
-  CloseRounded,
-  DoNotDisturbOutlined,
-  FileUploadRounded,
-  HighlightOff,
-  UploadFileRounded,
-} from "@mui/icons-material";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  Grid,
-  IconButton,
-  Input,
-  InputLabel,
-  Typography,
-} from "@mui/material";
-import { blue } from "@mui/material/colors";
+import AccountTreeRounded from "@mui/icons-material/AccountTreeRounded";
+import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
+import FileUploadRounded from "@mui/icons-material/FileUploadRounded";
+import HighlightOff from "@mui/icons-material/HighlightOff";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import FileUpload from "react-mui-fileuploader";
 
 export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
@@ -159,7 +146,7 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
                     <Typography variant="h6">Upload Other Documents</Typography>
                   )}
                 </Grid>
-                <Grid item xs="1">
+                <Grid item xs={1}>
                   <IconButton
                     variant="text"
                     color="darkBg"

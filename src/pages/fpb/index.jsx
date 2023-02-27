@@ -1,39 +1,28 @@
 import Head from "next/head";
 import React from "react";
 import { useRouter } from "next/router";
-// import { useSelector, useDispatch } from "react-redux";
-import {
-  Box,
-  Button,
-  Divider,
-  FormControl,
-  Grid,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Typography,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TablePagination,
-  Paper,
-  ButtonGroup,
-  Popper,
-  Grow,
-  ClickAwayListener,
-  MenuList,
-  Link,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import FormControl from "@mui/material/FormControl";
+import Grid from "@mui/material/Grid";
+import ListItemText from "@mui/material/ListItemText";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Typography from "@mui/material/Typography";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
+import Paper from "@mui/material/Paper";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Popper from "@mui/material/Popper";
+import Grow from "@mui/material/Grow";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import MenuList from "@mui/material/MenuList";
+import Link from "@mui/material/Link";
 import {
   Add,
   Refresh,
@@ -556,79 +545,66 @@ export default function Fpb() {
             </FormControl>
           </Grid>
         </Grid>
-        <Grid container sx={{ pt: 2 }}>
-          <Grid
-            item
-            xs="auto"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
-              pr: 2,
-            }}
+        <ButtonGroup variant="contained" color="secondaryButton" sx={{ pt: 2 }}>
+          <Button>
+            <Refresh sx={{ mr: 1 }} />
+            <Typography variant="bodyCst1">Refresh Table</Typography>
+          </Button>
+          <Button
+            size="small"
+            aria-controls={openColumnList ? "split-button-menu" : "none"}
+            aria-expanded={openColumnList ? "true" : "false"}
+            aria-label="select merge strategy"
+            aria-haspopup="menu"
+            onClick={handleToggleColumnList}
+            ref={anchorRef}
           >
-            <ButtonGroup variant="contained" color="secondaryButton">
-              <Button>
-                <Refresh sx={{ mr: 1 }} />
-                <Typography variant="bodyCst1">Refresh Table</Typography>
-              </Button>
-              <Button
-                size="small"
-                aria-controls={openColumnList ? "split-button-menu" : "none"}
-                aria-expanded={openColumnList ? "true" : "false"}
-                aria-label="select merge strategy"
-                aria-haspopup="menu"
-                onClick={handleToggleColumnList}
-                ref={anchorRef}
-              >
-                <Typography variant="bodyCst1">Select Columns</Typography>
-                <ArrowDropDown sx={{ ml: 1 }} />
-              </Button>
-            </ButtonGroup>
-            <Popper
-              sx={{
-                zIndex: 1,
+            <Typography variant="bodyCst1">Select Columns</Typography>
+            <ArrowDropDown sx={{ ml: 1 }} />
+          </Button>
+        </ButtonGroup>
+        <Popper
+          sx={{
+            zIndex: 1,
+          }}
+          open={openColumnList}
+          anchorEl={anchorRef.current}
+          transition
+          disablePortal
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin:
+                  placement === "bottom" ? "center top" : "center bottom",
               }}
-              open={openColumnList}
-              anchorEl={anchorRef.current}
-              transition
-              disablePortal
             >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === "bottom" ? "center top" : "center bottom",
-                  }}
-                >
-                  <Paper>
-                    <ClickAwayListener onClickAway={handleCloseColumnList}>
-                      <MenuList
-                        id="split-button-menu"
-                        autoFocusItem
-                        sx={{ minWidth: 250 }}
+              <Paper>
+                <ClickAwayListener onClickAway={handleCloseColumnList}>
+                  <MenuList
+                    id="split-button-menu"
+                    autoFocusItem
+                    sx={{ minWidth: 250 }}
+                  >
+                    {[
+                      ...columnSelect,
+                      { id: "reset", label: "Restore Columns" },
+                    ].map((col) => (
+                      <MenuItem
+                        onClick={() => handleColumnChange(col.id)}
+                        key={col.id}
+                        selected={col.isShow}
                       >
-                        {[
-                          ...columnSelect,
-                          { id: "reset", label: "Restore Columns" },
-                        ].map((col) => (
-                          <MenuItem
-                            onClick={() => handleColumnChange(col.id)}
-                            key={col.id}
-                            selected={col.isShow}
-                          >
-                            <ListItemText primary={col.label} />
-                          </MenuItem>
-                        ))}
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-          </Grid>
-        </Grid>
+                        <ListItemText primary={col.label} />
+                      </MenuItem>
+                    ))}
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
         <Paper sx={{ width: "100%", mt: 2 }}>
           <MainTable
             columns={columnSelect}

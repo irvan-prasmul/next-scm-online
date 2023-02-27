@@ -1,13 +1,11 @@
 import { useState } from "react";
-import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  TablePagination,
-} from "@mui/material";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TablePagination from "@mui/material/TablePagination";
+import TableBody from "@mui/material/TableBody";
 
 export default function MainTable({ columns, rows, maxHeight, customCell }) {
   const [page, setPage] = useState(0);
@@ -103,9 +101,9 @@ export default function MainTable({ columns, rows, maxHeight, customCell }) {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     {columns.map((column) => {
                       if (column.isShow) {
                         const value = row[column.id];
