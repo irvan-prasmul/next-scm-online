@@ -1,5 +1,47 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
 
+.main-box {
+  margin-right: 0px !important;
+  padding-right: 0px !important;
+  border-width: 10px;
+  border-color: #808080;
+  margin-top: 64px;
+  min-height: calc(100vh - 64px);
+  border-radius: 16px;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
+}
+
+.main-box:has(.alternate-backgound) {
+  background-color: #e5f8fc !important;
+}
+
+.alternate-background-header {
+  background-color: white;
+  border-color: #808080;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.form-white-backgound {
+  background-color: #fff !important;
+}
+
+.form-compact {
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+body {
+  margin-right: 0px !important;
+  padding-right: 0px !important;
+}
+
+header {
+  margin-right: 0px !important;
+  padding-right: 0px !important;
+}
+
 .login-logo {
   width: 22% !important;
   height: auto;
@@ -83,16 +125,6 @@
 
 .MuiButton-root {
   text-transform: unset !important;
-}
-
-.main-box {
-  border-width: 10px;
-  border-color: #808080;
-  margin-top: 64px;
-  min-height: calc(100vh - 64px);
-  border-radius: 16px;
-  -moz-border-radius: 16px;
-  -webkit-border-radius: 16px;
 }
 
 .carousel-img-1 {

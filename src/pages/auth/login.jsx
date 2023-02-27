@@ -32,26 +32,22 @@ export default function Login() {
   const dispatch = useDispatch();
 
   const [emailSelect, setEmailSelect] = React.useState("@prasetiyamulya.ac.id");
+  const handleEmailSelect = (event) => {
+    setEmailSelect(event.target.value);
+  };
   const [email, setEmail] = React.useState("");
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
+  };
   const [password, setPassword] = React.useState("");
+  const handlePassword = (event) => {
+    setPassword(event.target.value);
+  };
   const [showPassword, setShowPassword] = React.useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-  };
-
-  const handleEmail = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleEmailSelect = (event) => {
-    setEmailSelect(event.target.value);
-  };
-
-  const handlePassword = (event) => {
-    setPassword(event.target.value);
   };
 
   const router = useRouter();

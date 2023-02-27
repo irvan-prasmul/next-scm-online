@@ -74,6 +74,39 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
       );
   }
 
+  function renderAction(type) {
+    if (type == "Track")
+      return (
+        <>
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            color="secondaryButton"
+          >
+            <DoNotDisturbOutlined sx={{ mr: 1 }} />
+            Cancel
+          </Button>
+        </>
+      );
+    else
+      return (
+        <>
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            color="secondaryButton"
+          >
+            <DoNotDisturbOutlined sx={{ mr: 1 }} />
+            Cancel
+          </Button>
+          <Button onClick={handleClose} variant="contained" color="success">
+            <FileUploadRounded sx={{ mr: 1 }} />
+            Upload
+          </Button>
+        </>
+      );
+  }
+
   return (
     <Dialog
       maxWidth="xs"
@@ -95,7 +128,7 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
               <Grid container>
                 <Grid
                   item
-                  xs="1"
+                  xs="auto"
                   sx={{
                     display: "flex !important",
                     flexDirection: "column !important",
@@ -103,7 +136,7 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
                     pr: 1,
                   }}
                 >
-                  {type == "other" ? (
+                  {type == "Track" ? (
                     <AccountTreeRounded />
                   ) : (
                     <FileUploadRounded />
@@ -111,7 +144,7 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
                 </Grid>
                 <Grid
                   item
-                  xs={10}
+                  xs
                   sx={{
                     display: "flex !important",
                     flexDirection: "column !important",
@@ -141,20 +174,7 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
           </CardContent>
         </Card>
       </DialogContent>
-      <DialogActions>
-        <Button
-          onClick={handleClose}
-          variant="contained"
-          color="secondaryButton"
-        >
-          <DoNotDisturbOutlined sx={{ mr: 1 }} />
-          Cancel
-        </Button>
-        <Button onClick={handleClose} variant="contained" color="success">
-          <FileUploadRounded sx={{ mr: 1 }} />
-          Upload
-        </Button>
-      </DialogActions>
+      <DialogActions>{renderAction(type)}</DialogActions>
     </Dialog>
   );
 }

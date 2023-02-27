@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React from "react";
+import { useRouter } from "next/router";
 // import { useSelector, useDispatch } from "react-redux";
 import {
   Box,
@@ -55,7 +56,7 @@ import Moment from "react-moment";
 import MainTable from "@/components/mainTable";
 import _ from "lodash";
 import moment from "moment/moment";
-import ActionDialogFpb from "@/components/actionDialogFpb";
+import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ConfirmationDialog from "@/components/confirmationDialog";
 
 const columns = [
@@ -269,8 +270,6 @@ const rows = [
   },
 ];
 
-const testParam = "testParam";
-
 function renderStatusIcon(status) {
   return status == "pending" ? (
     <HourglassFullTwoTone />
@@ -288,17 +287,12 @@ function handleEdit(row, col) {
   console.log(row);
 }
 
-function handleTrackStatus(event) {
-  console.log("handle track:", event);
-  console.log(testParam);
-}
-
 const dialogTypes = { pta: "PTA", other: "Other", track: "Track" };
 
 export default function Fpb() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
-  // const router = useRouter();
+  const router = useRouter();
   const [statusSelect, setStatusSelect] = React.useState("All");
   const handleStatusSelect = (event) => {
     setStatusSelect(event.target.value);
@@ -340,12 +334,13 @@ export default function Fpb() {
   };
 
   const [confirmDialog, setConfirmDialog] = React.useState(false);
-  const handleConfirmDialog = (event) => {
-    setConfirmDialog(false);
-  };
 
   function dialogAction() {
     console.log("dialogAction");
+  }
+
+  function createNew(event) {
+    router.replace("/fpb/create");
   }
 
   const customCell = [
@@ -525,6 +520,7 @@ export default function Fpb() {
                 alignItems: "center",
                 flexWrap: "wrap",
               }}
+              onClick={createNew}
             >
               <Add sx={{ mr: 1 }} /> Create New
             </Button>
@@ -724,7 +720,7 @@ export default function Fpb() {
       <ConfirmationDialog
         type={"cancel"}
         isOpen={confirmDialog}
-        handleClose={handleConfirmDialog}
+        handleClose={(e) => setConfirmDialog(false)}
         action={dialogAction}
       />
     </>

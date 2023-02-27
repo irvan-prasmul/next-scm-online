@@ -229,7 +229,7 @@ export default function Layout({ children }) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar color="lighBg" position="fixed" open={open}>
+      <AppBar color="lightBg" position="fixed" open={open}>
         <Toolbar>
           <Grid container spacing={2} sx={{ width: "100%" }}>
             <Grid xs="auto">

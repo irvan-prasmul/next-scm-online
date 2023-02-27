@@ -12,7 +12,7 @@ function noType() {
   return <>Default</>;
 }
 
-function cancel() {
+function cancelVariant(type) {
   return (
     <Grid container>
       <Grid
@@ -35,7 +35,7 @@ function cancel() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h5">Are you sure you want to cancel?</Typography>
+        <Typography variant="h5">Are you sure you want to {type}?</Typography>
       </Grid>
       <Grid
         item
@@ -47,7 +47,9 @@ function cancel() {
         }}
       >
         <Typography variant="bodyCst1">
-          This action cannot be undone!
+          {type == "close"
+            ? "Your changes will be lost!"
+            : "This action cannot be undone!"}
         </Typography>
       </Grid>
     </Grid>
@@ -67,7 +69,11 @@ export default function ConfirmationDialog({
       onClose={handleClose}
       disableScrollLock={true}
     >
-      <DialogContent>{type == "cancel" ? cancel() : noType()}</DialogContent>
+      <DialogContent>
+        {type == "cancel" || type == "delete" || type == "close"
+          ? cancelVariant(type)
+          : noType()}
+      </DialogContent>
       <DialogActions>
         <Button
           onClick={handleClose}

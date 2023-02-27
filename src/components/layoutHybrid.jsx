@@ -286,7 +286,7 @@ export default function Layout({ children }) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
-        color="lighBg"
+        color="lightBg"
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },

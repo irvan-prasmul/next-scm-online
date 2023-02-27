@@ -15,7 +15,7 @@ const theme = createTheme({
     primary: { main: "#1d256a" },
     secondary: { main: "#11cb5f" },
     tertiary: { main: "#343a40" },
-    lighBg: { main: "#fff" },
+    lightBg: { main: "#fff" },
     darkBg: { main: "#000000" },
     primaryButton: { main: "#007bff", contrastText: "#fff" },
     secondaryButton: { main: "#6c757d", contrastText: "#fff" },
@@ -37,6 +37,11 @@ const theme = createTheme({
       ].join(","),
     },
     h7: {
+      fontSize: "1rem",
+      fontWeight: 600,
+    },
+    h8: {
+      fontSize: "0.875rem",
       fontWeight: 600,
     },
     bodyCst1: {
