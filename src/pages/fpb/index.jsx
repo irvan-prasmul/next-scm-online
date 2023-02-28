@@ -23,23 +23,21 @@ import Grow from "@mui/material/Grow";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import MenuList from "@mui/material/MenuList";
 import Link from "@mui/material/Link";
-import {
-  Add,
-  Refresh,
-  ShoppingCart,
-  ArrowDropDown,
-  HourglassFullTwoTone,
-  Cancel,
-  CloseRounded,
-  ShoppingCartCheckoutRounded,
-  CheckBox,
-  Inventory2Rounded,
-  Flag,
-  EditRounded,
-  FileUploadRounded,
-  ImageOutlined,
-  AccountTreeRounded,
-} from "@mui/icons-material";
+import Add from "@mui/icons-material/Add";
+import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
+import Refresh from "@mui/icons-material/Refresh";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import AccountTreeRounded from "@mui/icons-material/AccountTreeRounded";
+import ImageOutlined from "@mui/icons-material/ImageOutlined";
+import FileUploadRounded from "@mui/icons-material/FileUploadRounded";
+import EditRounded from "@mui/icons-material/EditRounded";
+import Flag from "@mui/icons-material/Flag";
+import Inventory2Rounded from "@mui/icons-material/Inventory2Rounded";
+import CheckBox from "@mui/icons-material/CheckBox";
+import ShoppingCartCheckoutRounded from "@mui/icons-material/ShoppingCartCheckoutRounded";
+import CloseRounded from "@mui/icons-material/CloseRounded";
+import Cancel from "@mui/icons-material/Cancel";
+import HourglassFullTwoTone from "@mui/icons-material/HourglassFullTwoTone";
 import TableIcon from "mdi-react/TableIcon";
 import Moment from "react-moment";
 import MainTable from "@/components/mainTable";
@@ -47,6 +45,7 @@ import _ from "lodash";
 import moment from "moment/moment";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ConfirmationDialog from "@/components/confirmationDialog";
+import TableChartRounded from "@mui/icons-material/TableChartRounded";
 
 const columns = [
   { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
@@ -60,7 +59,7 @@ const columns = [
   {
     id: "fpbnumber",
     label: "FPB Number",
-    minWidth: 162,
+    minWidth: 175,
     isShow: true,
   },
   {
@@ -559,6 +558,7 @@ export default function Fpb() {
             onClick={handleToggleColumnList}
             ref={anchorRef}
           >
+            <TableChartRounded sx={{ mr: 1 }} />
             <Typography variant="bodyCst1">Select Columns</Typography>
             <ArrowDropDown sx={{ ml: 1 }} />
           </Button>

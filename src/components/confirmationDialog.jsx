@@ -1,10 +1,16 @@
 import ErrorOutlineRounded from "@mui/icons-material/ErrorOutlineRounded";
+import Zoom from "@mui/material/Zoom";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import React from "react";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Zoom ref={ref} {...props} />;
+});
 
 function noType() {
   return <>Default</>;
@@ -62,6 +68,7 @@ export default function ConfirmationDialog({
 }) {
   return (
     <Dialog
+      TransitionComponent={Transition}
       maxWidth="xs"
       open={isOpen}
       onClose={handleClose}

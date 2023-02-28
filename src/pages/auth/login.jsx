@@ -23,7 +23,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useSelector, useDispatch } from "react-redux";
 
-export default function Login() {
+function Login() {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -255,3 +255,7 @@ export default function Login() {
     </>
   );
 }
+
+Login.layout = "none";
+
+export default Login;

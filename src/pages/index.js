@@ -5,7 +5,7 @@ import styles from "@/styles/Home.module.css";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
-export default function Root() {
+function Root() {
   const router = useRouter();
   useEffect(() => {
     console.log(`Component mounted`);
@@ -19,8 +19,11 @@ export default function Root() {
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <p>You should not be here!!!</p>
+        <h1>Redirecting...</h1>
       </main>
     </>
   );
 }
+Root.layout = "none";
+
+export default Root;

@@ -3,13 +3,13 @@
 .main-box {
   margin-right: 0px !important;
   padding-right: 0px !important;
-  border-width: 10px;
-  border-color: #808080;
-  margin-top: 64px;
-  min-height: calc(100vh - 64px);
-  border-radius: 16px;
-  -moz-border-radius: 16px;
-  -webkit-border-radius: 16px;
+  border-width: 10px !important;
+  border-color: #808080 !important;
+  margin-top: 64px !important;
+  min-height: calc(100vh - 64px) !important;
+  border-radius: 16px !important;
+  -moz-border-radius: 16px !important;
+  -webkit-border-radius: 16px !important;
 }
 
 .main-box:has(.alternate-backgound) {
@@ -23,13 +23,21 @@
   border-top-right-radius: 16px;
 }
 
-.form-white-backgound {
+.form-white-backgound > .MuiInputBase-root {
   background-color: #fff !important;
 }
 
 .form-compact {
   padding: 0px !important;
   margin: 0px !important;
+}
+
+.event-box {
+  background-color: #d3e3e3;
+  padding-top: 8px;
+  margin-top: 24px;
+  padding-bottom: 16px;
+  border-radius: 10px;
 }
 
 body {

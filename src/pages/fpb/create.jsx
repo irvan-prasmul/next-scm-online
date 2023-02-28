@@ -31,6 +31,15 @@ import MainTable from "@/components/mainTable";
 import _ from "lodash";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import ActionDialogAddNewItem from "@/components/fpb/actionDialogAddNewItem";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import FormHelperText from "@mui/material/FormHelperText";
+import InputAdornment from "@mui/material/InputAdornment";
+import PersonRounded from "@mui/icons-material/PersonRounded";
+import PhoneRounded from "@mui/icons-material/PhoneRounded";
+import Collapse from "@mui/material/Collapse";
+import TableChartRounded from "@mui/icons-material/TableChartRounded";
 
 const columns = [
   {
@@ -115,19 +124,20 @@ export default function FpbCreate() {
   const HandlePlantSelect = (event) => {
     if (event.target.value != "Choose") setPlant(event.target.value);
   };
-  const [plantSelect, setPlantSelect] = React.useState([
-    "R001 - BSD",
-    "R002 - Cilandak",
-  ]);
+  const plantSelect = ["R001 - BSD", "R002 - Cilandak"];
 
   const [activity, setActivity] = React.useState("Choose");
   const HandleActivitySelect = (event) => {
     if (event.target.value != "Choose") setActivity(event.target.value);
   };
-  const [activitySelect, setActivitySelect] = React.useState([
-    "Non - IO",
-    "IO",
-  ]);
+  const activitySelect = ["Non - IO", "IO"];
+  const [ioBudget, setIoBudget] = React.useState("");
+  const [eventName, setEventName] = React.useState("");
+  const [eventDate, setEventDate] = React.useState("");
+  const [picName, setPicName] = React.useState("");
+  const [picPhone, setPicPhone] = React.useState("");
+
+  const [isValidate, setValidate] = React.useState(false);
 
   const [addNewItemDialog, setAddNewItemDialog] = React.useState(false);
 
@@ -175,7 +185,7 @@ export default function FpbCreate() {
               size="small"
               sx={{ mr: 1 }}
               color="primaryButton"
-              onClick={(e) => handleEdit(row, col)}
+              onClick={(e) => console.log("buka modal dengan data tabel")}
             >
               <EditRounded /> Edit
             </Button>
@@ -195,6 +205,245 @@ export default function FpbCreate() {
       },
     },
   ];
+
+  function eventForm() {
+    return (
+      <Box className="event-box">
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="h5">-- EVENT --</Typography>
+          </Grid>
+        </Grid>
+        <Divider sx={{ pt: 1, mb: 2 }} />
+        <Grid
+          container
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Grid item xs={0} md={3} />
+          <Grid
+            item
+            xs={12}
+            md={2}
+            sx={{
+              pr: 2,
+              pt: 1,
+            }}
+          >
+            <Typography variant="h7">IO Budget</Typography>
+          </Grid>
+          <Grid item xs={12} md>
+            <TextField
+              size="small"
+              className="form-white-backgound"
+              value={ioBudget}
+              onChange={(e) => setIoBudget(e.target.value)}
+              error={isValidate && ioBudget == ""}
+              helperText={
+                isValidate && ioBudget == ""
+                  ? "Please fill out this field."
+                  : ""
+              }
+              sx={{ width: 330 }}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          sx={{
+            pt: 2,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Grid item xs={0} md={3} />
+          <Grid
+            item
+            xs={12}
+            md={2}
+            sx={{
+              pr: 2,
+              pt: 1,
+            }}
+          >
+            <Typography variant="h7">Event Name</Typography>
+          </Grid>
+          <Grid item xs={12} md>
+            <TextField
+              rows={2}
+              multiline
+              size="small"
+              className="form-white-backgound"
+              value={eventName}
+              onChange={(e) => setEventName(e.target.value)}
+              error={isValidate && eventName == ""}
+              helperText={
+                isValidate && eventName == ""
+                  ? "Please fill out this field."
+                  : ""
+              }
+              sx={{ width: 330 }}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          sx={{
+            pt: 2,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Grid item xs={0} md={3} />
+          <Grid
+            item
+            xs={12}
+            md={2}
+            sx={{
+              pr: 2,
+              pt: 1,
+            }}
+          >
+            <Typography variant="h7">Date</Typography>
+          </Grid>
+          <Grid item xs={12} md>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DatePicker
+                value={eventDate}
+                disablePast
+                className="form-white-backgound"
+                views={["year", "month", "day"]}
+                onChange={(newValue) => setEventDate(newValue)}
+                renderInput={(params) => (
+                  <TextField
+                    size="small"
+                    className="form-white-backgound"
+                    error={isValidate && eventDate == ""}
+                    helperText={
+                      isValidate && eventDate == ""
+                        ? "Please select a date."
+                        : ""
+                    }
+                    sx={{ width: 330 }}
+                    {...params}
+                  />
+                )}
+              />
+            </LocalizationProvider>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          sx={{
+            pt: 2,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Grid item xs={0} md={3} />
+          <Grid
+            item
+            xs={12}
+            md={2}
+            sx={{
+              pr: 2,
+              pt: 1,
+            }}
+          >
+            <Typography variant="h7">PIC Name</Typography>
+          </Grid>
+          <Grid item xs={12} md>
+            <FormControl
+              className="form-white-backgound"
+              variant="outlined"
+              size="small"
+            >
+              <OutlinedInput
+                endAdornment={
+                  <InputAdornment position="end">
+                    <PersonRounded />
+                  </InputAdornment>
+                }
+                value={picName}
+                onChange={(e) => {
+                  setPicName(e.target.value);
+                }}
+                error={isValidate && picName == ""}
+                sx={{ width: 330 }}
+              />
+              <FormHelperText sx={{ color: "error.main" }}>
+                {isValidate && picName == ""
+                  ? "Please fill out this field."
+                  : ""}
+              </FormHelperText>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          sx={{
+            pt: 2,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Grid item xs={0} md={3} />
+          <Grid
+            item
+            xs={12}
+            md={2}
+            sx={{
+              pr: 2,
+              pt: 1,
+            }}
+          >
+            <Typography variant="h7">PIC Phone</Typography>
+          </Grid>
+          <Grid item xs={12} md>
+            <FormControl
+              className="form-white-backgound"
+              variant="outlined"
+              size="small"
+            >
+              <OutlinedInput
+                endAdornment={
+                  <InputAdornment position="end">
+                    <PhoneRounded />
+                  </InputAdornment>
+                }
+                value={picPhone}
+                onChange={(e) => {
+                  setPicPhone(e.target.value);
+                }}
+                error={isValidate && picPhone == ""}
+                sx={{ width: 330 }}
+              />
+              <FormHelperText sx={{ color: "error.main" }}>
+                {isValidate && picPhone == ""
+                  ? "Please fill out this field."
+                  : ""}
+              </FormHelperText>
+            </FormControl>
+          </Grid>
+        </Grid>
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -247,9 +496,7 @@ export default function FpbCreate() {
             xs={12}
             md={2}
             sx={{
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
+              pt: 1,
             }}
           >
             <Typography variant="h7">Profit Center</Typography>
@@ -278,6 +525,11 @@ export default function FpbCreate() {
                   );
                 })}
               </Select>
+              <FormHelperText sx={{ color: "error.main" }}>
+                {isValidate && profitCenter == "Choose"
+                  ? "Please choose an option."
+                  : ""}
+              </FormHelperText>
             </FormControl>
           </Grid>
           <Grid item xs={0} md={2} />
@@ -323,9 +575,7 @@ export default function FpbCreate() {
             xs={12}
             md={2}
             sx={{
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
+              pt: 1,
             }}
           >
             <Typography variant="h7">Plant</Typography>
@@ -351,6 +601,11 @@ export default function FpbCreate() {
                   );
                 })}
               </Select>
+              <FormHelperText sx={{ color: "error.main" }}>
+                {isValidate && plant == "Choose"
+                  ? "Please choose an option."
+                  : ""}
+              </FormHelperText>
             </FormControl>
           </Grid>
           <Grid item xs={0} md={2} />
@@ -373,7 +628,7 @@ export default function FpbCreate() {
               margin="normal"
               className="form-white-backgound form-compact"
               fullWidth
-              disabled={profitCenter == "Choose"}
+              disabled={plant == "Choose"}
             >
               <Select
                 fullWidth
@@ -391,9 +646,17 @@ export default function FpbCreate() {
                   );
                 })}
               </Select>
+              <FormHelperText sx={{ color: "error.main" }}>
+                {isValidate && activity == "Choose"
+                  ? "Please choose an option."
+                  : ""}
+              </FormHelperText>
             </FormControl>
           </Grid>
         </Grid>
+        <Collapse in={activity == "IO"} timeout={600}>
+          {eventForm()}
+        </Collapse>
         <Divider sx={{ pt: 4, mb: 2 }} />
         <Grid container>
           <Grid item xs="auto">
@@ -419,20 +682,6 @@ export default function FpbCreate() {
           <Grid item xs="auto" sx={{ pr: 1 }}>
             <Button
               variant="contained"
-              color="success"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                flexWrap: "wrap",
-              }}
-              onClick={(e) => console.log("save")}
-            >
-              <SaveRounded sx={{ mr: 1 }} /> Save
-            </Button>
-          </Grid>
-          <Grid item xs="auto">
-            <Button
-              variant="contained"
               color="secondaryButton"
               sx={{
                 display: "flex",
@@ -445,6 +694,20 @@ export default function FpbCreate() {
               }}
             >
               <DoNotDisturbOutlined sx={{ mr: 1 }} /> Close
+            </Button>
+          </Grid>
+          <Grid item xs="auto">
+            <Button
+              variant="contained"
+              color="success"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
+              onClick={(e) => setValidate(true)}
+            >
+              <SaveRounded sx={{ mr: 1 }} /> Save
             </Button>
           </Grid>
         </Grid>
@@ -474,6 +737,7 @@ export default function FpbCreate() {
                 onClick={handleToggleColumnList}
                 ref={anchorRef}
               >
+                <TableChartRounded sx={{ mr: 1 }} />
                 <Typography variant="bodyCst1">Select Columns</Typography>
                 <ArrowDropDown sx={{ ml: 1 }} />
               </Button>

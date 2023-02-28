@@ -43,6 +43,7 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
                   <FileUpload
                     title="Select a file..."
                     multiFile={false}
+                    maxFileSize={10}
                     onFilesChange={handleFileInput}
                     allowedExtensions={["jpg", "jpeg", "png", "pdf"]}
                     onContextReady={(context) => {}}

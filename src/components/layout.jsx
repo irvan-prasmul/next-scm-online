@@ -149,7 +149,21 @@ const generateIcon = (icon) => {
   }
 };
 
+function useWindowSize() {
+  const [size, setSize] = React.useState([0, 0]);
+  React.useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener("resize", updateSize);
+    updateSize();
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+  return size;
+}
+
 export default function Layout({ children }) {
+  const [width, height] = useWindowSize();
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);
@@ -231,6 +245,9 @@ export default function Layout({ children }) {
   };
 
   React.useEffect(() => {
+    if (width < 900) setOpen(false);
+    if (width < 1100) setOpen(true);
+
     if (!auth.isAuth) router.replace("/auth/login");
     if (auth.userToken == "") {
       // CALL GET USER DATA API
@@ -242,7 +259,7 @@ export default function Layout({ children }) {
         },
       });
     }
-  }, [router]);
+  }, [router, width]);
 
   return (
     <Box sx={{ display: "flex" }}>
