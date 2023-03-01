@@ -62,20 +62,18 @@ export default function App({ Component, pageProps }) {
   //   case "none":
   return (
     <ThemeProvider theme={theme}>
-      {/* <LocalizationProvider dateAdapter={AdapterMoment}> */}
       <Provider store={store}>
-        {/* {Component.layout == "none" ? (
-            <Component {...pageProps} />
-          ) : (
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          )} */}
-        <Layout>
+        {Component.layout == "none" ? (
           <Component {...pageProps} />
-        </Layout>
+        ) : (
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        )}
+        {/* <Layout>
+          <Component {...pageProps} />
+        </Layout> */}
       </Provider>
-      {/* </LocalizationProvider> */}
     </ThemeProvider>
   );
   //   default:

@@ -6,8 +6,17 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TablePagination from "@mui/material/TablePagination";
 import TableBody from "@mui/material/TableBody";
+import Typography from "@mui/material/Typography";
+import TableFooter from "@mui/material/TableFooter";
+import Grid from "@mui/material/Grid";
 
-export default function MainTable({ columns, rows, maxHeight, customCell }) {
+export default function MainTable({
+  columns,
+  rows,
+  maxHeight,
+  customCell,
+  paginationProp,
+}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleChangePage = (event, newPage) => {
@@ -106,17 +115,28 @@ export default function MainTable({ columns, rows, maxHeight, customCell }) {
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     {columns.map((column) => {
                       if (column.isShow) {
-                        const value = row[column.id];
                         if (customCell) {
                           const ccIndex = customCell.findIndex((i) => {
-                            return i.id == column.id;
+                            if (Array.isArray(i.id)) {
+                              const aid = i.id.findIndex((aid) => {
+                                return aid == column.id;
+                              });
+                              // console.log("isarray:", aid, i.id);
+                              if (aid >= 0) return true;
+                              else return false;
+                            } else return i.id == column.id;
                           });
                           if (ccIndex >= 0)
-                            return customCell[ccIndex].element(row, value);
+                            return customCell[ccIndex].element(row, column);
                         }
+                        const value = row[column.id];
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            {column.format ? column.format(value) : value}
+                            <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+                              {column.format && value
+                                ? column.format(value)
+                                : value}
+                            </Typography>
                           </TableCell>
                         );
                       } else return null;
@@ -127,15 +147,31 @@ export default function MainTable({ columns, rows, maxHeight, customCell }) {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      <Grid container>
+        <Grid
+          item
+          xs
+          sx={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {paginationProp}
+        </Grid>
+        <Grid item xs="auto">
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            showFirstButton
+            showLastButton
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Grid>
+      </Grid>
     </>
   );
 }

@@ -46,17 +46,17 @@ import moment from "moment/moment";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import TableChartRounded from "@mui/icons-material/TableChartRounded";
+import GradingRounded from "@mui/icons-material/GradingRounded";
 import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
-import TextField from "@mui/material/TextField";
+import { TextField } from "@mui/material";
 
 const columns = [
   { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
   {
-    id: "created",
-    label: "Created",
+    id: "reviewer",
+    label: "Reviewer",
     minWidth: 100,
     isShow: true,
-    format: (value) => moment(value).format("YYYY-MM-DD"),
   },
   {
     id: "fpbnumber",
@@ -65,37 +65,17 @@ const columns = [
     isShow: true,
   },
   {
-    id: "pta",
-    label: "PTA",
-    minWidth: 110,
+    id: "noPo",
+    label: "No. PO",
+    minWidth: 100,
     isShow: true,
-    align: "left",
-    group: "Upload Document",
-  },
-  {
-    id: "io",
-    label: "IO",
-    minWidth: 110,
-    isShow: true,
-    group: "Upload Document",
-  },
-  {
-    id: "other",
-    label: "Other",
-    minWidth: 110,
-    isShow: true,
-    group: "Upload Document",
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
   },
   {
     id: "materialName",
     label: "Material Name",
     minWidth: 230,
-    isShow: true,
-  },
-  {
-    id: "category",
-    label: "Category",
-    minWidth: 90,
     isShow: true,
   },
   {
@@ -107,8 +87,8 @@ const columns = [
     align: "right",
   },
   {
-    id: "qtyPB",
-    label: "Qty PB",
+    id: "qtyPO",
+    label: "Qty PO",
     minWidth: 100,
     isShow: true,
     format: (value) => value.toLocaleString("id"),
@@ -127,6 +107,12 @@ const columns = [
     isShow: true,
     format: (value) => value.toLocaleString("id"),
     align: "right",
+  },
+  {
+    id: "vendor",
+    label: "Vendor",
+    minWidth: 100,
+    isShow: true,
   },
   {
     id: "constCenter",
@@ -148,22 +134,87 @@ const columns = [
     isShow: true,
   },
   {
+    id: "requesterName",
+    label: "Requester Name",
+    minWidth: 130,
+    isShow: true,
+  },
+  {
     id: "requesterNotes",
     label: "Requester Notes",
     minWidth: 202,
     isShow: true,
   },
   {
-    id: "ictNotes",
-    label: "ICT Notes",
-    minWidth: 202,
+    id: "docPta",
+    label: "Doc PTA",
+    minWidth: 115,
     isShow: true,
+    align: "left",
+  },
+  {
+    id: "docIo",
+    label: "Doc IO",
+    minWidth: 115,
+    isShow: true,
+    align: "left",
+  },
+  {
+    id: "docOther",
+    label: "Other Doc",
+    minWidth: 115,
+    isShow: true,
+    align: "left",
+  },
+  {
+    id: "activity",
+    label: "Activity",
+    minWidth: 110,
+    isShow: true,
+    align: "left",
+  },
+  {
+    id: "ioBudget",
+    label: "IO Budget",
+    minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "eventName",
+    label: "Event Name",
+    minWidth: 210,
+    isShow: true,
+    align: "left",
+  },
+  {
+    id: "eventDate",
+    label: "Event Date",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => moment(value).format("YYYY-MM-DD"),
+  },
+  {
+    id: "eventPic",
+    label: "Event PIC",
+    minWidth: 115,
+    isShow: true,
+    align: "left",
+  },
+  {
+    id: "eventContact",
+    label: "Event Contact",
+    minWidth: 115,
+    isShow: true,
+    align: "left",
   },
   {
     id: "picPurc",
     label: "PIC Purc.",
-    minWidth: 100,
+    minWidth: 90,
     isShow: true,
+    align: "left",
   },
   {
     id: "purchasingNotes",
@@ -172,26 +223,10 @@ const columns = [
     isShow: true,
   },
   {
-    id: "noPo",
-    label: "No. PO",
+    id: "status",
+    label: "Status",
     minWidth: 100,
     isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "approval",
-    label: "Approval",
-    minWidth: 100,
-    isShow: true,
-    group: "Status",
-  },
-  {
-    id: "purchase",
-    label: "Purchase",
-    minWidth: 100,
-    isShow: true,
-    group: "Status",
   },
   {
     id: "informationStatus",
@@ -200,71 +235,92 @@ const columns = [
     isShow: true,
   },
   {
-    id: "trackStatus",
-    label: "Track Status",
-    minWidth: 100,
+    id: "documentStatus",
+    label: "Document Status",
+    minWidth: 500,
     isShow: true,
   },
+  //
 ];
 
 const rows = [
   {
     id: 1,
-    created: "1976-04-19T12:59-0500",
+    reviewer: null,
     fpbnumber: "F23100468",
-    pta: null,
-    io: null,
-    other: null,
-    materialName: "Hydrogen Fuel Cell extra long",
-    category: "Non-ICT",
-    price: 8989871212112,
-    qtyPB: 111111,
-    uom: "UN",
-    total: 898989122121212,
-    constCenter: "SBE Dekanat",
-    planDate: "1976-04-19T12:59-0500",
-    file: "",
-    requesterNotes:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    // ictNotes: "",
-    ictNotes:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    picPurc: "bukan aku",
-    // purchasingNotes: "",
-    purchasingNotes:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    noPo: 123,
-    approval: "pending",
-    purchase: "approved",
-    // informationStatus: "",
-    informationStatus:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
-  {
-    id: 2,
-    created: "1976-04-19T12:59-0500",
-    fpbnumber: "F23100469",
-    pta: null,
-    io: null,
-    other: null,
+    noPo: null,
     materialName: "Fuel Cell",
-    category: "Non-ICT",
     price: 898987,
-    qtyPB: 1,
+    qtyPo: 1,
     uom: "UN",
     total: 898989,
+    vendor: null,
     constCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
+    requesterName: "Irvan",
+    requesterNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    docPta:
+      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14151233.png",
+    docIo:
+      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/151233.png",
+    docOther:
+      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181333.png",
+    activity: "IO",
+    ioBudget: 3313212,
+    eventName: "test Community Development II STEM (Periode 1)",
+    eventDate: "1976-04-19T12:59-0500",
+    eventPic: "test",
+    category: "Non-ICT",
     requesterNotes: "test",
     ictNotes: "ictNotes",
     picPurc: "bukan aku",
-    purchasingNotes: "tes",
-    noPo: 123,
-    approval: "cancelled",
-    purchase: "rejected",
-    informationStatus: "none",
+    purchasingNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    status: "pending",
+    informationStatus:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    documentStatus:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
+  // {
+  //   id: 2,
+  //   reviewer: null,
+  //   fpbnumber: "F23100468",
+  //   noPo: null,
+  //   materialName: "Fuel Cell",
+  //   price: 898987,
+  //   qtyPo: 1,
+  //   uom: "UN",
+  //   total: 898989,
+  //   vendor: null,
+  //   constCenter: "SBE Dekanat",
+  //   planDate: "1976-04-19T12:59-0500",
+  //   file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
+  //   requesterName: "Irvan",
+  //   requesterNotes:
+  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  //   docPta: null,
+  //   docIo: null,
+  //   docOther: null,
+  //   activity: "IO",
+  //   ioBudget: 3313212,
+  //   eventName: "test Community Development II STEM (Periode 1)",
+  //   eventDate: "1976-04-19T12:59-0500",
+  //   eventPic: "test",
+  //   category: "Non-ICT",
+  //   requesterNotes: "test",
+  //   ictNotes: "ictNotes",
+  //   picPurc: "bukan aku",
+  //   purchasingNotes:
+  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  //   status: "pending",
+  //   informationStatus:
+  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  //   documetStatus:
+  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  // },
 ];
 
 function renderStatusIcon(status) {
@@ -285,16 +341,13 @@ function handleEdit(row, col) {
 }
 
 const dialogTypes = {
-  pta: "PTA",
-  other: "Other",
-  track: "Track",
-  requesterNotes: "Requester Notes",
-  ictNotes: "ICT Notes",
   purchasingNotes: "Purchasing Notes",
   informationStatus: "Information Status",
+  documentStatus: "Document Status",
+  reviewer: "Reviewer",
 };
 
-export default function Fpb() {
+export default function FpbReviewer() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
@@ -338,7 +391,7 @@ export default function Fpb() {
     // setDialogBody("");
   };
 
-  const [confirmDialog, setConfirmDialog] = React.useState(false);
+  // const [confirmDialog, setConfirmDialog] = React.useState(false);
 
   function dialogAction() {
     console.log("dialogAction");
@@ -350,54 +403,28 @@ export default function Fpb() {
 
   const customCell = [
     {
-      id: "fpbnumber",
-      element: (row, col) => {
-        const value = row[col.id];
-        return (
-          <TableCell key={col.id} align="left">
-            <Typography variant="bodyTable1" sx={{ pl: 1 }}>
-              {value}
-            </Typography>
-            <br />
-            <Button
-              variant="text"
-              size="small"
-              onClick={(e) => handleEdit(row, value)}
-            >
-              <EditRounded color="primaryButton" /> Edit
-            </Button>
-            <Button
-              variant="text"
-              size="small"
-              onClick={(e) => setConfirmDialog(true)}
-            >
-              <CloseRounded color="error" /> Cancel
-            </Button>
-          </TableCell>
-        );
-      },
-    },
-    {
-      id: ["pta", "other"],
+      id: "reviewer",
       element: (row, col) => {
         return (
           <TableCell key={col.id} align="center">
             <Button
-              variant="text"
+              variant="contained"
               size="small"
+              color="primaryButton"
               onClick={(e) => {
                 setDialogType(dialogTypes[col.id]);
                 setOpenDialog(!openDialog);
               }}
             >
-              <FileUploadRounded color="primaryButton" /> Upload
+              <EditRounded fontSize="small" />
+              <Typography variant="bodyTable1">Input</Typography>
             </Button>
           </TableCell>
         );
       },
     },
     {
-      id: "file",
+      id: ["file", "docPta", "docIo", "docOther"],
       element: (row, col) => {
         const value = row[col.id];
         if (value == "" || value == undefined || value == null)
@@ -441,27 +468,20 @@ export default function Fpb() {
       },
     },
     {
-      id: [
-        "requesterNotes",
-        "ictNotes",
-        "purchasingNotes",
-        "informationStatus",
-      ],
+      id: ["purchasingNotes", "informationStatus", "documentStatus"],
       element: (row, col) => {
         const value = row[col.id];
         return (
           <TableCell key={col.id} align="left">
-            {((col.id == "requesterNotes" || col.id == "ictNotes") &&
-              value.length > 50) ||
-            (col.id == "purchasingNotes" && value.length > 60) ||
-            (col.id == "informationStatus" && value.length > 135) ? (
+            {(col.id == "purchasingNotes" && value.length > 60) ||
+            ((col.id == "informationStatus" || col.id == "documentStatus") &&
+              value.length > 135) ? (
               <>
                 <Typography variant="bodyTable1">
-                  {col.id == "requesterNotes" || col.id == "ictNotes"
-                    ? value.substring(0, 50)
-                    : col.id == "purchasingNotes"
+                  {col.id == "purchasingNotes"
                     ? value.substring(0, 60)
-                    : col.id == "informationStatus"
+                    : col.id == "informationStatus" ||
+                      col.id == "documentStatus"
                     ? value.substring(0, 135)
                     : ""}
                   ...
@@ -482,38 +502,6 @@ export default function Fpb() {
             ) : (
               <></>
             )}
-          </TableCell>
-        );
-      },
-    },
-    {
-      id: ["approval", "purchase"],
-      element: (row, col) => {
-        const value = row[col.id];
-        return (
-          <TableCell key={col.id} align="center">
-            {renderStatusIcon(value)}
-          </TableCell>
-        );
-      },
-    },
-    {
-      id: "trackStatus",
-      element: (row, col) => {
-        return (
-          <TableCell key={col.id} align="center">
-            <Button
-              variant="contained"
-              size="small"
-              color="secondaryButton"
-              onClick={(e) => {
-                setDialogType(dialogTypes.track);
-                setOpenDialog(!openDialog);
-              }}
-            >
-              <AccountTreeRounded fontSize="small" />
-              <Typography variant="bodyTable1">Tracking</Typography>
-            </Button>
           </TableCell>
         );
       },
@@ -557,7 +545,7 @@ export default function Fpb() {
   return (
     <>
       <Head>
-        <title>FPB</title>
+        <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
@@ -571,8 +559,8 @@ export default function Fpb() {
           flexWrap: "wrap",
         }}
       >
-        <ShoppingCart />
-        <Typography variant="h6">FPB Dashboard (Non-Stock)</Typography>
+        <GradingRounded />
+        <Typography variant="h6">Review FPB</Typography>
       </Box>
       <Divider />
       <Box sx={{ p: 2 }}>
@@ -580,42 +568,16 @@ export default function Fpb() {
           <Grid
             item
             xs={12}
-            md={1}
+            md={2}
             sx={{
               display: "flex",
               alignItems: "center",
               flexWrap: "wrap",
             }}
           >
-            <Typography variant="h7">FPB</Typography>
+            <Typography variant="h7">Review Status</Typography>
           </Grid>
-          <Grid item xs={12} md={11}>
-            <Button
-              variant="contained"
-              color="primaryButton"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                flexWrap: "wrap",
-              }}
-              onClick={createNew}
-            >
-              <Add sx={{ mr: 1 }} /> Create New
-            </Button>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={1}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
-            }}
-          >
-            <Typography variant="h7">Status</Typography>
-          </Grid>
-          <Grid item xs={12} md={11}>
+          <Grid item xs={12} md={10}>
             <FormControl
               variant="outlined"
               size="small"
@@ -624,12 +586,9 @@ export default function Fpb() {
             >
               <Select value={statusSelect} onChange={handleStatusSelect}>
                 <MenuItem value={"All"}>All</MenuItem>
-                <MenuItem value={"Waiting for Approval"}>
-                  Waiting for Approval
-                </MenuItem>
-                <MenuItem value={"Approved"}>Approved</MenuItem>
-                <MenuItem value={"Rejected"}>Rejected</MenuItem>
-                <MenuItem value={"Cancelled"}>Cancelled</MenuItem>
+                <MenuItem value={"Cancelled"}>Cancelled by user</MenuItem>
+                <MenuItem value={"Waiting"}>Waiting</MenuItem>
+                <MenuItem value={"Reviewed"}>Reviewed</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -811,12 +770,12 @@ export default function Fpb() {
         action={dialogAction}
         bodyValue={dialogBody}
       />
-      <ConfirmationDialog
+      {/* <ConfirmationDialog
         type={"cancel"}
         isOpen={confirmDialog}
         handleClose={(e) => setConfirmDialog(false)}
         action={dialogAction}
-      />
+      /> */}
     </>
   );
 }

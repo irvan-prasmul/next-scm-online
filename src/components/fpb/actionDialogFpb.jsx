@@ -15,13 +15,25 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import FileUpload from "react-mui-fileuploader";
+import BookmarkRounded from "@mui/icons-material/BookmarkRounded";
+import LocalAtmRounded from "@mui/icons-material/LocalAtmRounded";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
-export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
+export default function ActionDialogFpb({
+  type,
+  isOpen,
+  handleClose,
+  action,
+  bodyValue,
+}) {
   const [fileInput, setFileInput] = React.useState("All");
   const handleFileInput = (files) => {
     console.log("file", files);
     setFileInput([...files]);
   };
+  const [statusSelect, setStatusSelect] = React.useState("All");
 
   function renderBody(type) {
     if (type == "Track")
@@ -30,7 +42,36 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
           <Typography> table here</Typography>
         </Box>
       );
-    else
+    if (type == "Reviewer") {
+      return (
+        <Box sx={{ p: 2 }}>
+          <Grid container>
+            <Grid item xs="auto">
+              <Typography variant="h6">Reviewer</Typography>
+            </Grid>
+            <Grid item xs>
+              <FormControl
+                variant="outlined"
+                size="small"
+                margin="normal"
+                sx={{ width: "300px" }}
+              >
+                <Select
+                  value={statusSelect}
+                  onChange={(e) => setStatusSelect(e.target.value)}
+                >
+                  <MenuItem value={"All"}>All</MenuItem>
+                  <MenuItem value={"DIL"}>DIL</MenuItem>
+                  <MenuItem value={"ESO"}>ESO</MenuItem>
+                  <MenuItem value={"FRP"}>FRP</MenuItem>
+                  <MenuItem value={"PNK"}>PNK</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Box>
+      );
+    } else if (type == "PTA" || type == "Other")
       return (
         <Box sx={{ p: 2 }}>
           <Grid container>
@@ -60,6 +101,21 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
           </Grid>
         </Box>
       );
+    else if (
+      type == "Requester Notes" ||
+      type == "ICT Notes" ||
+      type == "Purchasing Notes" ||
+      type == "Information Status" ||
+      type == "Document Status"
+    ) {
+      return (
+        <Box
+          sx={{ p: 2, m: 2, backgroundColor: "#f2f2f2", textAlign: "justify" }}
+        >
+          <Typography variant="bodyCst1">{bodyValue}</Typography>
+        </Box>
+      );
+    }
   }
 
   function renderAction(type) {
@@ -76,7 +132,7 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
           </Button>
         </>
       );
-    else
+    else if (type == "PTA" || type == "Other")
       return (
         <>
           <Button
@@ -87,7 +143,7 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
             <DoNotDisturbOutlined sx={{ mr: 1 }} />
             Cancel
           </Button>
-          <Button onClick={handleClose} variant="contained" color="success">
+          <Button onClick={action} variant="contained" color="success">
             <FileUploadRounded sx={{ mr: 1 }} />
             Upload
           </Button>
@@ -126,8 +182,18 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
                 >
                   {type == "Track" ? (
                     <AccountTreeRounded />
-                  ) : (
+                  ) : type == "PTA" || type == "Other" ? (
                     <FileUploadRounded />
+                  ) : type == "Reviewer" ? (
+                    <LocalAtmRounded />
+                  ) : type == "Requester Notes" ||
+                    type == "ICT Notes" ||
+                    type == "Purchasing Notes" ||
+                    type == "Information Status" ||
+                    type == "Document Status" ? (
+                    <BookmarkRounded />
+                  ) : (
+                    <></>
                   )}
                 </Grid>
                 <Grid
@@ -143,8 +209,18 @@ export default function ActionDialogFpb({ type, isOpen, handleClose, action }) {
                     <Typography variant="h6">Track Status</Typography>
                   ) : type == "PTA" ? (
                     <Typography variant="h6">Upload Dokumen {type}</Typography>
-                  ) : (
+                  ) : type == "Other" ? (
                     <Typography variant="h6">Upload Other Documents</Typography>
+                  ) : type == "Reviewer" ? (
+                    <Typography variant="h6">Review FPB</Typography>
+                  ) : type == "Requester Notes" ||
+                    type == "ICT Notes" ||
+                    type == "Purchasing Notes" ||
+                    type == "Information Status" ||
+                    type == "Document Status" ? (
+                    <Typography variant="h6">{type}</Typography>
+                  ) : (
+                    <></>
                   )}
                 </Grid>
                 <Grid item xs={1}>

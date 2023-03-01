@@ -171,7 +171,7 @@ export default function Layout({ children }) {
     setOpen(!open);
   };
   const router = useRouter();
-  const [roleMenus, setRolesMenu] = React.useState([...roles.Requester]);
+  const [roleMenus, setRolesMenu] = React.useState([...roles.AllMenus]);
   const handleClickMenu = (menu) => {
     router.replace(menu.href);
   };

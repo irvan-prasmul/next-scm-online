@@ -1,4 +1,21 @@
 export const roles = {
+  AllMenus: [
+    {
+      href: "/home/dashboard",
+      name: "Home",
+      icon: "Home",
+    },
+    {
+      href: "/fpb",
+      name: "FPB",
+      icon: "ShoppingCart",
+    },
+    {
+      href: "/fpb/c_reviewer",
+      name: "Home Reviewer Purchasing",
+      icon: "Home",
+    },
+  ],
   Requester: [
     {
       href: "/home/dashboard",
@@ -9,6 +26,13 @@ export const roles = {
       href: "/fpb",
       name: "FPB",
       icon: "ShoppingCart",
+    },
+  ],
+  "Reviewer Purchasing": [
+    {
+      href: "/fpb/c_reviewer",
+      name: "Home",
+      icon: "Home",
     },
   ],
   PJK: [
@@ -322,13 +346,6 @@ export const roles = {
       href: "/sap",
       name: "SAP",
       icon: "ArrowTopRightBoldBoxIcon",
-    },
-  ],
-  "Reviewer Purchasing": [
-    {
-      href: "/home/dashboard",
-      name: "Home",
-      icon: "Home",
     },
   ],
 };
