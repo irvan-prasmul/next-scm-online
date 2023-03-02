@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
-import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
@@ -17,15 +16,8 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import TableBody from "@mui/material/TableBody";
 import Paper from "@mui/material/Paper";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Popper from "@mui/material/Popper";
-import Grow from "@mui/material/Grow";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import MenuList from "@mui/material/MenuList";
 import Link from "@mui/material/Link";
 import Add from "@mui/icons-material/Add";
-import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
-import Refresh from "@mui/icons-material/Refresh";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import AccountTreeRounded from "@mui/icons-material/AccountTreeRounded";
 import ImageOutlined from "@mui/icons-material/ImageOutlined";
@@ -38,16 +30,14 @@ import ShoppingCartCheckoutRounded from "@mui/icons-material/ShoppingCartCheckou
 import CloseRounded from "@mui/icons-material/CloseRounded";
 import Cancel from "@mui/icons-material/Cancel";
 import HourglassFullTwoTone from "@mui/icons-material/HourglassFullTwoTone";
-import TableIcon from "mdi-react/TableIcon";
-import Moment from "react-moment";
 import MainTable from "@/components/mainTable";
 import _ from "lodash";
 import moment from "moment/moment";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ConfirmationDialog from "@/components/confirmationDialog";
-import TableChartRounded from "@mui/icons-material/TableChartRounded";
 import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
-import TextField from "@mui/material/TextField";
+import MainTableMenu from "@/components/mainTableMenu";
+import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
 
 const columns = [
   { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
@@ -261,7 +251,7 @@ const rows = [
     picPurc: "bukan aku",
     purchasingNotes: "tes",
     noPo: 123,
-    approval: "cancelled",
+    approval: "canceled",
     purchase: "rejected",
     informationStatus: "none",
   },
@@ -272,7 +262,7 @@ function renderStatusIcon(status) {
     <HourglassFullTwoTone />
   ) : status == "approved" ? (
     <CheckBox color="success" />
-  ) : status == "cancelled" ? (
+  ) : status == "canceled" ? (
     <Cancel color="warning" />
   ) : (
     <CloseRounded color="error" />
@@ -294,25 +284,13 @@ const dialogTypes = {
   informationStatus: "Information Status",
 };
 
-export default function Fpb() {
+export default function FpbRequester() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
   const [statusSelect, setStatusSelect] = React.useState("All");
   const handleStatusSelect = (event) => {
     setStatusSelect(event.target.value);
-  };
-
-  const [openColumnList, setOpenColumnList] = React.useState(false);
-  const anchorRef = React.useRef(null);
-  const handleToggleColumnList = () => {
-    setOpenColumnList((prevOpen) => !prevOpen);
-  };
-  const handleCloseColumnList = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-    setOpenColumnList(false);
   };
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
@@ -329,23 +307,18 @@ export default function Fpb() {
     }
   };
   const [searchTable, setSearchTable] = React.useState("");
+  function handleSearchTable(e) {
+    setSearchTable(e.target.value);
+    console.log("refresh table");
+  }
 
   const [dialogType, setDialogType] = React.useState(dialogTypes.pta);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [dialogBody, setDialogBody] = React.useState("");
-  const handleCloseDialog = (event) => {
-    setOpenDialog(false);
-    // setDialogBody("");
-  };
-
   const [confirmDialog, setConfirmDialog] = React.useState(false);
 
   function dialogAction() {
     console.log("dialogAction");
-  }
-
-  function createNew(event) {
-    router.replace("/fpb/create");
   }
 
   const customCell = [
@@ -524,7 +497,7 @@ export default function Fpb() {
     return (
       <Grid
         container
-        xs={{
+        sx={{
           pl: 3,
         }}
       >
@@ -568,7 +541,6 @@ export default function Fpb() {
           pb: 1,
           display: "flex",
           alignItems: "center",
-          flexWrap: "wrap",
         }}
       >
         <ShoppingCart />
@@ -584,7 +556,6 @@ export default function Fpb() {
             sx={{
               display: "flex",
               alignItems: "center",
-              flexWrap: "wrap",
             }}
           >
             <Typography variant="h7">FPB</Typography>
@@ -596,9 +567,8 @@ export default function Fpb() {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                flexWrap: "wrap",
               }}
-              onClick={createNew}
+              onClick={(e) => router.replace("/fpb/create")}
             >
               <Add sx={{ mr: 1 }} /> Create New
             </Button>
@@ -610,7 +580,6 @@ export default function Fpb() {
             sx={{
               display: "flex",
               alignItems: "center",
-              flexWrap: "wrap",
             }}
           >
             <Typography variant="h7">Status</Typography>
@@ -629,98 +598,20 @@ export default function Fpb() {
                 </MenuItem>
                 <MenuItem value={"Approved"}>Approved</MenuItem>
                 <MenuItem value={"Rejected"}>Rejected</MenuItem>
-                <MenuItem value={"Cancelled"}>Cancelled</MenuItem>
+                <MenuItem value={"Canceled"}>Canceled</MenuItem>
               </Select>
             </FormControl>
           </Grid>
         </Grid>
-        <Grid container>
-          <Grid item xs={12} md="auto">
-            <ButtonGroup
-              variant="contained"
-              color="secondaryButton"
-              sx={{ pt: 2 }}
-            >
-              <Button>
-                <Refresh sx={{ mr: 1 }} />
-                <Typography variant="bodyCst1">Refresh Table</Typography>
-              </Button>
-              <Button
-                size="small"
-                aria-controls={openColumnList ? "split-button-menu" : "none"}
-                aria-expanded={openColumnList ? "true" : "false"}
-                aria-label="select merge strategy"
-                aria-haspopup="menu"
-                onClick={handleToggleColumnList}
-                ref={anchorRef}
-              >
-                <TableChartRounded sx={{ mr: 1 }} />
-                <Typography variant="bodyCst1">Select Columns</Typography>
-                <ArrowDropDown sx={{ ml: 1 }} />
-              </Button>
-            </ButtonGroup>
-          </Grid>
-          <Grid item xs={0} md></Grid>
-          <Grid
-            item
-            xs={12}
-            md="auto"
-            sx={{
-              display: "flex",
-              alignItems: "end",
-            }}
-          >
-            <TextField
-              size="small"
-              label="Search"
-              value={searchTable}
-              onChange={(e) => setSearchTable(e.target.value)}
-              sx={{ width: 200 }}
-            />
-          </Grid>
-        </Grid>
-        <Popper
-          sx={{
-            zIndex: 1,
+        <MainTableMenu
+          handleRefreshTable={(e) => {
+            console.log("refresh table");
           }}
-          open={openColumnList}
-          anchorEl={anchorRef.current}
-          transition
-          disablePortal
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom",
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleCloseColumnList}>
-                  <MenuList
-                    id="split-button-menu"
-                    autoFocusItem
-                    sx={{ minWidth: 250 }}
-                  >
-                    {[
-                      ...columnSelect,
-                      { id: "reset", label: "Restore Columns" },
-                    ].map((col) => (
-                      <MenuItem
-                        onClick={() => handleColumnChange(col.id)}
-                        key={col.id}
-                        selected={col.isShow}
-                      >
-                        <ListItemText primary={col.label} />
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+          searchTable={searchTable}
+          handleSearchTable={handleSearchTable}
+          columnSelect={columnSelect}
+          handleColumnChange={handleColumnChange}
+        />
         <Paper sx={{ width: "100%", mt: 2 }}>
           <MainTable
             columns={columnSelect}
@@ -731,83 +622,23 @@ export default function Fpb() {
           />
         </Paper>
         <Paper sx={{ width: 300, mt: 2 }}>
-          <TableContainer>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell className="plain-table" align="center" colSpan={2}>
-                    <Typography variant="h5">Information Status</Typography>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell className="plain-table" align="center" width={60}>
-                    <HourglassFullTwoTone />
-                  </TableCell>
-                  <TableCell className="plain-table">
-                    <Typography variant="bodyCst1">Waiting</Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="plain-table" align="center" width={60}>
-                    <Cancel color="warning" />
-                  </TableCell>
-                  <TableCell className="plain-table">
-                    <Typography variant="bodyCst1">Canceled by User</Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="plain-table" align="center" width={60}>
-                    <CheckBox color="success" />
-                  </TableCell>
-                  <TableCell className="plain-table">
-                    <Typography variant="bodyCst1">Approved</Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="plain-table" align="center" width={60}>
-                    <CloseRounded color="error" />
-                  </TableCell>
-                  <TableCell className="plain-table">
-                    <Typography variant="bodyCst1">Rejected</Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="plain-table" align="center" width={60}>
-                    <ShoppingCartCheckoutRounded color="primaryButton" />
-                  </TableCell>
-                  <TableCell className="plain-table">
-                    <Typography variant="bodyCst1">PO Process</Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="plain-table" align="center" width={60}>
-                    <Inventory2Rounded color="info" />
-                  </TableCell>
-                  <TableCell className="plain-table">
-                    <Typography variant="bodyCst1">
-                      Ready for pick up
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="plain-table" align="center" width={60}>
-                    <Flag color="success" />
-                  </TableCell>
-                  <TableCell className="plain-table">
-                    <Typography variant="bodyCst1">Delivered</Typography>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <TableInfomationStatus
+            statusList={[
+              "Waiting",
+              "Canceled by User",
+              "Approved",
+              "Rejected",
+              "PO Process",
+              "Ready for pick up",
+              "Delivered",
+            ]}
+          />
         </Paper>
       </Box>
       <ActionDialogFpb
         type={dialogType}
         isOpen={openDialog}
-        handleClose={handleCloseDialog}
+        handleClose={(e) => setOpenDialog(false)}
         action={dialogAction}
         bodyValue={dialogBody}
       />

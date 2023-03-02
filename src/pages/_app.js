@@ -58,8 +58,7 @@ const theme = createTheme({
 
 export default function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
-  // switch (Component.layout) {
-  //   case "none":
+
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
@@ -70,21 +69,7 @@ export default function App({ Component, pageProps }) {
             <Component {...pageProps} />
           </Layout>
         )}
-        {/* <Layout>
-          <Component {...pageProps} />
-        </Layout> */}
       </Provider>
     </ThemeProvider>
   );
-  //   default:
-  //     return (
-  //       <ThemeProvider theme={theme}>
-  //         <Provider store={store}>
-  //           <Layout>
-  //             <Component {...pageProps} />
-  //           </Layout>
-  //         </Provider>
-  //       </ThemeProvider>
-  //     );
-  // }
 }

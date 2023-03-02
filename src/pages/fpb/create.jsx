@@ -30,7 +30,7 @@ import DeleteRounded from "@mui/icons-material/DeleteRounded";
 import MainTable from "@/components/mainTable";
 import _ from "lodash";
 import ConfirmationDialog from "@/components/confirmationDialog";
-import ActionDialogAddNewItem from "@/components/fpb/actionDialogAddNewItem";
+import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -215,7 +215,6 @@ export default function FpbCreate() {
             xs={12}
             sx={{
               display: "flex",
-              flexDirection: "row",
               justifyContent: "center",
             }}
           >
@@ -227,7 +226,6 @@ export default function FpbCreate() {
           container
           sx={{
             display: "flex",
-            flexDirection: "row",
             justifyContent: "center",
           }}
         >
@@ -264,7 +262,6 @@ export default function FpbCreate() {
           sx={{
             pt: 2,
             display: "flex",
-            flexDirection: "row",
             justifyContent: "center",
           }}
         >
@@ -303,7 +300,6 @@ export default function FpbCreate() {
           sx={{
             pt: 2,
             display: "flex",
-            flexDirection: "row",
             justifyContent: "center",
           }}
         >
@@ -350,7 +346,6 @@ export default function FpbCreate() {
           sx={{
             pt: 2,
             display: "flex",
-            flexDirection: "row",
             justifyContent: "center",
           }}
         >
@@ -398,7 +393,6 @@ export default function FpbCreate() {
           sx={{
             pt: 2,
             display: "flex",
-            flexDirection: "row",
             justifyContent: "center",
           }}
         >
@@ -462,7 +456,6 @@ export default function FpbCreate() {
           flexDirection: "row",
           justifyContent: "start",
           alignItems: "center",
-          flexWrap: "wrap",
         }}
       >
         <ShoppingCart />
@@ -481,7 +474,6 @@ export default function FpbCreate() {
             sx={{
               display: "flex",
               alignItems: "center",
-              flexWrap: "wrap",
             }}
           >
             <Typography variant="h7">Requester</Typography>
@@ -540,7 +532,6 @@ export default function FpbCreate() {
             sx={{
               display: "flex",
               alignItems: "center",
-              flexWrap: "wrap",
             }}
           >
             <Typography variant="h7">Business Area</Typography>
@@ -552,7 +543,6 @@ export default function FpbCreate() {
             sx={{
               display: "flex",
               alignItems: "center",
-              flexWrap: "wrap",
             }}
           >
             <TextField
@@ -616,7 +606,6 @@ export default function FpbCreate() {
             sx={{
               display: "flex",
               alignItems: "center",
-              flexWrap: "wrap",
             }}
           >
             <Typography variant="h7">Activity</Typography>
@@ -666,7 +655,6 @@ export default function FpbCreate() {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                flexWrap: "wrap",
               }}
               onClick={(e) => setAddNewItemDialog(true)}
               disabled={
@@ -686,7 +674,6 @@ export default function FpbCreate() {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                flexWrap: "wrap",
               }}
               onClick={(e) => {
                 setConfirmType("close");
@@ -703,7 +690,6 @@ export default function FpbCreate() {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                flexWrap: "wrap",
               }}
               onClick={(e) => setValidate(true)}
             >
@@ -719,7 +705,6 @@ export default function FpbCreate() {
             sx={{
               display: "flex",
               alignItems: "center",
-              flexWrap: "wrap",
               pr: 2,
             }}
           >
@@ -795,7 +780,7 @@ export default function FpbCreate() {
           />
         </Paper>
       </Box>
-      <ActionDialogAddNewItem
+      <ActionDialogMaterialItem
         isOpen={addNewItemDialog}
         handleClose={(e) => setAddNewItemDialog(false)}
       />

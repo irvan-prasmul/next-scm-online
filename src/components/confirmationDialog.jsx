@@ -7,6 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import React from "react";
+import TextField from "@mui/material/TextField";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Zoom ref={ref} {...props} />;
@@ -16,7 +17,7 @@ function noType() {
   return <>Default</>;
 }
 
-function cancelVariant(type) {
+function warningVariant(type) {
   return (
     <Grid container>
       <Grid
@@ -24,8 +25,7 @@ function cancelVariant(type) {
         xs={12}
         sx={{
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <ErrorOutlineRounded color="warning" sx={{ fontSize: 72 }} />
@@ -35,8 +35,7 @@ function cancelVariant(type) {
         xs={12}
         sx={{
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <Typography variant="h5">Are you sure you want to {type}?</Typography>
@@ -46,16 +45,27 @@ function cancelVariant(type) {
         xs={12}
         sx={{
           display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          justifyContent: "center",
+          pt: type == "Reject" ? 3 : 0,
         }}
       >
         <Typography variant="bodyCst1">
           {type == "close"
             ? "Your changes will be lost!"
-            : "This action cannot be undone!"}
+            : type == "cancel" || type == "delete"
+            ? "This action cannot be undone!"
+            : type == "Reject"
+            ? "Once reject, you will not be able to recovery this data!\n*** Please write the reason in the column below : "
+            : ""}
         </Typography>
       </Grid>
+      {type == "Reject" ? (
+        <Grid item xs={12} sx={{ pt: 2 }}>
+          <TextField size="small" label="Reason" fullWidth />
+        </Grid>
+      ) : (
+        <></>
+      )}
     </Grid>
   );
 }
@@ -75,11 +85,15 @@ export default function ConfirmationDialog({
       disableScrollLock={true}
     >
       <DialogContent>
-        {type == "cancel" || type == "delete" || type == "close"
-          ? cancelVariant(type)
+        {type == "cancel" ||
+        type == "delete" ||
+        type == "close" ||
+        type == "approve" ||
+        type == "Reject"
+          ? warningVariant(type)
           : noType()}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ pr: 3, pb: 3 }}>
         <Button
           onClick={handleClose}
           variant="contained"

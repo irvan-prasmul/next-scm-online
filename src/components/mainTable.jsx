@@ -9,6 +9,7 @@ import TableBody from "@mui/material/TableBody";
 import Typography from "@mui/material/Typography";
 import TableFooter from "@mui/material/TableFooter";
 import Grid from "@mui/material/Grid";
+import Collapse from "@mui/material/Collapse";
 
 export default function MainTable({
   columns,
@@ -16,6 +17,7 @@ export default function MainTable({
   maxHeight,
   customCell,
   paginationProp,
+  isExpandable = false,
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -26,7 +28,7 @@ export default function MainTable({
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const generateTableHeadRow = () => {
+  function generateTableHeadRow() {
     let headerGroupList = [];
     let rowHeader2 = [];
     columns.map((element) => {
@@ -101,52 +103,116 @@ export default function MainTable({
         </TableRow>
       </TableHead>
     );
-  };
-  return (
-    <>
-      <TableContainer sx={{ maxHeight: maxHeight }}>
-        <Table>
-          {generateTableHeadRow()}
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                    {columns.map((column) => {
-                      if (column.isShow) {
-                        if (customCell) {
-                          const ccIndex = customCell.findIndex((i) => {
-                            if (Array.isArray(i.id)) {
-                              const aid = i.id.findIndex((aid) => {
-                                return aid == column.id;
-                              });
-                              // console.log("isarray:", aid, i.id);
-                              if (aid >= 0) return true;
-                              else return false;
-                            } else return i.id == column.id;
-                          });
-                          if (ccIndex >= 0)
-                            return customCell[ccIndex].element(row, column);
-                        }
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            <Typography variant="bodyTable1" sx={{ pl: 1 }}>
-                              {column.format && value
-                                ? column.format(value)
-                                : value}
-                            </Typography>
-                          </TableCell>
-                        );
-                      } else return null;
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+  }
+
+  function normalTableRow(row, index) {
+    return (
+      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+        {columns.map((column) => {
+          if (column.isShow) {
+            if (customCell) {
+              const ccIndex = customCell.findIndex((i) => {
+                if (Array.isArray(i.id)) {
+                  const aid = i.id.findIndex((aid) => {
+                    return aid == column.id;
+                  });
+                  if (aid >= 0) return true;
+                  else return false;
+                } else return i.id == column.id;
+              });
+              if (ccIndex >= 0) return customCell[ccIndex].element(row, column);
+            }
+            const value = row[column.id];
+            return (
+              <TableCell key={column.id} align={column.align}>
+                <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+                  {column.format && value ? column.format(value) : value}
+                </Typography>
+              </TableCell>
+            );
+          } else return null;
+        })}
+      </TableRow>
+    );
+  }
+
+  function ExpandableTableRow(row, index) {
+    const [open, setOpen] = useState(false);
+    const expandId = customCell.findIndex((e) => {
+      return e.id == "expandedRow";
+    });
+    let activeColumn = 0;
+    return (
+      <>
+        <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+          {columns.map((column) => {
+            if (column.isShow) {
+              activeColumn++;
+              if (customCell) {
+                const ccIndex = customCell.findIndex((i) => {
+                  if (Array.isArray(i.id)) {
+                    const aid = i.id.findIndex((aid) => {
+                      return aid == column.id;
+                    });
+                    if (aid >= 0) return true;
+                    else return false;
+                  } else return i.id == column.id;
+                });
+                if (ccIndex >= 0) {
+                  if (customCell[ccIndex].expandTrigger == true)
+                    return customCell[ccIndex].element(
+                      row,
+                      column,
+                      open,
+                      setOpen
+                    );
+                  else return customCell[ccIndex].element(row, column);
+                }
+              }
+              const value = row[column.id];
+              return (
+                <TableCell key={column.id} align={column.align}>
+                  <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+                    {column.format && value ? column.format(value) : value}
+                  </Typography>
+                </TableCell>
+              );
+            } else return null;
+          })}
+        </TableRow>
+        {open ? (
+          <TableRow key={index + "_expand"}>
+            <TableCell
+              colSpan={activeColumn}
+              style={{ paddingBottom: 0, paddingTop: 0 }}
+            >
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                {customCell[expandId].element(row)}
+              </Collapse>
+            </TableCell>
+          </TableRow>
+        ) : (
+          <></>
+        )}
+      </>
+    );
+  }
+
+  function generateTableBodyRow() {
+    return (
+      <TableBody>
+        {rows
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((row, index) => {
+            if (isExpandable) return ExpandableTableRow(row, index);
+            else return normalTableRow(row, index);
+          })}
+      </TableBody>
+    );
+  }
+
+  function generateTableFooter() {
+    return (
       <Grid container>
         <Grid
           item
@@ -172,6 +238,18 @@ export default function MainTable({
           />
         </Grid>
       </Grid>
+    );
+  }
+
+  return (
+    <>
+      <TableContainer sx={{ maxHeight: maxHeight }}>
+        <Table>
+          {generateTableHeadRow()}
+          {generateTableBodyRow()}
+        </Table>
+      </TableContainer>
+      {generateTableFooter()}
     </>
   );
 }

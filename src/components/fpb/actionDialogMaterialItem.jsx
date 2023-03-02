@@ -27,7 +27,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import FileUpload from "react-mui-fileuploader";
 
-export default function ActionDialogAddNewItem({ isOpen, handleClose }) {
+export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
   const [materialSearch, setMaterialSearch] = React.useState("");
   const handleMaterialSearch = (event) => {
     setMaterialSearch(event.target.value);
@@ -101,8 +101,7 @@ export default function ActionDialogAddNewItem({ isOpen, handleClose }) {
               xs="auto"
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <AddShoppingCartRounded />
@@ -112,8 +111,7 @@ export default function ActionDialogAddNewItem({ isOpen, handleClose }) {
               xs
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <Typography variant="h6">Add an item</Typography>
@@ -376,8 +374,6 @@ export default function ActionDialogAddNewItem({ isOpen, handleClose }) {
                   allowedExtensions={["jpg", "jpeg", "png", "pdf"]}
                   onContextReady={(context) => {}}
                   showPlaceholderImage={false}
-                  PlaceholderGridProps="xs"
-                  LabelsGridProps="xs"
                 />
               </Box>
             </Grid>

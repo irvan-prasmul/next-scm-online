@@ -1,19 +1,57 @@
 export const roles = {
   AllMenus: [
     {
-      href: "/home/dashboard",
-      name: "Home",
-      icon: "Home",
+      name: "Requester",
+      icon: "CircleOutlineIcon",
+      isOpen: false,
+      child: [
+        {
+          href: "/home/dashboard",
+          name: "Home",
+          icon: "Home",
+        },
+        {
+          href: "/fpb/c-requester",
+          name: "FPB",
+          icon: "ShoppingCart",
+        },
+      ],
     },
     {
-      href: "/fpb",
-      name: "FPB",
-      icon: "ShoppingCart",
+      name: "Reviewer Purchasing",
+      icon: "CircleOutlineIcon",
+      isOpen: false,
+      child: [
+        {
+          href: "/fpb/c-reviewer",
+          name: "Home",
+          icon: "Home",
+        },
+      ],
     },
     {
-      href: "/fpb/c_reviewer",
-      name: "Home Reviewer Purchasing",
-      icon: "Home",
+      name: "PJK",
+      icon: "CircleOutlineIcon",
+      isOpen: false,
+      child: [
+        {
+          href: "/fpb/c-pj-kegiatan",
+          name: "Home",
+          icon: "Home",
+        },
+      ],
+    },
+    {
+      name: "PJB",
+      icon: "CircleOutlineIcon",
+      isOpen: false,
+      child: [
+        {
+          href: "/fpb/c-pj-budget",
+          name: "Home",
+          icon: "Home",
+        },
+      ],
     },
   ],
   Requester: [
@@ -23,28 +61,28 @@ export const roles = {
       icon: "Home",
     },
     {
-      href: "/fpb",
+      href: "/fpb/c-requester",
       name: "FPB",
       icon: "ShoppingCart",
     },
   ],
   "Reviewer Purchasing": [
     {
-      href: "/fpb/c_reviewer",
+      href: "/fpb/c-reviewer",
       name: "Home",
       icon: "Home",
     },
   ],
   PJK: [
     {
-      href: "/home/dashboard",
+      href: "/fpb/c-pj-kegiatan",
       name: "Home",
       icon: "Home",
     },
   ],
   PJB: [
     {
-      href: "/home/dashboard",
+      href: "/fpb/c-pj-budget",
       name: "Home",
       icon: "Home",
     },

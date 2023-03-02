@@ -86,7 +86,6 @@ function Login() {
                   xs={12}
                   sx={{
                     display: "flex",
-                    flexDirection: "row",
                     justifyContent: "center",
                   }}
                 >
@@ -101,7 +100,6 @@ function Login() {
                   xs={12}
                   sx={{
                     display: "flex",
-                    flexDirection: "row",
                     justifyContent: "center",
                   }}
                 >

@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -20,6 +19,7 @@ import LocalAtmRounded from "@mui/icons-material/LocalAtmRounded";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import SaveRounded from "@mui/icons-material/SaveRounded";
 
 export default function ActionDialogFpb({
   type,
@@ -35,6 +35,80 @@ export default function ActionDialogFpb({
   };
   const [statusSelect, setStatusSelect] = React.useState("All");
 
+  function renderHeader(type) {
+    return (
+      <Box
+        sx={{
+          p: 2,
+          width: "100%",
+          backgroundColor: "lightBlueHeader.main",
+          color: "lightBlueHeader.contrastText",
+        }}
+      >
+        <Grid container>
+          <Grid
+            item
+            xs="auto"
+            sx={{
+              display: "flex !important",
+              flexDirection: "column !important",
+              justifyContent: "center !important",
+              pr: 1,
+            }}
+          >
+            {type == "Track" ? (
+              <AccountTreeRounded />
+            ) : type == "PTA" || type == "Other" ? (
+              <FileUploadRounded />
+            ) : type == "Reviewer" ? (
+              <LocalAtmRounded />
+            ) : type == "Requester Notes" ||
+              type == "ICT Notes" ||
+              type == "Purchasing Notes" ||
+              type == "Information Status" ||
+              type == "Document Status" ? (
+              <BookmarkRounded />
+            ) : (
+              <></>
+            )}
+          </Grid>
+          <Grid
+            item
+            xs
+            sx={{
+              display: "flex !important",
+              flexDirection: "column !important",
+              justifyContent: "center !important",
+            }}
+          >
+            {type == "Track" ? (
+              <Typography variant="h6">Track Status</Typography>
+            ) : type == "PTA" ? (
+              <Typography variant="h6">Upload Dokumen {type}</Typography>
+            ) : type == "Other" ? (
+              <Typography variant="h6">Upload Other Documents</Typography>
+            ) : type == "Reviewer" ? (
+              <Typography variant="h6">Review FPB</Typography>
+            ) : type == "Requester Notes" ||
+              type == "ICT Notes" ||
+              type == "Purchasing Notes" ||
+              type == "Information Status" ||
+              type == "Document Status" ? (
+              <Typography variant="h6">{type}</Typography>
+            ) : (
+              <></>
+            )}
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton variant="text" color="darkBg" onClick={handleClose}>
+              <HighlightOff />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </Box>
+    );
+  }
+
   function renderBody(type) {
     if (type == "Track")
       return (
@@ -46,7 +120,11 @@ export default function ActionDialogFpb({
       return (
         <Box sx={{ p: 2 }}>
           <Grid container>
-            <Grid item xs="auto">
+            <Grid
+              item
+              xs="auto"
+              sx={{ display: "flex", alignItems: "center", pr: 2 }}
+            >
               <Typography variant="h6">Reviewer</Typography>
             </Grid>
             <Grid item xs>
@@ -132,7 +210,24 @@ export default function ActionDialogFpb({
           </Button>
         </>
       );
-    else if (type == "PTA" || type == "Other")
+    if (type == "Reviewer") {
+      return (
+        <>
+          <Button
+            onClick={handleClose}
+            variant="contained"
+            color="secondaryButton"
+          >
+            <DoNotDisturbOutlined sx={{ mr: 1 }} />
+            Close
+          </Button>
+          <Button onClick={action} variant="contained" color="success">
+            <SaveRounded sx={{ mr: 1 }} />
+            Save
+          </Button>
+        </>
+      );
+    } else if (type == "PTA" || type == "Other")
       return (
         <>
           <Button
@@ -161,79 +256,8 @@ export default function ActionDialogFpb({
       <DialogContent sx={{ p: 0 }}>
         <Card>
           <CardContent sx={{ p: 0 }}>
-            <Box
-              sx={{
-                p: 2,
-                width: "100%",
-                backgroundColor: "lightBlueHeader.main",
-                color: "lightBlueHeader.contrastText",
-              }}
-            >
-              <Grid container>
-                <Grid
-                  item
-                  xs="auto"
-                  sx={{
-                    display: "flex !important",
-                    flexDirection: "column !important",
-                    justifyContent: "center !important",
-                    pr: 1,
-                  }}
-                >
-                  {type == "Track" ? (
-                    <AccountTreeRounded />
-                  ) : type == "PTA" || type == "Other" ? (
-                    <FileUploadRounded />
-                  ) : type == "Reviewer" ? (
-                    <LocalAtmRounded />
-                  ) : type == "Requester Notes" ||
-                    type == "ICT Notes" ||
-                    type == "Purchasing Notes" ||
-                    type == "Information Status" ||
-                    type == "Document Status" ? (
-                    <BookmarkRounded />
-                  ) : (
-                    <></>
-                  )}
-                </Grid>
-                <Grid
-                  item
-                  xs
-                  sx={{
-                    display: "flex !important",
-                    flexDirection: "column !important",
-                    justifyContent: "center !important",
-                  }}
-                >
-                  {type == "Track" ? (
-                    <Typography variant="h6">Track Status</Typography>
-                  ) : type == "PTA" ? (
-                    <Typography variant="h6">Upload Dokumen {type}</Typography>
-                  ) : type == "Other" ? (
-                    <Typography variant="h6">Upload Other Documents</Typography>
-                  ) : type == "Reviewer" ? (
-                    <Typography variant="h6">Review FPB</Typography>
-                  ) : type == "Requester Notes" ||
-                    type == "ICT Notes" ||
-                    type == "Purchasing Notes" ||
-                    type == "Information Status" ||
-                    type == "Document Status" ? (
-                    <Typography variant="h6">{type}</Typography>
-                  ) : (
-                    <></>
-                  )}
-                </Grid>
-                <Grid item xs={1}>
-                  <IconButton
-                    variant="text"
-                    color="darkBg"
-                    onClick={handleClose}
-                  >
-                    <HighlightOff />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Box>
+            {renderHeader(type)}
+
             {renderBody(type)}
           </CardContent>
         </Card>
