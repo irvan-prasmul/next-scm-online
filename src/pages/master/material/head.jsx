@@ -9,18 +9,25 @@ import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
+import Table from "@mui/material/Table";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
 import CheckBox from "@mui/icons-material/CheckBox";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import moment from "moment/moment";
+import IconButton from "@mui/material";
+import AddCircle from "@mui/icons-material/AddCircle";
+import RemoveCircle from "@mui/icons-material/RemoveCircle";
 import Search from "@mui/icons-material/Search";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
+import CubeScanIcon from "mdi-react/CubeScanIcon";
 import { pjbPreview } from "@/components/mainTable/mainTableCustemCells";
 import { pjbExpandedRows } from "@/components/mainTable/maintableCustomRows";
-import { paginationPropType } from "@/types";
 import PageHeader from "@/components/pageHeader";
+import Add from "@mui/icons-material/Add";
 
 const columns = [
   {
@@ -64,7 +71,7 @@ const columns = [
   },
 ];
 
-export default function FpbPJBudget() {
+export default function MasterMaterialHead() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
@@ -92,7 +99,7 @@ export default function FpbPJBudget() {
     console.log("refresh table");
   }
 
-  function buttonExpandedRow(data) {
+  function openExpandedRow(data) {
     return (
       <Button
         variant="text"
@@ -114,7 +121,7 @@ export default function FpbPJBudget() {
       doctype: "UNI",
       total: 123141231,
       expandedProps: {
-        Action: buttonExpandedRow("test"),
+        Action: openExpandedRow("test"),
         Requester: "Theresia Uma Nurwiranti",
         Department: "UNI-PAFM",
         Activity: "Non-IO",
@@ -133,7 +140,7 @@ export default function FpbPJBudget() {
       doctype: "UNI",
       total: 22222,
       expandedProps: {
-        Action: buttonExpandedRow("test"),
+        Action: openExpandedRow("test"),
         Requester: "tes",
         Department: "UNI-PAFM",
         Activity: "Non-IO",
@@ -151,20 +158,78 @@ export default function FpbPJBudget() {
     pjbExpandedRows({ id: "expandedRow" }),
   ];
 
+  function tablePaginationProp() {
+    return (
+      <Grid
+        container
+        sx={{
+          pl: 3,
+        }}
+      >
+        <Grid
+          item
+          xs
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            pl: 3,
+          }}
+        >
+          <Typography variant="h7">Total price: 312313123</Typography>
+        </Grid>
+        <Grid
+          item
+          xs
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            pl: 3,
+          }}
+        >
+          <Typography variant="h7">Total qty: 1111</Typography>
+        </Grid>
+      </Grid>
+    );
+  }
+
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Material Head</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <PageHeader icon={<CheckBox />} title="Approval PJ Budget" />
+      <PageHeader icon={<CubeScanIcon />} title="Master Material Head" />
       <Box sx={{ p: 2 }}>
         <Grid container>
           <Grid
             item
             xs={12}
-            md={2}
+            md={1}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h7">FPB</Typography>
+          </Grid>
+          <Grid item xs={12} md={11}>
+            <Button
+              variant="contained"
+              color="primaryButton"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+              onClick={(e) => router.replace("/fpb/create")}
+            >
+              <Add sx={{ mr: 1 }} /> Create New
+            </Button>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={1}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -172,7 +237,7 @@ export default function FpbPJBudget() {
           >
             <Typography variant="h7">Status</Typography>
           </Grid>
-          <Grid item xs={12} md={10}>
+          <Grid item xs={12} md={11}>
             <FormControl
               variant="outlined"
               size="small"
@@ -181,8 +246,8 @@ export default function FpbPJBudget() {
             >
               <Select value={statusSelect} onChange={handleStatusSelect}>
                 <MenuItem value={"All"}>All</MenuItem>
-                <MenuItem value={"Waiting"}>Waiting For Approval</MenuItem>
-                <MenuItem value={"Done"}>Done</MenuItem>
+                <MenuItem value={"Active"}>Active</MenuItem>
+                <MenuItem value={"Inactive"}>Inactive</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -202,15 +267,8 @@ export default function FpbPJBudget() {
             rows={rows}
             maxHeight={1000}
             customCell={customCell}
-            paginationProp={paginationPropType.qtyAndTotal}
-            qty={1234567890}
-            total={1234567890}
+            paginationProp={tablePaginationProp()}
             isExpandable={true}
-          />
-        </Paper>
-        <Paper sx={{ width: 300, mt: 2 }}>
-          <TableInfomationStatus
-            statusList={["Waiting For Approval", "Approved", "Rejected"]}
           />
         </Paper>
       </Box>

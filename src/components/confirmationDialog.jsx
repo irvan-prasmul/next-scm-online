@@ -8,6 +8,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import TextField from "@mui/material/TextField";
+import { confirmationType } from "@/types";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Zoom ref={ref} {...props} />;
@@ -46,20 +47,20 @@ function warningVariant(type) {
         sx={{
           display: "flex",
           justifyContent: "center",
-          pt: type == "Reject" ? 3 : 0,
+          pt: type == confirmationType.reject ? 3 : 0,
         }}
       >
         <Typography variant="bodyCst1">
-          {type == "close"
+          {type == confirmationType.close
             ? "Your changes will be lost!"
-            : type == "cancel" || type == "delete"
+            : type == confirmationType.cancel || type == confirmationType.delete
             ? "This action cannot be undone!"
-            : type == "Reject"
+            : type == confirmationType.reject
             ? "Once reject, you will not be able to recovery this data!\n*** Please write the reason in the column below : "
             : ""}
         </Typography>
       </Grid>
-      {type == "Reject" ? (
+      {type == confirmationType.reject ? (
         <Grid item xs={12} sx={{ pt: 2 }}>
           <TextField size="small" label="Reason" fullWidth />
         </Grid>
@@ -85,11 +86,11 @@ export default function ConfirmationDialog({
       disableScrollLock={true}
     >
       <DialogContent>
-        {type == "cancel" ||
-        type == "delete" ||
-        type == "close" ||
-        type == "approve" ||
-        type == "Reject"
+        {type == confirmationType.cancel ||
+        type == confirmationType.delete ||
+        type == confirmationType.close ||
+        type == confirmationType.approve ||
+        type == confirmationType.reject
           ? warningVariant(type)
           : noType()}
       </DialogContent>

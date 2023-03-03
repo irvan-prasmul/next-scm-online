@@ -18,7 +18,7 @@ import CheckBox from "@mui/icons-material/CheckBox";
 import CloseRounded from "@mui/icons-material/CloseRounded";
 import Cancel from "@mui/icons-material/Cancel";
 import HourglassFullTwoTone from "@mui/icons-material/HourglassFullTwoTone";
-import MainTable from "@/components/mainTable";
+import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import moment from "moment/moment";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
@@ -26,8 +26,17 @@ import GradingRounded from "@mui/icons-material/GradingRounded";
 import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
 import DriveFileRenameOutlineRounded from "@mui/icons-material/DriveFileRenameOutlineRounded";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
-import MainTableMenu from "@/components/mainTableMenu";
+import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
+import {
+  iconView,
+  imageView,
+  longTextWithReadMore,
+  materialNameEdit,
+  setReviewerFpb,
+} from "@/components/mainTable/mainTableCustemCells";
+import PageHeader from "@/components/pageHeader";
+import { paginationPropType } from "@/types";
 
 const columns = [
   { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
@@ -251,7 +260,7 @@ const rows = [
     eventName: "test Community Development II STEM (Periode 1)",
     eventDate: "1976-04-19T12:59-0500",
     eventPic: "test",
-    category: "Non-ICT",
+    eventContact: "1231412",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     ictNotes: "ictNotes",
@@ -289,7 +298,6 @@ const rows = [
   //   eventName: "test Community Development II STEM (Periode 1)",
   //   eventDate: "1976-04-19T12:59-0500",
   //   eventPic: "test",
-  //   category: "Non-ICT",
   //   requesterNotes: "test",
   //   ictNotes: "ictNotes",
   //   picPurc: "bukan aku",
@@ -302,26 +310,6 @@ const rows = [
   //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   // },
 ];
-
-function renderStatusIcon(status) {
-  return status == "pending" ? (
-    <HourglassFullTwoTone />
-  ) : status == "approved" ? (
-    <CheckBox color="success" />
-  ) : status == "canceled" ? (
-    <Cancel color="warning" />
-  ) : (
-    <CloseRounded color="error" />
-  );
-}
-
-const dialogTypes = {
-  requesterNotes: "Requester Notes",
-  purchasingNotes: "Purchasing Notes",
-  informationStatus: "Information Status",
-  documentStatus: "Document Status",
-  reviewer: "Reviewer",
-};
 
 export default function FpbReviewer() {
   // const auth = useSelector((state) => state.auth);
@@ -350,9 +338,7 @@ export default function FpbReviewer() {
     console.log("refresh table");
   }
 
-  const [dialogType, setDialogType] = React.useState(
-    dialogTypes.requesterNotes
-  );
+  const [dialogType, setDialogType] = React.useState("");
   const [openDialog, setOpenDialog] = React.useState(false);
   const [dialogBody, setDialogBody] = React.useState("");
   const handleCloseDialog = (event) => {
@@ -367,183 +353,28 @@ export default function FpbReviewer() {
   }
 
   const customCell = [
-    {
-      id: "reviewer",
-      element: (row, col) => {
-        return (
-          <TableCell key={col.id} align="center">
-            <Button
-              variant="contained"
-              size="small"
-              color="primaryButton"
-              onClick={(e) => {
-                setDialogType(dialogTypes[col.id]);
-                setOpenDialog(!openDialog);
-              }}
-            >
-              <EditRounded fontSize="small" />
-              <Typography variant="bodyTable1">Input</Typography>
-            </Button>
-          </TableCell>
-        );
-      },
-    },
-    {
-      id: ["file", "docPta", "docIo", "docOther"],
-      element: (row, col) => {
-        const value = row[col.id];
-        if (value == "" || value == undefined || value == null)
-          return (
-            <TableCell key={col.id} align="left">
-              <Link
-                underline="none"
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <DoNotDisturbOutlined
-                  color="primaryButton"
-                  style={{ marginRight: 1, fontSize: "1.1rem" }}
-                />
-                <Typography variant="bodyTable1" color="blue">
-                  No Image
-                </Typography>
-              </Link>
-            </TableCell>
-          );
-        return (
-          <TableCell key={col.id} align="left">
-            <Link
-              href={value}
-              target="_blank"
-              underline="none"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <ImageOutlined color="primaryButton" fontSize="small" />
-              <Typography variant="bodyTable1" color="blue">
-                View
-              </Typography>
-            </Link>
-          </TableCell>
-        );
-      },
-    },
-    {
-      id: "materialName",
-      element: (row, col) => {
-        const value = row[col.id];
-        return (
-          <TableCell key={col.id} align="left">
-            <Button
-              variant="text"
-              color="primaryButton"
-              size="small"
-              onClick={(e) => setEditItemDialog(true)}
-            >
-              <Typography variant="bodyCst1">{value}</Typography>
-              <DriveFileRenameOutlineRounded sx={{ fontSize: "1.25rem" }} />
-            </Button>
-          </TableCell>
-        );
-      },
-    },
-    {
-      id: "status",
-      element: (row, col) => {
-        const value = row[col.id];
-        return (
-          <TableCell key={col.id} align="center">
-            {renderStatusIcon(value)}
-          </TableCell>
-        );
-      },
-    },
-    {
+    setReviewerFpb({ id: "reviewer", setDialogType, setOpenDialog }),
+    materialNameEdit({ id: "materialName", setEditItemDialog }),
+    imageView({ id: ["file", "docPta", "docIo", "docOther"] }),
+    iconView({ id: "status" }),
+    longTextWithReadMore({
       id: [
         "requesterNotes",
         "purchasingNotes",
         "informationStatus",
         "documentStatus",
       ],
-      element: (row, col) => {
-        const value = row[col.id];
-        return (
-          <TableCell key={col.id} align="left">
-            {(col.id == "requesterNotes" && value.length > 50) ||
-            (col.id == "purchasingNotes" && value.length > 60) ||
-            ((col.id == "informationStatus" || col.id == "documentStatus") &&
-              value.length > 135) ? (
-              <>
-                <Typography variant="bodyTable1">
-                  {col.id == "requesterNotes"
-                    ? value.substring(0, 50)
-                    : col.id == "purchasingNotes"
-                    ? value.substring(0, 60)
-                    : col.id == "informationStatus" ||
-                      col.id == "documentStatus"
-                    ? value.substring(0, 135)
-                    : ""}
-                  ...
-                </Typography>
-                <Button
-                  variant="text"
-                  color="primaryButton"
-                  size="small"
-                  onClick={(e) => {
-                    setDialogType(dialogTypes[col.id]);
-                    setDialogBody(value);
-                    setOpenDialog(!openDialog);
-                  }}
-                >
-                  Read More
-                </Button>
-              </>
-            ) : (
-              <></>
-            )}
-          </TableCell>
-        );
+      limit: {
+        requesterNotes: 50,
+        purchasingNotes: 60,
+        informationStatus: 135,
+        documentStatus: 135,
       },
-    },
+      setDialogType,
+      setDialogBody,
+      setOpenDialog,
+    }),
   ];
-
-  function tablePaginationProp() {
-    return (
-      <Grid
-        container
-        sx={{
-          pl: 3,
-        }}
-      >
-        <Grid
-          item
-          xs
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            pl: 3,
-          }}
-        >
-          <Typography variant="h7">Total price: 312313123</Typography>
-        </Grid>
-        <Grid
-          item
-          xs
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            pl: 3,
-          }}
-        >
-          <Typography variant="h7">Total qty: 1111</Typography>
-        </Grid>
-      </Grid>
-    );
-  }
 
   return (
     <>
@@ -552,19 +383,7 @@ export default function FpbReviewer() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <Box
-        sx={{
-          pt: 1,
-          pl: 2,
-          pb: 1,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <GradingRounded />
-        <Typography variant="h6">Review FPB</Typography>
-      </Box>
-      <Divider />
+      <PageHeader icon={<GradingRounded />} title="Review FPB" />
       <Box sx={{ p: 2 }}>
         <Grid container>
           <Grid
@@ -609,7 +428,9 @@ export default function FpbReviewer() {
             rows={rows}
             maxHeight={1000}
             customCell={customCell}
-            paginationProp={tablePaginationProp()}
+            paginationProp={paginationPropType.qtyAndTotal}
+            qty={1234567890}
+            total={1234567890}
           />
         </Paper>
         <Paper sx={{ width: 300, mt: 2 }}>

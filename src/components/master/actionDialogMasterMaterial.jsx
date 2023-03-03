@@ -22,21 +22,17 @@ import MenuItem from "@mui/material/MenuItem";
 import SaveRounded from "@mui/icons-material/SaveRounded";
 import Note from "@mui/icons-material/Note";
 import TextField from "@mui/material/TextField";
-import { dialogTypesFpb } from "@/types";
+import InsertDriveFileRounded from "@mui/icons-material/InsertDriveFileRounded";
+import { dialogTypesMasterMaterial } from "@/types";
 
-export default function ActionDialogFpb({
+export default function ActionDialogMasterMaterial({
   type,
   isOpen,
   handleClose,
   action,
-  bodyValue,
 }) {
-  const [fileInput, setFileInput] = React.useState("All");
-  const handleFileInput = (files) => {
-    console.log("file", files);
-    setFileInput([...files]);
-  };
-  const [statusSelect, setStatusSelect] = React.useState("All");
+  const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
 
   function renderHeader(type) {
     return (
@@ -59,20 +55,8 @@ export default function ActionDialogFpb({
               pr: 1,
             }}
           >
-            {type == dialogTypesFpb.track ? (
-              <AccountTreeRounded />
-            ) : type == dialogTypesFpb.pta || type == dialogTypesFpb.other ? (
-              <FileUploadRounded />
-            ) : type == dialogTypesFpb.reviewer ? (
-              <LocalAtmRounded />
-            ) : type == dialogTypesFpb.requesterNotes ||
-              type == dialogTypesFpb.ictNotes ||
-              type == dialogTypesFpb.purchasingNotes ||
-              type == dialogTypesFpb.informationStatus ||
-              type == dialogTypesFpb.documentStatus ? (
-              <BookmarkRounded />
-            ) : type == dialogTypesFpb.requesterNotes + "#EDIT#" ? (
-              <Note />
+            {type == dialogTypesMasterMaterial.add ? (
+              <InsertDriveFileRounded />
             ) : (
               <></>
             )}
@@ -86,24 +70,10 @@ export default function ActionDialogFpb({
               justifyContent: "center !important",
             }}
           >
-            {type == dialogTypesFpb.track ? (
-              <Typography variant="h6">Track Status</Typography>
-            ) : type == dialogTypesFpb.pta ? (
-              <Typography variant="h6">Upload Dokumen {type}</Typography>
-            ) : type == dialogTypesFpb.other ? (
-              <Typography variant="h6">Upload Other Documents</Typography>
-            ) : type == dialogTypesFpb.reviewer ? (
-              <Typography variant="h6">Review FPB</Typography>
-            ) : type == dialogTypesFpb.requesterNotes ||
-              type == dialogTypesFpb.ictNotes ||
-              type == dialogTypesFpb.purchasingNotes ||
-              type == dialogTypesFpb.informationStatus ||
-              type == dialogTypesFpb.documentStatus ? (
-              <Typography variant="h6">{type}</Typography>
-            ) : type == dialogTypesFpb.requesterNotes + "#EDIT#" ? (
-              <Typography variant="h6">Update Requester Notes</Typography>
+            {type == "none" ? (
+              <Typography variant="h6">none</Typography>
             ) : (
-              <></>
+              <Typography variant="h6">{type}</Typography>
             )}
           </Grid>
           <Grid item xs={1}>
@@ -117,13 +87,13 @@ export default function ActionDialogFpb({
   }
 
   function renderBody(type) {
-    if (type == dialogTypesFpb.track)
+    if (type == dialogTypesMasterMaterial.add)
       return (
         <Box sx={{ p: 2 }}>
           <Typography> table here</Typography>
         </Box>
       );
-    if (type == dialogTypesFpb.reviewer) {
+    if (type == "Reviewer") {
       return (
         <Box sx={{ p: 2 }}>
           <Grid container>
@@ -156,7 +126,7 @@ export default function ActionDialogFpb({
           </Grid>
         </Box>
       );
-    } else if (type == dialogTypesFpb.pta || type == dialogTypesFpb.other)
+    } else if (type == "PTA" || type == "Other")
       return (
         <Box sx={{ p: 2 }}>
           <Grid container>
@@ -187,11 +157,11 @@ export default function ActionDialogFpb({
         </Box>
       );
     else if (
-      type == dialogTypesFpb.requesterNotes ||
-      type == dialogTypesFpb.ictNotes ||
-      type == dialogTypesFpb.purchasingNotes ||
-      type == dialogTypesFpb.informationStatus ||
-      type == dialogTypesFpb.documentStatus
+      type == "Requester Notes" ||
+      type == "ICT Notes" ||
+      type == "Purchasing Notes" ||
+      type == "Information Status" ||
+      type == "Document Status"
     ) {
       return (
         <Box
@@ -200,7 +170,7 @@ export default function ActionDialogFpb({
           <Typography variant="bodyCst1">{bodyValue}</Typography>
         </Box>
       );
-    } else if (type == dialogTypesFpb.requesterNotes + "#EDIT#") {
+    } else if (type == "Requester Notes#EDIT#") {
       return (
         <Box sx={{ backgroundColor: "#f2f2f2", textAlign: "justify" }}>
           <TextField
@@ -220,7 +190,7 @@ export default function ActionDialogFpb({
   }
 
   function renderAction(type) {
-    if (type == dialogTypesFpb.track)
+    if (type == "Track")
       return (
         <>
           <Button
@@ -233,10 +203,7 @@ export default function ActionDialogFpb({
           </Button>
         </>
       );
-    if (
-      type == dialogTypesFpb.reviewer ||
-      type == dialogTypesFpb.requesterNotes + "#EDIT#"
-    ) {
+    if (type == "Reviewer" || type == "Requester Notes#EDIT#") {
       return (
         <>
           <Button
@@ -253,7 +220,7 @@ export default function ActionDialogFpb({
           </Button>
         </>
       );
-    } else if (type == dialogTypesFpb.pta || type == dialogTypesFpb.other)
+    } else if (type == "PTA" || type == "Other")
       return (
         <>
           <Button

@@ -9,35 +9,26 @@ import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
-import TableContainer from "@mui/material/TableContainer";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import TableBody from "@mui/material/TableBody";
 import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
 import Add from "@mui/icons-material/Add";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import AccountTreeRounded from "@mui/icons-material/AccountTreeRounded";
-import ImageOutlined from "@mui/icons-material/ImageOutlined";
-import FileUploadRounded from "@mui/icons-material/FileUploadRounded";
-import EditRounded from "@mui/icons-material/EditRounded";
-import Flag from "@mui/icons-material/Flag";
-import Inventory2Rounded from "@mui/icons-material/Inventory2Rounded";
-import CheckBox from "@mui/icons-material/CheckBox";
-import ShoppingCartCheckoutRounded from "@mui/icons-material/ShoppingCartCheckoutRounded";
-import CloseRounded from "@mui/icons-material/CloseRounded";
-import Cancel from "@mui/icons-material/Cancel";
-import HourglassFullTwoTone from "@mui/icons-material/HourglassFullTwoTone";
-import MainTable from "@/components/mainTable";
+import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import moment from "moment/moment";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ConfirmationDialog from "@/components/confirmationDialog";
-import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
-import MainTableMenu from "@/components/mainTableMenu";
+import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
+import {
+  textWithEditOrCancelTextButton,
+  imageView,
+  uploadDocument,
+  longTextWithReadMore,
+  iconView,
+  trackStatus,
+} from "@/components/mainTable/mainTableCustemCells";
+import PageHeader from "@/components/pageHeader";
+import { paginationPropType } from "@/types";
 
 const columns = [
   { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
@@ -257,32 +248,10 @@ const rows = [
   },
 ];
 
-function renderStatusIcon(status) {
-  return status == "pending" ? (
-    <HourglassFullTwoTone />
-  ) : status == "approved" ? (
-    <CheckBox color="success" />
-  ) : status == "canceled" ? (
-    <Cancel color="warning" />
-  ) : (
-    <CloseRounded color="error" />
-  );
-}
-
 function handleEdit(row, col) {
   console.log("handle edit:", col);
   console.log(row);
 }
-
-const dialogTypes = {
-  pta: "PTA",
-  other: "Other",
-  track: "Track",
-  requesterNotes: "Requester Notes",
-  ictNotes: "ICT Notes",
-  purchasingNotes: "Purchasing Notes",
-  informationStatus: "Information Status",
-};
 
 export default function FpbRequester() {
   // const auth = useSelector((state) => state.auth);
@@ -312,7 +281,7 @@ export default function FpbRequester() {
     console.log("refresh table");
   }
 
-  const [dialogType, setDialogType] = React.useState(dialogTypes.pta);
+  const [dialogType, setDialogType] = React.useState("");
   const [openDialog, setOpenDialog] = React.useState(false);
   const [dialogBody, setDialogBody] = React.useState("");
   const [confirmDialog, setConfirmDialog] = React.useState(false);
@@ -322,210 +291,41 @@ export default function FpbRequester() {
   }
 
   const customCell = [
-    {
+    textWithEditOrCancelTextButton({
       id: "fpbnumber",
-      element: (row, col) => {
-        const value = row[col.id];
-        return (
-          <TableCell key={col.id} align="left">
-            <Typography variant="bodyTable1" sx={{ pl: 1 }}>
-              {value}
-            </Typography>
-            <br />
-            <Button
-              variant="text"
-              size="small"
-              onClick={(e) => handleEdit(row, value)}
-            >
-              <EditRounded color="primaryButton" /> Edit
-            </Button>
-            <Button
-              variant="text"
-              size="small"
-              onClick={(e) => setConfirmDialog(true)}
-            >
-              <CloseRounded color="error" /> Cancel
-            </Button>
-          </TableCell>
-        );
-      },
-    },
-    {
+      handleEdit,
+      setConfirmDialog,
+    }),
+    uploadDocument({
       id: ["pta", "other"],
-      element: (row, col) => {
-        return (
-          <TableCell key={col.id} align="center">
-            <Button
-              variant="text"
-              size="small"
-              onClick={(e) => {
-                setDialogType(dialogTypes[col.id]);
-                setOpenDialog(!openDialog);
-              }}
-            >
-              <FileUploadRounded color="primaryButton" /> Upload
-            </Button>
-          </TableCell>
-        );
-      },
-    },
-    {
-      id: "file",
-      element: (row, col) => {
-        const value = row[col.id];
-        if (value == "" || value == undefined || value == null)
-          return (
-            <TableCell key={col.id} align="left">
-              <Link
-                underline="none"
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <DoNotDisturbOutlined
-                  color="primaryButton"
-                  style={{ marginRight: 1, fontSize: "1.1rem" }}
-                />
-                <Typography variant="bodyTable1" color="blue">
-                  No Image
-                </Typography>
-              </Link>
-            </TableCell>
-          );
-        return (
-          <TableCell key={col.id} align="left">
-            <Link
-              href={value}
-              target="_blank"
-              underline="none"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <ImageOutlined color="primaryButton" fontSize="small" />
-              <Typography variant="bodyTable1" color="blue">
-                View
-              </Typography>
-            </Link>
-          </TableCell>
-        );
-      },
-    },
-    {
+      setDialogType,
+      setOpenDialog,
+    }),
+    imageView({ id: "file" }),
+    longTextWithReadMore({
       id: [
         "requesterNotes",
         "ictNotes",
         "purchasingNotes",
         "informationStatus",
       ],
-      element: (row, col) => {
-        const value = row[col.id];
-        return (
-          <TableCell key={col.id} align="left">
-            {((col.id == "requesterNotes" || col.id == "ictNotes") &&
-              value.length > 50) ||
-            (col.id == "purchasingNotes" && value.length > 60) ||
-            (col.id == "informationStatus" && value.length > 135) ? (
-              <>
-                <Typography variant="bodyTable1">
-                  {col.id == "requesterNotes" || col.id == "ictNotes"
-                    ? value.substring(0, 50)
-                    : col.id == "purchasingNotes"
-                    ? value.substring(0, 60)
-                    : col.id == "informationStatus"
-                    ? value.substring(0, 135)
-                    : ""}
-                  ...
-                </Typography>
-                <Button
-                  variant="text"
-                  color="primaryButton"
-                  size="small"
-                  onClick={(e) => {
-                    setDialogType(dialogTypes[col.id]);
-                    setDialogBody(value);
-                    setOpenDialog(!openDialog);
-                  }}
-                >
-                  Read More
-                </Button>
-              </>
-            ) : (
-              <></>
-            )}
-          </TableCell>
-        );
+      limit: {
+        requesterNotes: 50,
+        ictNotes: 50,
+        purchasingNotes: 60,
+        informationStatus: 135,
       },
-    },
-    {
-      id: ["approval", "purchase"],
-      element: (row, col) => {
-        const value = row[col.id];
-        return (
-          <TableCell key={col.id} align="center">
-            {renderStatusIcon(value)}
-          </TableCell>
-        );
-      },
-    },
-    {
+      setDialogType,
+      setDialogBody,
+      setOpenDialog,
+    }),
+    iconView({ id: ["approval", "purchase"] }),
+    trackStatus({
       id: "trackStatus",
-      element: (row, col) => {
-        return (
-          <TableCell key={col.id} align="center">
-            <Button
-              variant="contained"
-              size="small"
-              color="secondaryButton"
-              onClick={(e) => {
-                setDialogType(dialogTypes.track);
-                setOpenDialog(!openDialog);
-              }}
-            >
-              <AccountTreeRounded fontSize="small" />
-              <Typography variant="bodyTable1">Tracking</Typography>
-            </Button>
-          </TableCell>
-        );
-      },
-    },
+      setDialogType,
+      setOpenDialog,
+    }),
   ];
-
-  function tablePaginationProp() {
-    return (
-      <Grid
-        container
-        sx={{
-          pl: 3,
-        }}
-      >
-        <Grid
-          item
-          xs
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            pl: 3,
-          }}
-        >
-          <Typography variant="h7">Total price: 312313123</Typography>
-        </Grid>
-        <Grid
-          item
-          xs
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            pl: 3,
-          }}
-        >
-          <Typography variant="h7">Total qty: 1111</Typography>
-        </Grid>
-      </Grid>
-    );
-  }
 
   return (
     <>
@@ -534,19 +334,7 @@ export default function FpbRequester() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <Box
-        sx={{
-          pt: 1,
-          pl: 2,
-          pb: 1,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <ShoppingCart />
-        <Typography variant="h6">FPB Dashboard (Non-Stock)</Typography>
-      </Box>
-      <Divider />
+      <PageHeader icon={<ShoppingCart />} title="FPB Dashboard (Non-Stock)" />
       <Box sx={{ p: 2 }}>
         <Grid container>
           <Grid
@@ -618,7 +406,9 @@ export default function FpbRequester() {
             rows={rows}
             maxHeight={1000}
             customCell={customCell}
-            paginationProp={tablePaginationProp()}
+            paginationProp={paginationPropType.qtyAndTotal}
+            qty={1234567890}
+            total={1234567890}
           />
         </Paper>
         <Paper sx={{ width: 300, mt: 2 }}>

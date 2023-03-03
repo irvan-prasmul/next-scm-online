@@ -53,6 +53,82 @@ export const roles = {
         },
       ],
     },
+    {
+      name: "Procurement",
+      icon: "CircleOutlineIcon",
+      isOpen: false,
+      child: [
+        {
+          href: "/home/dashboard",
+          name: "Home",
+          icon: "Home",
+        },
+        {
+          href: "/fpb/c-procurement",
+          name: "Approval FPB",
+          icon: "NewspaperVariantMultipleOutlineIcon",
+        },
+        {
+          name: "Master",
+          icon: "DropboxIcon",
+          isOpen: false,
+          child: [
+            {
+              icon: "PackageVariantClosedIcon",
+              name: "Material",
+              isOpen: false,
+              child: [
+                {
+                  href: "/master/material/head",
+                  name: "Material Head",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "master/material/det",
+                  name: "Material Det",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "master/material/type",
+                  name: "Material Type",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "master/material/group",
+                  name: "Material Group",
+                  icon: "CircleOutlineIcon",
+                },
+              ],
+            },
+            {
+              href: "/department",
+              name: "Department",
+              icon: "Shortcut",
+            },
+            {
+              href: "/cost-center",
+              name: "Cost Center",
+              icon: "Shortcut",
+            },
+            {
+              href: "/user",
+              name: "User",
+              icon: "Shortcut",
+            },
+            {
+              href: "/config-pjb",
+              name: "Config PJB",
+              icon: "Shortcut",
+            },
+            {
+              href: "/vendor",
+              name: "Vendor",
+              icon: "Shortcut",
+            },
+          ],
+        },
+      ],
+    },
   ],
   Requester: [
     {
@@ -111,7 +187,7 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/master/material",
+          href: "/master/master/",
           icon: "Shortcut",
           name: "Material",
         },
@@ -133,11 +209,11 @@ export const roles = {
   Procurement: [
     {
       href: "/home/dashboard",
-      name: "Dashboard",
+      name: "Home",
       icon: "Home",
     },
     {
-      href: "/fpb/approval",
+      href: "/fpb/c-procurement",
       name: "Approval FPB",
       icon: "NewspaperVariantMultipleOutlineIcon",
     },
@@ -152,22 +228,22 @@ export const roles = {
           isOpen: false,
           child: [
             {
-              href: "/material/head",
+              href: "master/material/head",
               name: "Material Head",
               icon: "CircleOutlineIcon",
             },
             {
-              href: "/material/det",
+              href: "master/material/det",
               name: "Material Det",
               icon: "CircleOutlineIcon",
             },
             {
-              href: "/material/type",
+              href: "master/material/type",
               name: "Material Type",
               icon: "CircleOutlineIcon",
             },
             {
-              href: "/material/group",
+              href: "master/material/group",
               name: "Material Group",
               icon: "CircleOutlineIcon",
             },
@@ -221,7 +297,7 @@ export const roles = {
               icon: "CircleOutlineIcon",
             },
             {
-              href: "/reports/request/material",
+              href: "/reports/request/master/",
               name: "Material",
               icon: "CircleOutlineIcon",
             },
@@ -316,7 +392,7 @@ export const roles = {
               icon: "CircleOutlineIcon",
             },
             {
-              href: "/reports/request/material",
+              href: "/reports/request/master/",
               name: "Material",
               icon: "CircleOutlineIcon",
             },

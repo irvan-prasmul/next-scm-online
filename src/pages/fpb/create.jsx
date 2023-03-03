@@ -27,7 +27,7 @@ import ArrowForward from "@mui/icons-material/ArrowForward";
 import SaveRounded from "@mui/icons-material/SaveRounded";
 import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
 import DeleteRounded from "@mui/icons-material/DeleteRounded";
-import MainTable from "@/components/mainTable";
+import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
@@ -40,6 +40,7 @@ import PersonRounded from "@mui/icons-material/PersonRounded";
 import PhoneRounded from "@mui/icons-material/PhoneRounded";
 import Collapse from "@mui/material/Collapse";
 import TableChartRounded from "@mui/icons-material/TableChartRounded";
+import MainTableMenu from "@/components/mainTable/mainTableMenu";
 
 const columns = [
   {
@@ -141,17 +142,12 @@ export default function FpbCreate() {
 
   const [addNewItemDialog, setAddNewItemDialog] = React.useState(false);
 
-  const [openColumnList, setOpenColumnList] = React.useState(false);
-  const anchorRef = React.useRef(null);
-  const handleToggleColumnList = () => {
-    setOpenColumnList((prevOpen) => !prevOpen);
-  };
-  const handleCloseColumnList = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-    setOpenColumnList(false);
-  };
+  const [searchTable, setSearchTable] = React.useState("");
+  function handleSearchTable(e) {
+    setSearchTable(e.target.value);
+    console.log("refresh table");
+  }
+
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
     console.log("ddl click: ", id);
@@ -698,79 +694,15 @@ export default function FpbCreate() {
           </Grid>
         </Grid>
         <Divider sx={{ pt: 2, mb: 4 }} />
-        <Grid container sx={{ pt: 2 }}>
-          <Grid
-            item
-            xs="auto"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              pr: 2,
-            }}
-          >
-            <ButtonGroup variant="contained" color="secondaryButton">
-              <Button>
-                <Refresh sx={{ mr: 1 }} />
-                <Typography variant="bodyCst1">Refresh Table</Typography>
-              </Button>
-              <Button
-                size="small"
-                aria-controls={openColumnList ? "split-button-menu" : "none"}
-                aria-expanded={openColumnList ? "true" : "false"}
-                aria-label="select merge strategy"
-                aria-haspopup="menu"
-                onClick={handleToggleColumnList}
-                ref={anchorRef}
-              >
-                <TableChartRounded sx={{ mr: 1 }} />
-                <Typography variant="bodyCst1">Select Columns</Typography>
-                <ArrowDropDown sx={{ ml: 1 }} />
-              </Button>
-            </ButtonGroup>
-            <Popper
-              sx={{
-                zIndex: 1,
-              }}
-              open={openColumnList}
-              anchorEl={anchorRef.current}
-              transition
-              disablePortal
-            >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === "bottom" ? "center top" : "center bottom",
-                  }}
-                >
-                  <Paper>
-                    <ClickAwayListener onClickAway={handleCloseColumnList}>
-                      <MenuList
-                        id="split-button-menu"
-                        autoFocusItem
-                        sx={{ minWidth: 250 }}
-                      >
-                        {[
-                          ...columnSelect,
-                          { id: "reset", label: "Restore Columns" },
-                        ].map((col) => (
-                          <MenuItem
-                            onClick={() => handleColumnChange(col.id)}
-                            key={col.id}
-                            selected={col.isShow}
-                          >
-                            <ListItemText primary={col.label} />
-                          </MenuItem>
-                        ))}
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-          </Grid>
-        </Grid>
+        <MainTableMenu
+          handleRefreshTable={(e) => {
+            console.log("refresh table");
+          }}
+          searchTable={searchTable}
+          handleSearchTable={handleSearchTable}
+          columnSelect={columnSelect}
+          handleColumnChange={handleColumnChange}
+        />
         <Paper sx={{ width: "100%", mt: 2 }}>
           <MainTable
             columns={columnSelect}

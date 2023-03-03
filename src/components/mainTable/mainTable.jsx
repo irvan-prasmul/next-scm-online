@@ -7,16 +7,18 @@ import TableCell from "@mui/material/TableCell";
 import TablePagination from "@mui/material/TablePagination";
 import TableBody from "@mui/material/TableBody";
 import Typography from "@mui/material/Typography";
-import TableFooter from "@mui/material/TableFooter";
 import Grid from "@mui/material/Grid";
 import Collapse from "@mui/material/Collapse";
+import { paginationPropType } from "@/types";
 
 export default function MainTable({
   columns,
   rows,
   maxHeight,
   customCell,
-  paginationProp,
+  paginationProp = paginationPropType.none,
+  qty = 0,
+  total = 0,
   isExpandable = false,
 }) {
   const [page, setPage] = useState(0);
@@ -222,7 +224,39 @@ export default function MainTable({
             alignItems: "center",
           }}
         >
-          {paginationProp}
+          {paginationProp == paginationPropType.qtyAndTotal ? (
+            <Grid
+              container
+              sx={{
+                pl: 3,
+              }}
+            >
+              <Grid
+                item
+                xs
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  pl: 3,
+                }}
+              >
+                <Typography variant="h7">Total qty: {qty}</Typography>
+              </Grid>
+              <Grid
+                item
+                xs
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  pl: 3,
+                }}
+              >
+                <Typography variant="h7">Total price: {total}</Typography>
+              </Grid>
+            </Grid>
+          ) : (
+            <></>
+          )}
         </Grid>
         <Grid item xs="auto">
           <TablePagination
