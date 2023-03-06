@@ -26,7 +26,7 @@ import {
   imageView,
   longTextWithReadMore,
   pjkAction,
-} from "@/components/mainTable/mainTableCustemCells";
+} from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
 import { paginationPropType } from "@/types";
 

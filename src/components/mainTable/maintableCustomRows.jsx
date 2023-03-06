@@ -4,13 +4,18 @@ import _ from "lodash";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
 
-export function pjbExpandedRows({ id }) {
+export function tableExpandedRows({ id }) {
   return {
     id,
     element: (row) => {
       return (
-        <Table size="small" sx={{ mt: 1, mb: 2, width: 400 }}>
+        <Table size="small" sx={{ mt: 1, mb: 2, width: 450 }}>
           {Object.keys(row.expandedProps).map((key) => {
+            let tempRow = {};
+            if (typeof row.expandedProps[key] == "function") {
+              tempRow = _.cloneDeep(row);
+              delete tempRow.expandedProps[key];
+            }
             return (
               <TableRow key={key}>
                 <TableCell sx={{ width: "25%" }}>
@@ -25,7 +30,9 @@ export function pjbExpandedRows({ id }) {
                 </TableCell>
                 <TableCell sx={{ width: "100%" }}>
                   <Typography variant="bodyTable1" sx={{ pl: 1 }}>
-                    {row.expandedProps[key]}
+                    {typeof row.expandedProps[key] == "function"
+                      ? row.expandedProps[key](tempRow)
+                      : row.expandedProps[key]}
                   </Typography>
                 </TableCell>
               </TableRow>

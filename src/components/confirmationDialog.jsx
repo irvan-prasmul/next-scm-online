@@ -18,7 +18,7 @@ function noType() {
   return <>Default</>;
 }
 
-function warningVariant(type) {
+function warningVariant(type, isValue) {
   return (
     <Grid container>
       <Grid
@@ -39,7 +39,11 @@ function warningVariant(type) {
           justifyContent: "center",
         }}
       >
-        <Typography variant="h5">Are you sure you want to {type}?</Typography>
+        <Typography variant="h5">
+          {type == confirmationType.flagIct
+            ? "Confirmation"
+            : "Are you sure you want to " + type + "?"}
+        </Typography>
       </Grid>
       <Grid
         item
@@ -57,6 +61,8 @@ function warningVariant(type) {
             ? "This action cannot be undone!"
             : type == confirmationType.reject
             ? "Once reject, you will not be able to recovery this data!\n*** Please write the reason in the column below : "
+            : type == confirmationType.flagIct
+            ? (isValue ? "Unset" : "Set") + ' as "ICT" Material Group?'
             : ""}
         </Typography>
       </Grid>
@@ -76,6 +82,7 @@ export default function ConfirmationDialog({
   isOpen,
   handleClose,
   action,
+  isValue = false,
 }) {
   return (
     <Dialog
@@ -90,8 +97,9 @@ export default function ConfirmationDialog({
         type == confirmationType.delete ||
         type == confirmationType.close ||
         type == confirmationType.approve ||
-        type == confirmationType.reject
-          ? warningVariant(type)
+        type == confirmationType.reject ||
+        type == confirmationType.flagIct
+          ? warningVariant(type, isValue)
           : noType()}
       </DialogContent>
       <DialogActions sx={{ pr: 3, pb: 3 }}>

@@ -84,17 +84,17 @@ export const roles = {
                   icon: "CircleOutlineIcon",
                 },
                 {
-                  href: "master/material/det",
+                  href: "/master/material/det",
                   name: "Material Det",
                   icon: "CircleOutlineIcon",
                 },
                 {
-                  href: "master/material/type",
+                  href: "/master/material/type",
                   name: "Material Type",
                   icon: "CircleOutlineIcon",
                 },
                 {
-                  href: "master/material/group",
+                  href: "/master/material/group",
                   name: "Material Group",
                   icon: "CircleOutlineIcon",
                 },
@@ -228,22 +228,22 @@ export const roles = {
           isOpen: false,
           child: [
             {
-              href: "master/material/head",
+              href: "/master/material/head",
               name: "Material Head",
               icon: "CircleOutlineIcon",
             },
             {
-              href: "master/material/det",
+              href: "/master/material/det",
               name: "Material Det",
               icon: "CircleOutlineIcon",
             },
             {
-              href: "master/material/type",
+              href: "/master/material/type",
               name: "Material Type",
               icon: "CircleOutlineIcon",
             },
             {
-              href: "master/material/group",
+              href: "/master/material/group",
               name: "Material Group",
               icon: "CircleOutlineIcon",
             },

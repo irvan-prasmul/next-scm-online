@@ -17,8 +17,8 @@ import moment from "moment/moment";
 import Search from "@mui/icons-material/Search";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
-import { pjbPreview } from "@/components/mainTable/mainTableCustemCells";
-import { pjbExpandedRows } from "@/components/mainTable/maintableCustomRows";
+import { openExpandedRow } from "@/components/mainTable/mainTableCustomCells";
+import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import { paginationPropType } from "@/types";
 import PageHeader from "@/components/pageHeader";
 
@@ -147,8 +147,8 @@ export default function FpbPJBudget() {
   ];
 
   const customCell = [
-    pjbPreview({ id: "preview" }),
-    pjbExpandedRows({ id: "expandedRow" }),
+    openExpandedRow({ id: "preview" }),
+    tableExpandedRows({ id: "expandedRow" }),
   ];
 
   return (

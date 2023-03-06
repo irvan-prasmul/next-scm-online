@@ -35,8 +35,8 @@ const columns = [
     isShow: true,
   },
   {
-    id: "name",
-    label: "Name",
+    id: "materialType",
+    label: "Material Type",
     minWidth: 110,
     isShow: true,
   },
@@ -57,19 +57,19 @@ const columns = [
 const rows = [
   {
     action: null,
-    name: "ATK",
-    description: "Alat tulis dan perlengkapan kantor",
+    materialType: "ZM01",
+    description: "Prasmul Stock, valuated",
     status: masterMaterialStatus.active,
   },
   {
     action: null,
-    name: "Other",
-    description: "Lain-lain",
+    materialType: "ZM02",
+    description: "Prasmul Stock, Non-value",
     status: masterMaterialStatus.active,
   },
 ];
 
-export default function MasterMaterialHead() {
+export default function MasterMaterialType() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
@@ -99,16 +99,17 @@ export default function MasterMaterialHead() {
   const [confirmType, setConfirmType] = React.useState("");
   const [confirmDialog, setConfirmDialog] = React.useState(false);
 
-  const [name, setName] = React.useState("");
+  const [materialType, setMaterialType] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [rowStatusSelect, setRowStatusSelect] = React.useState(
     masterMaterialStatus.active
   );
+
   function handleActionEdit(row) {
-    setName(row.name);
+    setMaterialType(row.materialType);
     setDescription(row.description);
     setRowStatusSelect(masterMaterialStatus.active);
-    setDialogType(dialogTypesMasterMaterial.edit);
+    setDialogType(dialogTypesMasterMaterial.editType);
     setOpenDialog(true);
   }
 
@@ -128,11 +129,11 @@ export default function MasterMaterialHead() {
   return (
     <>
       <Head>
-        <title>Material Head</title>
+        <title>Material Type</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <PageHeader icon={<CubeScanIcon />} title="Master Material Head" />
+      <PageHeader icon={<CubeScanIcon />} title="Master Material Type" />
       <Box sx={{ p: 2 }}>
         <Grid container>
           <Grid
@@ -155,9 +156,9 @@ export default function MasterMaterialHead() {
                 alignItems: "center",
               }}
               onClick={(e) => {
-                setName("");
+                setMaterialType("");
                 setDescription("");
-                setDialogType(dialogTypesMasterMaterial.add);
+                setDialogType(dialogTypesMasterMaterial.addType);
                 setOpenDialog(true);
               }}
             >
@@ -264,8 +265,8 @@ export default function MasterMaterialHead() {
         action={(e) => {
           console.log("action");
         }}
-        name={name}
-        setName={setName}
+        materialType={materialType}
+        setMaterialType={setMaterialType}
         description={description}
         setDescription={setDescription}
         rowStatusSelect={rowStatusSelect}

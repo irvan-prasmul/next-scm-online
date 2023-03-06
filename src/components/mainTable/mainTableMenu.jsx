@@ -13,7 +13,7 @@ import MenuList from "@mui/material/MenuList";
 import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
 import Refresh from "@mui/icons-material/Refresh";
 import _ from "lodash";
-import TableChartRounded from "@mui/icons-material/TableChartRounded";
+import TableChartOutlined from "@mui/icons-material/TableChartOutlined";
 import TextField from "@mui/material/TextField";
 
 export default function MainTableMenu({
@@ -22,6 +22,7 @@ export default function MainTableMenu({
   handleSearchTable,
   columnSelect,
   handleColumnChange,
+  customButtons, // array button element with handler
 }) {
   const [openColumnList, setOpenColumnList] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -48,6 +49,11 @@ export default function MainTableMenu({
               <Refresh sx={{ mr: 1 }} />
               <Typography variant="bodyCst1">Refresh Table</Typography>
             </Button>
+            {customButtons && customButtons.length > 0 ? (
+              customButtons.map((element) => element)
+            ) : (
+              <></>
+            )}
             <Button
               size="small"
               aria-controls={openColumnList ? "split-button-menu" : "none"}
@@ -57,7 +63,7 @@ export default function MainTableMenu({
               onClick={handleToggleColumnList}
               ref={anchorRef}
             >
-              <TableChartRounded sx={{ mr: 1 }} />
+              <TableChartOutlined sx={{ mr: 1 }} />
               <Typography variant="bodyCst1">Set Columns</Typography>
               <ArrowDropDown sx={{ ml: 1 }} />
             </Button>

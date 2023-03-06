@@ -41,6 +41,7 @@ import PhoneRounded from "@mui/icons-material/PhoneRounded";
 import Collapse from "@mui/material/Collapse";
 import TableChartRounded from "@mui/icons-material/TableChartRounded";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
+import { requesterCreateAction } from "@/components/mainTable/mainTableCustomCells";
 
 const columns = [
   {
@@ -171,35 +172,12 @@ export default function FpbCreate() {
   }
 
   const customCell = [
-    {
+    requesterCreateAction({
       id: "action",
-      element: (row, col) => {
-        return (
-          <TableCell key="action" align="left">
-            <Button
-              variant="contained"
-              size="small"
-              sx={{ mr: 1 }}
-              color="primaryButton"
-              onClick={(e) => console.log("buka modal dengan data tabel")}
-            >
-              <EditRounded /> Edit
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              color="error"
-              onClick={(e) => {
-                setConfirmType("delete");
-                setConfirmDialog(true);
-              }}
-            >
-              <DeleteRounded /> Delete
-            </Button>
-          </TableCell>
-        );
-      },
-    },
+      setAddNewItemDialog,
+      setConfirmType,
+      setConfirmDialog,
+    }),
   ];
 
   function eventForm() {

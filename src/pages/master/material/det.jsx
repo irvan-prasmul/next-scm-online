@@ -13,7 +13,7 @@ import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import CubeScanIcon from "mdi-react/CubeScanIcon";
-import { materialHeadActionButtons } from "@/components/mainTable/mainTableCustomCells";
+import { openExpandedRow } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
 import Add from "@mui/icons-material/Add";
 import {
@@ -26,25 +26,54 @@ import FileDocumentOutlineIcon from "mdi-react/FileDocumentOutlineIcon";
 import FileExcelOutlineIcon from "mdi-react/FileExcelOutlineIcon";
 import FilePowerpointOutlineIcon from "mdi-react/FilePowerpointOutlineIcon";
 import ConfirmationDialog from "@/components/confirmationDialog";
+import CloudUpload from "@mui/icons-material/CloudUpload";
+import CloudDownload from "@mui/icons-material/CloudDownload";
+import DeleteRounded from "@mui/icons-material/DeleteRounded";
+import EditRounded from "@mui/icons-material/EditRounded";
+import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 
 const columns = [
   {
-    id: "action",
-    label: "Action",
+    id: "preview",
+    label: "Preview",
     minWidth: 160,
     isShow: true,
   },
   {
-    id: "name",
-    label: "Name",
+    id: "plu",
+    label: "PLU",
     minWidth: 110,
     isShow: true,
   },
   {
-    id: "description",
-    label: "Description",
-    minWidth: 500,
+    id: "materialName",
+    label: "Material Name",
+    minWidth: 300,
     isShow: true,
+  },
+  {
+    id: "price",
+    label: "Price",
+    minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "stock",
+    label: "Stock",
+    minWidth: 110,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "reorderPoint",
+    label: "Reorder Point",
+    minWidth: 110,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
   },
   {
     id: "status",
@@ -54,25 +83,16 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    action: null,
-    name: "ATK",
-    description: "Alat tulis dan perlengkapan kantor",
-    status: masterMaterialStatus.active,
-  },
-  {
-    action: null,
-    name: "Other",
-    description: "Lain-lain",
-    status: masterMaterialStatus.active,
-  },
-];
-
-export default function MasterMaterialHead() {
+export default function MasterMaterialDet() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
+
+  const [fileInput, setFileInput] = React.useState([]);
+  const handleFileInput = (e) => {
+    setFileInput(e.target.files[0]);
+    console.log("file:", fileInput);
+  };
   const [statusSelect, setStatusSelect] = React.useState("All");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
@@ -100,39 +120,113 @@ export default function MasterMaterialHead() {
   const [confirmDialog, setConfirmDialog] = React.useState(false);
 
   const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  const [materialHead, setMaterialHead] = React.useState("");
+  const [plu, setPlu] = React.useState("");
+  const [price, setPrice] = React.useState("");
+  const [stock, setStock] = React.useState("");
+  const [reorderPoint, setReorderPoint] = React.useState("");
+  const [uom, setUom] = React.useState("");
+  const [materialType, setMaterialType] = React.useState("");
+  const [materialGroup, setMaterialGroup] = React.useState("");
   const [rowStatusSelect, setRowStatusSelect] = React.useState(
     masterMaterialStatus.active
   );
-  function handleActionEdit(row) {
-    setName(row.name);
-    setDescription(row.description);
-    setRowStatusSelect(masterMaterialStatus.active);
-    setDialogType(dialogTypesMasterMaterial.edit);
-    setOpenDialog(true);
+
+  function buttonExpandedRow(row) {
+    return (
+      <>
+        <Button
+          variant="contained"
+          size="small"
+          sx={{ mr: 1 }}
+          color="primaryButton"
+          onClick={(e) => {
+            console.log(row);
+            setName(row.materialName);
+            setMaterialHead(row.expandedProps.materialHead);
+            setPlu(row.plu);
+            setPrice(row.price);
+            setStock(row.stock);
+            setReorderPoint(row.reorderPoint);
+            setUom(row.expandedProps.uom);
+            setMaterialType(row.expandedProps.materialType);
+            setMaterialGroup(row.expandedProps.materialGroup);
+            setRowStatusSelect(masterMaterialStatus.active);
+            setDialogType(dialogTypesMasterMaterial.editDetail);
+            setOpenDialog(true);
+          }}
+        >
+          <EditRounded /> Edit
+        </Button>
+        <Button
+          variant="contained"
+          size="small"
+          color="error"
+          onClick={(e) => {
+            setConfirmType(confirmationType.delete);
+            setConfirmDialog(true);
+          }}
+        >
+          <DeleteRounded /> Delete
+        </Button>
+      </>
+    );
   }
 
-  function handleActionDelete(e) {
-    setConfirmType(confirmationType.delete);
-    setConfirmDialog(true);
-  }
+  const rows = [
+    {
+      preview: null,
+      plu: 3145132,
+      materialName: "Hydrogen Fuel Cell",
+      price: 12312,
+      stock: 12,
+      reorderPoint: 32,
+      status: masterMaterialStatus.active,
+      expandedProps: {
+        Action: buttonExpandedRow,
+        "Material Head": "RT",
+        UOM: "UOM",
+        "UOM Descp": "Non-IO",
+        "Material Type": "ZM03 (Prasmul Non-stock)",
+        "Type Descp": "Perlengkapan Listrik & Teknik",
+        "Material Group": "1211",
+        "Group Descp": "Perlengkapan Listrik & Teknik",
+      },
+    },
+    {
+      preview: null,
+      plu: 654743,
+      materialName: "1,10-Phenanthroline Monohydrate",
+      price: 12312,
+      stock: 12,
+      reorderPoint: 32,
+      status: masterMaterialStatus.active,
+      expandedProps: {
+        Action: buttonExpandedRow("test"),
+        "Material Head": "RT",
+        UOM: "UOM",
+        "UOM Descp": "Non-IO",
+        "Material Type": "ZM03 (Prasmul Non-stock)",
+        "Type Descp": "Perlengkapan Listrik & Teknik",
+        "Material Group": "1211",
+        "Group Descp": "Perlengkapan Listrik & Teknik",
+      },
+    },
+  ];
 
   const customCell = [
-    materialHeadActionButtons({
-      id: "action",
-      handleEdit: handleActionEdit,
-      handleDelete: handleActionDelete,
-    }),
+    openExpandedRow({ id: "preview" }),
+    tableExpandedRows({ id: "expandedRow" }),
   ];
 
   return (
     <>
       <Head>
-        <title>Material Head</title>
+        <title>Material Detail</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <PageHeader icon={<CubeScanIcon />} title="Master Material Head" />
+      <PageHeader icon={<CubeScanIcon />} title="Master Material Detail" />
       <Box sx={{ p: 2 }}>
         <Grid container>
           <Grid
@@ -156,14 +250,91 @@ export default function MasterMaterialHead() {
               }}
               onClick={(e) => {
                 setName("");
-                setDescription("");
-                setDialogType(dialogTypesMasterMaterial.add);
+                setPlu("");
+                setMaterialHead("Choose");
+                setPrice("");
+                setStock("");
+                setReorderPoint("");
+                setUom("Choose");
+                setMaterialType("Choose");
+                setMaterialGroup("Choose");
+                setDialogType(dialogTypesMasterMaterial.addDetail);
                 setOpenDialog(true);
               }}
             >
               <Add sx={{ mr: 1 }} /> Add New
             </Button>
           </Grid>
+        </Grid>
+        <Grid container sx={{ pt: 2 }}>
+          <Grid
+            item
+            xs={12}
+            md={1}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h7">Import</Typography>
+          </Grid>
+          <Grid item xs={12} md="auto" sx={{ pr: 2 }}>
+            <input
+              accept=".xslx, .csv"
+              type="file"
+              onChange={handleFileInput}
+            />
+          </Grid>
+          <Grid item xs={12} md="auto">
+            <Button
+              variant="contained"
+              color="primaryButton"
+              size="small"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+              onClick={(e) => {
+                console.log("import");
+              }}
+            >
+              <CloudUpload sx={{ mr: 1 }} /> Import
+            </Button>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md="auto"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              px: 1,
+            }}
+          >
+            <Typography variant="h7"> OR </Typography>
+          </Grid>
+          <Grid item xs={12} md>
+            <Button
+              variant="contained"
+              color="secondaryButton"
+              size="small"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+              onClick={(e) => {
+                const URL =
+                  "https://ws-dev.prasetiyamulya.ac.id/fpb/C_master/download_template_material";
+                if (typeof window !== "undefined") {
+                  window.location.href = URL;
+                }
+              }}
+            >
+              <CloudDownload sx={{ mr: 1 }} /> Download Template
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid container>
           <Grid
             item
             xs={12}
@@ -219,7 +390,7 @@ export default function MasterMaterialHead() {
               <Typography variant="bodyCst1">CSV</Typography>
             </Button>,
             <Button
-              key="21"
+              key="2"
               size="small"
               onClick={(e) => {
                 const URL =
@@ -254,6 +425,7 @@ export default function MasterMaterialHead() {
             rows={rows}
             maxHeight={1000}
             customCell={customCell}
+            isExpandable={true}
           />
         </Paper>
       </Box>
@@ -266,8 +438,22 @@ export default function MasterMaterialHead() {
         }}
         name={name}
         setName={setName}
-        description={description}
-        setDescription={setDescription}
+        plu={plu}
+        setPlu={setPlu}
+        materialHead={materialHead}
+        setMaterialHead={setMaterialHead}
+        price={price}
+        setPrice={setPrice}
+        stock={stock}
+        setStock={setStock}
+        reorderPoint={reorderPoint}
+        setReorderPoint={setReorderPoint}
+        uom={uom}
+        setUom={setUom}
+        materialType={materialType}
+        setMaterialType={setMaterialType}
+        materialGroup={materialGroup}
+        setMaterialGroup={setMaterialGroup}
         rowStatusSelect={rowStatusSelect}
         setRowStatusSelect={setRowStatusSelect}
       />

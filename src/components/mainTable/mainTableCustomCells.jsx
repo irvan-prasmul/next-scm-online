@@ -18,7 +18,13 @@ import AddCircle from "@mui/icons-material/AddCircle";
 import RemoveCircle from "@mui/icons-material/RemoveCircle";
 import IconButton from "@mui/material/IconButton";
 import AdfScannerRounded from "@mui/icons-material/AdfScannerRounded";
-import { confirmationType, dialogTypesFpb } from "@/types";
+import {
+  confirmationType,
+  dialogTypesFpb,
+  dialogTypesMasterMaterial,
+  masterMaterialStatus,
+} from "@/types";
+import Switch from "@mui/material/Switch";
 
 function renderStatusIcon(status) {
   return status == "pending" ? (
@@ -231,6 +237,74 @@ export function materialNameEdit({ id, setEditItemDialog }) {
   };
 }
 
+export function openExpandedRow({ id }) {
+  return {
+    id,
+    expandTrigger: true,
+    element: (row, col, open, setOpen) => {
+      return (
+        <TableCell key={col.id} align="center">
+          <IconButton
+            variant="contained"
+            size="small"
+            color={open ? "error" : "primaryButton"}
+            onClick={(e) => {
+              setOpen(!open);
+            }}
+          >
+            {open ? <RemoveCircle /> : <AddCircle />}
+          </IconButton>
+        </TableCell>
+      );
+    },
+  };
+}
+
+export function fpbNumberTextDownload({ id }) {
+  return {
+    id,
+    element: (row, col) => {
+      const value = row[col.id];
+      return (
+        <TableCell key={col.id} align="left">
+          <Button
+            variant="text"
+            size="small"
+            color="primaryButton"
+            onClick={(e) => {
+              const URL =
+                "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
+              if (typeof window !== "undefined") {
+                window.location.href = URL;
+              }
+            }}
+          >
+            {value}{" "}
+            <AdfScannerRounded
+              color="primaryButton"
+              sx={{ fontSize: "1.2rem" }}
+            />
+          </Button>
+        </TableCell>
+      );
+    },
+  };
+}
+
+export function renderSwitch({ id, onChange }) {
+  return {
+    id,
+    element: (row, col) => {
+      const value = row[col.id];
+      return (
+        <TableCell key={col.id} align="left">
+          <Switch checked={value} onChange={onChange} />
+        </TableCell>
+      );
+    },
+  };
+}
+
 // BELOW ARE SINGLE BUTTON TO OPEN DIALOG
 export function trackStatus({ id, setDialogType, setOpenDialog }) {
   return {
@@ -279,7 +353,44 @@ export function setReviewerFpb({ id, setDialogType, setOpenDialog }) {
   };
 }
 
-// BELOW ARE CUSTOM ACTIONS
+// BELOW ARE 2 BUTTON ACTIONS
+export function requesterCreateAction({
+  id,
+  setAddNewItemDialog,
+  setConfirmType,
+  setConfirmDialog,
+}) {
+  return {
+    id,
+    element: (row, col) => {
+      return (
+        <TableCell key="action" align="left">
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ mr: 1 }}
+            color="primaryButton"
+            onClick={(e) => setAddNewItemDialog(true)}
+          >
+            <EditRounded /> Edit
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            color="error"
+            onClick={(e) => {
+              setConfirmType(confirmationType.delete);
+              setConfirmDialog(true);
+            }}
+          >
+            <DeleteRounded /> Delete
+          </Button>
+        </TableCell>
+      );
+    },
+  };
+}
+
 export function pjkAction({ id, setConfirmType, setConfirmDialog }) {
   return {
     id,
@@ -350,53 +461,30 @@ export function procurementAction({ id, setConfirmType, setConfirmDialog }) {
   };
 }
 
-export function pjbPreview({ id }) {
-  return {
-    id,
-    expandTrigger: true,
-    element: (row, col, open, setOpen) => {
-      return (
-        <TableCell key={col.id} align="center">
-          <IconButton
-            variant="contained"
-            size="small"
-            color={open ? "error" : "primaryButton"}
-            onClick={(e) => {
-              setOpen(!open);
-            }}
-          >
-            {open ? <RemoveCircle /> : <AddCircle />}
-          </IconButton>
-        </TableCell>
-      );
-    },
-  };
-}
-
-export function fpbNumberTextDownload({ id }) {
+export function materialHeadActionButtons({ id, handleEdit, handleDelete }) {
   return {
     id,
     element: (row, col) => {
-      const value = row[col.id];
       return (
-        <TableCell key={col.id} align="left">
+        <TableCell key="action" align="left">
           <Button
-            variant="text"
+            variant="contained"
             size="small"
+            sx={{ mr: 1 }}
             color="primaryButton"
             onClick={(e) => {
-              const URL =
-                "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
-              if (typeof window !== "undefined") {
-                window.location.href = URL;
-              }
+              handleEdit(row);
             }}
           >
-            {value}{" "}
-            <AdfScannerRounded
-              color="primaryButton"
-              sx={{ fontSize: "1.2rem" }}
-            />
+            <EditRounded /> Edit
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            color="error"
+            onClick={handleDelete}
+          >
+            <DeleteRounded /> Delete
           </Button>
         </TableCell>
       );

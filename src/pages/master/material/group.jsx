@@ -3,17 +3,31 @@ import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
+import Table from "@mui/material/Table";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
+import CheckBox from "@mui/icons-material/CheckBox";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
+import moment from "moment/moment";
+import IconButton from "@mui/material";
+import AddCircle from "@mui/icons-material/AddCircle";
+import RemoveCircle from "@mui/icons-material/RemoveCircle";
+import Search from "@mui/icons-material/Search";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
+import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
 import CubeScanIcon from "mdi-react/CubeScanIcon";
-import { materialHeadActionButtons } from "@/components/mainTable/mainTableCustomCells";
+import {
+  materialHeadActionButtons,
+  renderSwitch,
+} from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
 import Add from "@mui/icons-material/Add";
 import {
@@ -35,15 +49,21 @@ const columns = [
     isShow: true,
   },
   {
-    id: "name",
-    label: "Name",
+    id: "materialGroup",
+    label: "Material Group",
     minWidth: 110,
     isShow: true,
   },
   {
     id: "description",
     label: "Description",
-    minWidth: 500,
+    minWidth: 380,
+    isShow: true,
+  },
+  {
+    id: "flagIct",
+    label: "Flag ICT",
+    minWidth: 110,
     isShow: true,
   },
   {
@@ -57,19 +77,21 @@ const columns = [
 const rows = [
   {
     action: null,
-    name: "ATK",
-    description: "Alat tulis dan perlengkapan kantor",
+    materialGroup: "ZM01",
+    description: "Prasmul Stock, valuated",
+    flagIct: true,
     status: masterMaterialStatus.active,
   },
   {
     action: null,
-    name: "Other",
-    description: "Lain-lain",
+    materialGroup: "ZM02",
+    description: "Prasmul Stock, Non-value",
+    flagIct: false,
     status: masterMaterialStatus.active,
   },
 ];
 
-export default function MasterMaterialHead() {
+export default function MasterMaterialGroup() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
@@ -99,16 +121,19 @@ export default function MasterMaterialHead() {
   const [confirmType, setConfirmType] = React.useState("");
   const [confirmDialog, setConfirmDialog] = React.useState(false);
 
-  const [name, setName] = React.useState("");
+  const [materialGroup, setMaterialGroup] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [rowStatusSelect, setRowStatusSelect] = React.useState(
     masterMaterialStatus.active
   );
+
+  const [selectedFlagIct, setSelectedFlagIct] = React.useState(false);
+
   function handleActionEdit(row) {
-    setName(row.name);
+    setMaterialGroup(row.materialGroup);
     setDescription(row.description);
     setRowStatusSelect(masterMaterialStatus.active);
-    setDialogType(dialogTypesMasterMaterial.edit);
+    setDialogType(dialogTypesMasterMaterial.editType);
     setOpenDialog(true);
   }
 
@@ -123,16 +148,25 @@ export default function MasterMaterialHead() {
       handleEdit: handleActionEdit,
       handleDelete: handleActionDelete,
     }),
+    renderSwitch({
+      id: "flagIct",
+      onChange: (e) => {
+        console.log("switched", e);
+        setSelectedFlagIct(!e.target.checked);
+        setConfirmType(confirmationType.flagIct);
+        setConfirmDialog(true);
+      },
+    }),
   ];
 
   return (
     <>
       <Head>
-        <title>Material Head</title>
+        <title>Material Group</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <PageHeader icon={<CubeScanIcon />} title="Master Material Head" />
+      <PageHeader icon={<CubeScanIcon />} title="Master Material Group" />
       <Box sx={{ p: 2 }}>
         <Grid container>
           <Grid
@@ -155,9 +189,9 @@ export default function MasterMaterialHead() {
                 alignItems: "center",
               }}
               onClick={(e) => {
-                setName("");
+                setMaterialGroup("");
                 setDescription("");
-                setDialogType(dialogTypesMasterMaterial.add);
+                setDialogType(dialogTypesMasterMaterial.addGroup);
                 setOpenDialog(true);
               }}
             >
@@ -264,8 +298,8 @@ export default function MasterMaterialHead() {
         action={(e) => {
           console.log("action");
         }}
-        name={name}
-        setName={setName}
+        materialGroup={materialGroup}
+        setMaterialGroup={setMaterialGroup}
         description={description}
         setDescription={setDescription}
         rowStatusSelect={rowStatusSelect}
@@ -278,6 +312,7 @@ export default function MasterMaterialHead() {
         action={() => {
           console.log("confirm action");
         }}
+        isValue={selectedFlagIct}
       />
     </>
   );

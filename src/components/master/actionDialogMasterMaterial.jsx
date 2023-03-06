@@ -23,16 +23,45 @@ import SaveRounded from "@mui/icons-material/SaveRounded";
 import Note from "@mui/icons-material/Note";
 import TextField from "@mui/material/TextField";
 import InsertDriveFileRounded from "@mui/icons-material/InsertDriveFileRounded";
-import { dialogTypesMasterMaterial } from "@/types";
+import { dialogTypesMasterMaterial, masterMaterialStatus } from "@/types";
+import NoteEditOutlineIcon from "mdi-react/NoteEditOutlineIcon";
+import Refresh from "@mui/icons-material/Refresh";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormHelperText from "@mui/material/FormHelperText";
 
 export default function ActionDialogMasterMaterial({
   type,
   isOpen,
   handleClose,
   action,
+  // head
+  name = "name",
+  setName = (e) => console.log("undefined"),
+  description = "description",
+  setDescription = (e) => console.log("undefined"),
+  // detail
+  plu = "plu",
+  setPlu = (e) => console.log("undefined"),
+  materialHead = "materialHead",
+  setMaterialHead = (e) => console.log("undefined"),
+  price = "price",
+  setPrice = (e) => console.log("undefined"),
+  stock = "stock",
+  setStock = (e) => console.log("undefined"),
+  reorderPoint = "reorderPoint",
+  setReorderPoint = (e) => console.log("undefined"),
+  uom = "uom",
+  setUom = (e) => console.log("undefined"),
+  materialType = "materialType",
+  setMaterialType = (e) => console.log("undefined"),
+  materialGroup = "materialGroup",
+  setMaterialGroup = (e) => console.log("undefined"),
+  // edit
+  rowStatusSelect = masterMaterialStatus.active,
+  setRowStatusSelect = (e) => console.log("undefined"),
 }) {
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  const [isValidate, setValidate] = React.useState(false);
 
   function renderHeader(type) {
     return (
@@ -55,8 +84,16 @@ export default function ActionDialogMasterMaterial({
               pr: 1,
             }}
           >
-            {type == dialogTypesMasterMaterial.add ? (
+            {type == dialogTypesMasterMaterial.add ||
+            type == dialogTypesMasterMaterial.addDetail ||
+            type == dialogTypesMasterMaterial.addType ||
+            type == dialogTypesMasterMaterial.addGroup ? (
               <InsertDriveFileRounded />
+            ) : type == dialogTypesMasterMaterial.edit ||
+              type == dialogTypesMasterMaterial.editDetail ||
+              type == dialogTypesMasterMaterial.editType ||
+              type == dialogTypesMasterMaterial.editGroup ? (
+              <NoteEditOutlineIcon />
             ) : (
               <></>
             )}
@@ -70,11 +107,12 @@ export default function ActionDialogMasterMaterial({
               justifyContent: "center !important",
             }}
           >
-            {type == "none" ? (
-              <Typography variant="h6">none</Typography>
-            ) : (
-              <Typography variant="h6">{type}</Typography>
-            )}
+            {
+              // type == "none" ? (
+              //   <Typography variant="h7">none</Typography>
+              // ) :
+              <Typography variant="h7">{type}</Typography>
+            }
           </Grid>
           <Grid item xs={1}>
             <IconButton variant="text" color="darkBg" onClick={handleClose}>
@@ -86,124 +124,460 @@ export default function ActionDialogMasterMaterial({
     );
   }
 
+  function statusRow(type) {
+    return type == dialogTypesMasterMaterial.edit ||
+      type == dialogTypesMasterMaterial.editDetail ||
+      type == dialogTypesMasterMaterial.editType ||
+      type == dialogTypesMasterMaterial.editGroup ? (
+      <Grid container>
+        <Grid
+          item
+          xs={3}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h7">Status</Typography>
+        </Grid>
+        <Grid item xs>
+          <FormControl
+            variant="outlined"
+            size="small"
+            margin="normal"
+            fullWidth
+          >
+            <Select
+              value={rowStatusSelect}
+              onChange={(e) => setRowStatusSelect(e.target.value)}
+            >
+              <MenuItem value={masterMaterialStatus.all}>All</MenuItem>
+              <MenuItem value={masterMaterialStatus.active}>Active</MenuItem>
+              <MenuItem value={masterMaterialStatus.inactive}>
+                Inactive
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
+    ) : (
+      <></>
+    );
+  }
+
   function renderBody(type) {
-    if (type == dialogTypesMasterMaterial.add)
-      return (
-        <Box sx={{ p: 2 }}>
-          <Typography> table here</Typography>
-        </Box>
-      );
-    if (type == "Reviewer") {
+    if (
+      type == dialogTypesMasterMaterial.add ||
+      type == dialogTypesMasterMaterial.edit
+    )
       return (
         <Box sx={{ p: 2 }}>
           <Grid container>
             <Grid
               item
-              xs="auto"
-              sx={{ display: "flex", alignItems: "center", pr: 2 }}
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
             >
-              <Typography variant="h6">Reviewer</Typography>
+              <Typography variant="h7" sx={{ mt: 1 }}>
+                Name
+              </Typography>
+            </Grid>
+            <Grid item xs>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container sx={{ pt: 2 }}>
+            <Grid item xs={3} sx={{ mt: 1 }}>
+              <Typography variant="h7">Description</Typography>
+            </Grid>
+            <Grid item xs>
+              <TextField
+                multiline
+                rows={3}
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          {statusRow(type)}
+        </Box>
+      );
+    if (
+      type == dialogTypesMasterMaterial.addDetail ||
+      type == dialogTypesMasterMaterial.editDetail
+    )
+      return (
+        <Box sx={{ p: 2 }}>
+          <Grid container>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7">PLU</Typography>
+            </Grid>
+            <Grid item xs>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={plu}
+                onChange={(e) => {
+                  setPlu(e.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7">Material Head</Typography>
             </Grid>
             <Grid item xs>
               <FormControl
                 variant="outlined"
                 size="small"
                 margin="normal"
-                sx={{ width: "300px" }}
+                fullWidth
               >
                 <Select
-                  value={statusSelect}
-                  onChange={(e) => setStatusSelect(e.target.value)}
+                  value={materialHead}
+                  onChange={(e) => setMaterialHead(e.target.value)}
                 >
-                  <MenuItem value={"All"}>All</MenuItem>
-                  <MenuItem value={"DIL"}>DIL</MenuItem>
-                  <MenuItem value={"ESO"}>ESO</MenuItem>
-                  <MenuItem value={"FRP"}>FRP</MenuItem>
-                  <MenuItem value={"PNK"}>PNK</MenuItem>
+                  <MenuItem value={"opt1"}>opt1</MenuItem>
+                  <MenuItem value={"opt2"}>opt2</MenuItem>
+                  <MenuItem value={"opt3"}>opt3</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
           </Grid>
+          <Grid container sx={{ pt: 2 }}>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7">Material Name</Typography>
+            </Grid>
+            <Grid item xs>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container sx={{ pt: 2 }}>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7">Price</Typography>
+            </Grid>
+            <Grid item xs>
+              <FormControl variant="outlined" fullWidth size="small">
+                <OutlinedInput
+                  type="number"
+                  startAdornment={
+                    <InputAdornment position="start">Rp.</InputAdornment>
+                  }
+                  value={price}
+                  onChange={(e) => {
+                    setPrice(e.target.value);
+                  }}
+                  error={isValidate && price == ""}
+                  fullWidth
+                />
+                <FormHelperText sx={{ color: "error.main" }}>
+                  {isValidate && price == ""
+                    ? "Please fill out this field."
+                    : ""}
+                </FormHelperText>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ pt: 2 }}>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7">Stock</Typography>
+            </Grid>
+            <Grid item xs>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={stock}
+                onChange={(e) => {
+                  setStock(e.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container sx={{ pt: 2 }}>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7">Reorder Point</Typography>
+            </Grid>
+            <Grid item xs>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={reorderPoint}
+                onChange={(e) => {
+                  setReorderPoint(e.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7">UOM</Typography>
+            </Grid>
+            <Grid item xs>
+              <FormControl
+                variant="outlined"
+                size="small"
+                margin="normal"
+                fullWidth
+              >
+                <Select value={uom} onChange={(e) => setUom(e.target.value)}>
+                  <MenuItem value={"opt1"}>opt1</MenuItem>
+                  <MenuItem value={"opt2"}>opt2</MenuItem>
+                  <MenuItem value={"opt3"}>opt3</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7">Material Type</Typography>
+            </Grid>
+            <Grid item xs>
+              <FormControl
+                variant="outlined"
+                size="small"
+                margin="normal"
+                fullWidth
+              >
+                <Select
+                  value={materialType}
+                  onChange={(e) => setMaterialType(e.target.value)}
+                >
+                  <MenuItem value={"opt1"}>opt1</MenuItem>
+                  <MenuItem value={"opt2"}>opt2</MenuItem>
+                  <MenuItem value={"opt3"}>opt3</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7">Material Group</Typography>
+            </Grid>
+            <Grid item xs>
+              <FormControl
+                variant="outlined"
+                size="small"
+                margin="normal"
+                fullWidth
+              >
+                <Select
+                  value={materialGroup}
+                  onChange={(e) => setMaterialGroup(e.target.value)}
+                >
+                  <MenuItem value={"opt1"}>opt1</MenuItem>
+                  <MenuItem value={"opt2"}>opt2</MenuItem>
+                  <MenuItem value={"opt3"}>opt3</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          {statusRow(type)}
         </Box>
       );
-    } else if (type == "PTA" || type == "Other")
+    if (
+      type == dialogTypesMasterMaterial.addType ||
+      type == dialogTypesMasterMaterial.editType
+    )
       return (
         <Box sx={{ p: 2 }}>
           <Grid container>
-            <Grid item xs="auto" sx={{ pr: 2 }}>
-              <Typography variant="h6">File</Typography>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7" sx={{ mt: 1 }}>
+                Material Type
+              </Typography>
             </Grid>
             <Grid item xs>
-              <Grid container>
-                <Grid item xs={12}>
-                  <FileUpload
-                    title="Select a file..."
-                    multiFile={false}
-                    maxFileSize={10}
-                    onFilesChange={handleFileInput}
-                    allowedExtensions={["jpg", "jpeg", "png", "pdf"]}
-                    onContextReady={(context) => {}}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="bodyCst1" color="error">
-                    * Allowed file types : jpg, jpeg, png & pdf. Max size : 10
-                    MB.
-                  </Typography>
-                </Grid>
-              </Grid>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={materialType}
+                onChange={(e) => {
+                  setMaterialType(e.target.value);
+                }}
+              />
             </Grid>
           </Grid>
+          <Grid container sx={{ pt: 2 }}>
+            <Grid item xs={3} sx={{ mt: 1 }}>
+              <Typography variant="h7">Description</Typography>
+            </Grid>
+            <Grid item xs>
+              <TextField
+                multiline
+                rows={3}
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          {statusRow(type)}
         </Box>
       );
-    else if (
-      type == "Requester Notes" ||
-      type == "ICT Notes" ||
-      type == "Purchasing Notes" ||
-      type == "Information Status" ||
-      type == "Document Status"
-    ) {
+    if (
+      type == dialogTypesMasterMaterial.addGroup ||
+      type == dialogTypesMasterMaterial.editGroup
+    )
       return (
-        <Box
-          sx={{ p: 2, m: 2, backgroundColor: "#f2f2f2", textAlign: "justify" }}
-        >
-          <Typography variant="bodyCst1">{bodyValue}</Typography>
+        <Box sx={{ p: 2 }}>
+          <Grid container>
+            <Grid
+              item
+              xs={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Typography variant="h7" sx={{ mt: 1 }}>
+                Material Group
+              </Typography>
+            </Grid>
+            <Grid item xs>
+              <TextField
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={materialGroup}
+                onChange={(e) => {
+                  setMaterialGroup(e.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container sx={{ pt: 2 }}>
+            <Grid item xs={3} sx={{ mt: 1 }}>
+              <Typography variant="h7">Description</Typography>
+            </Grid>
+            <Grid item xs>
+              <TextField
+                multiline
+                rows={3}
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              />
+            </Grid>
+          </Grid>
+          {statusRow(type)}
         </Box>
       );
-    } else if (type == "Requester Notes#EDIT#") {
-      return (
-        <Box sx={{ backgroundColor: "#f2f2f2", textAlign: "justify" }}>
-          <TextField
-            multiline
-            rows={5}
-            variant="outlined"
-            size="small"
-            sx={{ width: 450 }}
-            value={bodyValue}
-            // onChange={(e) => {
-            //   setInformation(e.target.value);
-            // }}
-          />
-        </Box>
-      );
-    }
   }
 
   function renderAction(type) {
-    if (type == "Track")
-      return (
-        <>
-          <Button
-            onClick={handleClose}
-            variant="contained"
-            color="secondaryButton"
-          >
-            <DoNotDisturbOutlined sx={{ mr: 1 }} />
-            Cancel
-          </Button>
-        </>
-      );
-    if (type == "Reviewer" || type == "Requester Notes#EDIT#") {
+    if (
+      type == dialogTypesMasterMaterial.add ||
+      type == dialogTypesMasterMaterial.addDetail ||
+      type == dialogTypesMasterMaterial.addType ||
+      type == dialogTypesMasterMaterial.addGroup
+    ) {
       return (
         <>
           <Button
@@ -220,7 +594,13 @@ export default function ActionDialogMasterMaterial({
           </Button>
         </>
       );
-    } else if (type == "PTA" || type == "Other")
+    }
+    if (
+      type == dialogTypesMasterMaterial.edit ||
+      type == dialogTypesMasterMaterial.editDetail ||
+      type == dialogTypesMasterMaterial.editType ||
+      type == dialogTypesMasterMaterial.editGroup
+    ) {
       return (
         <>
           <Button
@@ -229,21 +609,28 @@ export default function ActionDialogMasterMaterial({
             color="secondaryButton"
           >
             <DoNotDisturbOutlined sx={{ mr: 1 }} />
-            Cancel
+            Close
           </Button>
           <Button onClick={action} variant="contained" color="success">
-            <FileUploadRounded sx={{ mr: 1 }} />
-            Upload
+            <Refresh sx={{ mr: 1 }} />
+            Update
           </Button>
         </>
       );
+    }
   }
 
   return (
     <Dialog
-      maxWidth="xs"
+      fullWidth
+      disableEscapeKeyDown
+      maxWidth={
+        type == dialogTypesMasterMaterial.addDetail ||
+        type == dialogTypesMasterMaterial.editDetail
+          ? "md"
+          : "sm"
+      }
       open={isOpen}
-      onClose={handleClose}
       disableScrollLock={true}
     >
       <DialogContent sx={{ p: 0 }}>
