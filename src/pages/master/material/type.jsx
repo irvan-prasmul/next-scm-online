@@ -13,19 +13,22 @@ import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import CubeScanIcon from "mdi-react/CubeScanIcon";
-import { materialHeadActionButtons } from "@/components/mainTable/mainTableCustomCells";
+import { editAndDeleteAction } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
 import Add from "@mui/icons-material/Add";
 import {
   confirmationType,
   dialogTypesMasterMaterial,
   masterMaterialStatus,
+  masterStatusDdlValues,
 } from "@/types";
 import ActionDialogMasterMaterial from "@/components/master/actionDialogMasterMaterial";
 import FileDocumentOutlineIcon from "mdi-react/FileDocumentOutlineIcon";
 import FileExcelOutlineIcon from "mdi-react/FileExcelOutlineIcon";
 import FilePowerpointOutlineIcon from "mdi-react/FilePowerpointOutlineIcon";
 import ConfirmationDialog from "@/components/confirmationDialog";
+import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
+import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 
 const columns = [
   {
@@ -73,7 +76,7 @@ export default function MasterMaterialType() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
-  const [statusSelect, setStatusSelect] = React.useState("All");
+  const [statusSelect, setStatusSelect] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
@@ -119,7 +122,7 @@ export default function MasterMaterialType() {
   }
 
   const customCell = [
-    materialHeadActionButtons({
+    editAndDeleteAction({
       id: "action",
       handleEdit: handleActionEdit,
       handleDelete: handleActionDelete,
@@ -135,67 +138,25 @@ export default function MasterMaterialType() {
       </Head>
       <PageHeader icon={<CubeScanIcon />} title="Master Material Type" />
       <Box sx={{ p: 2 }}>
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={1}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Material</Typography>
-          </Grid>
-          <Grid item xs={12} md={11}>
-            <Button
-              variant="contained"
-              color="primaryButton"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-              onClick={(e) => {
-                setMaterialType("");
-                setDescription("");
-                setDialogType(dialogTypesMasterMaterial.addType);
-                setOpenDialog(true);
-              }}
-            >
-              <Add sx={{ mr: 1 }} /> Add New
-            </Button>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={1}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Status</Typography>
-          </Grid>
-          <Grid item xs={12} md={11}>
-            <FormControl
-              variant="outlined"
-              size="small"
-              margin="normal"
-              sx={{ width: "300px" }}
-            >
-              <Select
-                value={statusSelect}
-                onChange={(e) => setStatusSelect(e.target.value)}
-              >
-                <MenuItem value={masterMaterialStatus.all}>All</MenuItem>
-                <MenuItem value={masterMaterialStatus.active}>Active</MenuItem>
-                <MenuItem value={masterMaterialStatus.inactive}>
-                  Inactive
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
+        <RowButtonSimple
+          md={1}
+          text="Material"
+          buttonOnClick={(e) => {
+            setMaterialType("");
+            setDescription("");
+            setDialogType(dialogTypesMasterMaterial.addType);
+            setOpenDialog(true);
+          }}
+        />
+        <RowDdlSimple
+          md={1}
+          text="Status"
+          ddlValue={statusSelect}
+          ddlValues={masterStatusDdlValues}
+          ddlOnChange={(e) => {
+            setStatusSelect(e.target.value);
+          }}
+        />
         <MainTableMenu
           handleRefreshTable={(e) => {
             console.log("refresh table");

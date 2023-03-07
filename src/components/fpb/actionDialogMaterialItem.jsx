@@ -26,6 +26,10 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import FileUpload from "react-mui-fileuploader";
+import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
+import RowDdlSimple from "../rowSimplified/rowDdlSimple";
+import RowDatePickerSimple from "../rowSimplified/rowDatePickerSimple";
+import RowSelectFileSimple from "../rowSimplified/rowSelectFileSimple";
 
 export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
   const [materialSearch, setMaterialSearch] = React.useState("");
@@ -37,20 +41,17 @@ export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
   const [uom, setUom] = React.useState("");
   const [unitPrice, setUnitPrice] = React.useState("");
   const [quantity, setQuantity] = React.useState("");
-  const [costCenter, setCostCenter] = React.useState("Choose");
-  const HandleCostCenterSelect = (event) => {
-    if (event.target.value != "Choose") setCostCenter(event.target.value);
-  };
+  const [costCenter, setCostCenter] = React.useState("choose");
   const [costCenterSelect, setCostCenterSelect] = React.useState([
-    "26201 - SBE BVDI",
-    "21202 - SBE Dekanat",
+    { value: "1", text: "26201 - SBE BVDI" },
+    { value: "2", text: "21202 - SBE Dekanat" },
   ]);
   const [usagePlan, setUsagePlan] = React.useState("");
   const [fileInput, setFileInput] = React.useState([]);
-  const handleFileInput = (files) => {
-    console.log("file", files);
-    setFileInput([...files]);
-  };
+  // const handleFileInput = (files) => {
+  //   console.log("file", files);
+  //   setFileInput([...files]);
+  // };
   const [information, setInformation] = React.useState("");
 
   const [isValidate, setValidate] = React.useState(false);
@@ -69,7 +70,7 @@ export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
     setUom("");
     setUnitPrice("");
     setQuantity("");
-    setCostCenter("Choose");
+    setCostCenter("choose");
     setUsagePlan("");
     setFileInput([]);
     setInformation("");
@@ -156,254 +157,78 @@ export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
               </FormControl>
             </Grid>
           </Grid>
-          <Divider sx={{ mb: 3, pt: 2 }} />
-          <Grid container>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              sx={{
-                mt: 1,
-              }}
-            >
-              <Typography variant="h7"> Material Name</Typography>
-            </Grid>
-            <Grid item xs={12} md={9}>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                disabled
-                value={materialName}
-                onChange={(e) => {
-                  setMaterialName(e.target.value);
-                }}
-                error={isValidate && materialName == ""}
-                helperText={
-                  isValidate && materialName == ""
-                    ? "Please fill out this field."
-                    : ""
-                }
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              sx={{
-                mt: 1,
-              }}
-            >
-              <Typography variant="h7"> UOM</Typography>
-            </Grid>
-            <Grid item xs={12} md={9}>
-              <TextField
-                variant="outlined"
-                size="small"
-                disabled
-                value={uom}
-                onChange={(e) => {
-                  setUom(e.target.value);
-                }}
-                error={isValidate && uom == ""}
-                helperText={
-                  isValidate && uom == "" ? "Please fill out this field." : ""
-                }
-                sx={{ width: 250 }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              sx={{
-                mt: 1,
-              }}
-            >
-              <Typography variant="h7"> Unit Price</Typography>
-            </Grid>
-            <Grid item xs={12} md={9}>
-              <FormControl variant="outlined" size="small">
-                <OutlinedInput
-                  type="number"
-                  startAdornment={
-                    <InputAdornment position="start">Rp.</InputAdornment>
-                  }
-                  value={unitPrice}
-                  onChange={(e) => {
-                    setUnitPrice(e.target.value);
-                  }}
-                  error={isValidate && unitPrice == ""}
-                  sx={{ width: 250 }}
-                />
-                <FormHelperText sx={{ color: "error.main" }}>
-                  {isValidate && unitPrice == ""
-                    ? "Please fill out this field."
-                    : ""}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              sx={{
-                mt: 1,
-              }}
-            >
-              <Typography variant="h7"> Quantity</Typography>
-            </Grid>
-            <Grid item xs={12} md={9}>
-              <TextField
-                variant="outlined"
-                size="small"
-                type="number"
-                value={quantity}
-                onChange={(e) => {
-                  setQuantity(e.target.value);
-                }}
-                error={isValidate && quantity == ""}
-                helperText={
-                  isValidate && quantity == ""
-                    ? "Please fill out this field."
-                    : ""
-                }
-                sx={{ width: 250 }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              sx={{
-                mt: 1,
-              }}
-            >
-              <Typography variant="h7"> Cost Center</Typography>
-            </Grid>
-            <Grid item xs={12} md={9}>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                error={isValidate && costCenter == "Choose"}
-                className="form-white-backgound form-compact"
-                sx={{ width: 250 }}
-              >
-                <Select value={costCenter} onChange={HandleCostCenterSelect}>
-                  <MenuItem value="Choose">
-                    <em>Choose</em>
-                  </MenuItem>
-                  {costCenterSelect.map((val, index) => {
-                    return (
-                      <MenuItem value={val} key={index}>
-                        {val}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-                <FormHelperText sx={{ color: "error.main" }}>
-                  {isValidate && costCenter == "Choose"
-                    ? "Please choose an option."
-                    : ""}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              sx={{
-                mt: 1,
-              }}
-            >
-              <Typography variant="h7"> Usage Plan</Typography>
-            </Grid>
-            <Grid item xs={12} md={9}>
-              <LocalizationProvider dateAdapter={AdapterMoment}>
-                <DatePicker
-                  value={usagePlan}
-                  disablePast
-                  views={["year", "month", "day"]}
-                  onChange={(newValue) => setUsagePlan(newValue)}
-                  renderInput={(params) => (
-                    <TextField
-                      size="small"
-                      error={isValidate && usagePlan == ""}
-                      helperText={
-                        isValidate && usagePlan == ""
-                          ? "Please select a date."
-                          : ""
-                      }
-                      {...params}
-                    />
-                  )}
-                />
-              </LocalizationProvider>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              sx={{
-                mt: 1,
-              }}
-            >
-              <Typography variant="h7"> File</Typography>
-            </Grid>
-            <Grid item xs={12} md={9}>
-              <Box sx={{ maxWidth: 300 }}>
-                <FileUpload
-                  title="Select a file..."
-                  multiFile={false}
-                  maxFileSize={10}
-                  buttonLabel="click here"
-                  onFilesChange={handleFileInput}
-                  allowedExtensions={["jpg", "jpeg", "png", "pdf"]}
-                  onContextReady={(context) => {}}
-                  showPlaceholderImage={false}
-                />
-              </Box>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={12}
-              md={3}
-              sx={{
-                mt: 1,
-              }}
-            >
-              <Typography variant="h7"> Information</Typography>
-            </Grid>
-            <Grid item xs={12} md={9}>
-              <TextField
-                multiline
-                rows={2}
-                fullWidth
-                placeholder="Merk, seri, ukuran, dll"
-                variant="outlined"
-                size="small"
-                value={information}
-                onChange={(e) => {
-                  setInformation(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
+          <Divider sx={{ mb: 2, pt: 2 }} />
+          <RowTextFieldSimple
+            md={3}
+            text="Material Name"
+            textFieldValue={materialName}
+            textFieldOnChange={(e) => setMaterialName(e.target.value)}
+            isValidate={isValidate}
+            fullWidth
+            disabled
+          />
+          <RowTextFieldSimple
+            md={3}
+            text="UOM"
+            textFieldValue={uom}
+            textFieldOnChange={(e) => setUom(e.target.value)}
+            isValidate={isValidate}
+            disabled
+          />
+          <RowTextFieldSimple
+            md={3}
+            text="Unit Price"
+            textFieldValue={unitPrice}
+            textFieldOnChange={(e) => setUnitPrice(e.target.value)}
+            isValidate={isValidate}
+            type="number"
+            startAdornment={
+              <InputAdornment position="start">Rp.</InputAdornment>
+            }
+          />
+          <RowTextFieldSimple
+            md={3}
+            text="Quantity"
+            textFieldValue={quantity}
+            textFieldOnChange={(e) => setQuantity(e.target.value)}
+            isValidate={isValidate}
+            type="number"
+          />
+          <RowDdlSimple
+            md={3}
+            text="Cost Center"
+            ddlValue={costCenter}
+            ddlValues={costCenterSelect}
+            ddlOnChange={(e) => {
+              if (e.target.value != "choose") setCostCenter(e.target.value);
+            }}
+            isValidate={isValidate}
+            addChoose
+          />
+          <RowDatePickerSimple
+            md={3}
+            text="Usage Plan"
+            dateValue={usagePlan}
+            dateOnChange={(val) => setUsagePlan(val)}
+            isValidate={isValidate}
+          />
+          <RowTextFieldSimple
+            md={3}
+            text="File"
+            textFieldValue={undefined}
+            textFieldOnChange={(e) => setFileInput(e.target.files[0])}
+            type="file"
+          />
+          <RowTextFieldSimple
+            md={3}
+            text="Information"
+            textFieldValue={information}
+            textFieldOnChange={(e) => setInformation(e.target.value)}
+            fullWidth
+            multiline
+            placeholder="Merk, seri, ukuran, dll"
+            rows={2}
+          />
         </Box>
       </DialogContent>
       <DialogActions>

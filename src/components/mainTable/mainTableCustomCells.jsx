@@ -461,7 +461,7 @@ export function procurementAction({ id, setConfirmType, setConfirmDialog }) {
   };
 }
 
-export function materialHeadActionButtons({ id, handleEdit, handleDelete }) {
+export function editAndDeleteAction({ id, handleEdit, handleDelete }) {
   return {
     id,
     element: (row, col) => {

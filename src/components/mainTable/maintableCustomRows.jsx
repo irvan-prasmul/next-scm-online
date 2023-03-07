@@ -19,7 +19,7 @@ export function tableExpandedRows({ id }) {
             return (
               <TableRow key={key}>
                 <TableCell sx={{ width: "25%" }}>
-                  <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+                  <Typography variant="h7" sx={{ pl: 1 }}>
                     {key}
                   </Typography>
                 </TableCell>

@@ -29,6 +29,7 @@ import {
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
 import { paginationPropType } from "@/types";
+import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 
 const columns = [
   { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
@@ -163,14 +164,19 @@ const rows = [
   },
 ];
 
+const statusDdlValues = [
+  { value: "all", text: "All" },
+  { value: "waiting", text: "Waiting for Approval" },
+  { value: "approved", text: "Approved" },
+  { value: "rejected", text: "Rejected" },
+  { value: "canceled", text: "Canceled by User" },
+];
+
 export default function FpbAprrovalPJKegiatan() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
-  const [statusSelect, setStatusSelect] = React.useState("All");
-  const handleStatusSelect = (event) => {
-    setStatusSelect(event.target.value);
-  };
+  const [statusSelect, setStatusSelect] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
@@ -232,35 +238,14 @@ export default function FpbAprrovalPJKegiatan() {
       </Head>
       <PageHeader icon={<CheckBox />} title="Approval PJ Kegiatan" />
       <Box sx={{ p: 2 }}>
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={2}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Status</Typography>
-          </Grid>
-          <Grid item xs={12} md={10}>
-            <FormControl
-              variant="outlined"
-              size="small"
-              margin="normal"
-              sx={{ width: "300px" }}
-            >
-              <Select value={statusSelect} onChange={handleStatusSelect}>
-                <MenuItem value={"All"}>All</MenuItem>
-                <MenuItem value={"Waiting"}>Waiting For Approval</MenuItem>
-                <MenuItem value={"Approved"}>Approved</MenuItem>
-                <MenuItem value={"Rejected"}>Rejected</MenuItem>
-                <MenuItem value={"Canceled"}>Canceled by user</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
+        <RowDdlSimple
+          text="Status"
+          ddlValue={statusSelect}
+          ddlValues={statusDdlValues}
+          ddlOnChange={(e) => {
+            setStatusSelect(e.target.value);
+          }}
+        />
         <MainTableMenu
           handleRefreshTable={(e) => {
             console.log("refresh table");

@@ -36,5 +36,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
     "sass": "^1.58.3"
+  },
+  "devDependencies": {
+    "eslint-plugin-mui-path-imports": "^0.0.14"
   }
 }

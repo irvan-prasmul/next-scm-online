@@ -37,6 +37,7 @@ import {
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
 import { paginationPropType } from "@/types";
+import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 
 const columns = [
   { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
@@ -311,14 +312,19 @@ const rows = [
   // },
 ];
 
+const statusDdlValues = [
+  { value: "all", text: "All" },
+  { value: "cancelled", text: "Cancelled by User" },
+  { value: "waiting", text: "Waiting" },
+  { value: "reviewed", text: "Reviewed" },
+];
+
 export default function FpbReviewer() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
-  const [statusSelect, setStatusSelect] = React.useState("All");
-  const handleStatusSelect = (event) => {
-    setStatusSelect(event.target.value);
-  };
+  const [statusSelect, setStatusSelect] = React.useState("all");
+
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
     if (id == "reset") {
@@ -341,10 +347,6 @@ export default function FpbReviewer() {
   const [dialogType, setDialogType] = React.useState("");
   const [openDialog, setOpenDialog] = React.useState(false);
   const [dialogBody, setDialogBody] = React.useState("");
-  const handleCloseDialog = (event) => {
-    setOpenDialog(false);
-    // setDialogBody("");
-  };
 
   const [editItemDialog, setEditItemDialog] = React.useState(false);
 
@@ -385,34 +387,14 @@ export default function FpbReviewer() {
       </Head>
       <PageHeader icon={<GradingRounded />} title="Review FPB" />
       <Box sx={{ p: 2 }}>
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={2}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Review Status</Typography>
-          </Grid>
-          <Grid item xs={12} md={10}>
-            <FormControl
-              variant="outlined"
-              size="small"
-              margin="normal"
-              sx={{ width: "300px" }}
-            >
-              <Select value={statusSelect} onChange={handleStatusSelect}>
-                <MenuItem value={"All"}>All</MenuItem>
-                <MenuItem value={"Canceled"}>Canceled by user</MenuItem>
-                <MenuItem value={"Waiting"}>Waiting</MenuItem>
-                <MenuItem value={"Reviewed"}>Reviewed</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
+        <RowDdlSimple
+          text="Review Status"
+          ddlValue={statusSelect}
+          ddlValues={statusDdlValues}
+          ddlOnChange={(e) => {
+            setStatusSelect(e.target.value);
+          }}
+        />
         <MainTableMenu
           handleRefreshTable={(e) => {
             console.log("refresh table");
@@ -452,7 +434,7 @@ export default function FpbReviewer() {
       <ActionDialogFpb
         type={dialogType}
         isOpen={openDialog}
-        handleClose={handleCloseDialog}
+        handleClose={(e) => setOpenDialog(false)}
         action={dialogAction}
         bodyValue={dialogBody}
       />

@@ -66,7 +66,7 @@ export default function MainTable({
                 if (headerGroupList[index].rendered++ == 0) {
                   return (
                     <TableCell
-                      key={column.group + index}
+                      key={"group-head" + column.group + index}
                       align="center"
                       rowSpan={1}
                       colSpan={colSpan}
@@ -78,7 +78,7 @@ export default function MainTable({
               } else
                 return (
                   <TableCell
-                    key={column.id}
+                    key={"normal-head" + column.id}
                     align={column.align}
                     rowSpan={2}
                     style={{ minWidth: column.minWidth }}
@@ -93,7 +93,7 @@ export default function MainTable({
             if (column.isShow)
               return (
                 <TableCell
-                  key={column.id}
+                  key={"lower-head" + column.id}
                   align={column.align}
                   rowSpan={1}
                   style={{ minWidth: column.minWidth }}
@@ -109,7 +109,7 @@ export default function MainTable({
 
   function normalTableRow(row, index) {
     return (
-      <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+      <TableRow hover role="checkbox" tabIndex={-1} key={"normal-row" + index}>
         {columns.map((column) => {
           if (column.isShow) {
             if (customCell) {
@@ -126,7 +126,7 @@ export default function MainTable({
             }
             const value = row[column.id];
             return (
-              <TableCell key={column.id} align={column.align}>
+              <TableCell key={"normal-cell" + column.id} align={column.align}>
                 <Typography variant="bodyTable1" sx={{ pl: 1 }}>
                   {column.format && value ? column.format(value) : value}
                 </Typography>
@@ -146,7 +146,12 @@ export default function MainTable({
     let activeColumn = 0;
     return (
       <>
-        <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+        <TableRow
+          hover
+          role="checkbox"
+          tabIndex={-1}
+          key={"expandable-row" + index}
+        >
           {columns.map((column) => {
             if (column.isShow) {
               activeColumn++;
@@ -173,7 +178,10 @@ export default function MainTable({
               }
               const value = row[column.id];
               return (
-                <TableCell key={column.id} align={column.align}>
+                <TableCell
+                  key={"expandable-cell" + column.id}
+                  align={column.align}
+                >
                   <Typography variant="bodyTable1" sx={{ pl: 1 }}>
                     {column.format && value ? column.format(value) : value}
                   </Typography>
@@ -183,7 +191,7 @@ export default function MainTable({
           })}
         </TableRow>
         {open ? (
-          <TableRow key={index + "_expand"}>
+          <TableRow key={"expanded-row" + index}>
             <TableCell
               colSpan={activeColumn}
               style={{ paddingBottom: 0, paddingTop: 0 }}

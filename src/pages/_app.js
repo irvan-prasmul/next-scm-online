@@ -53,6 +53,10 @@ const theme = createTheme({
       fontSize: "0.875rem",
       fontWeight: 400,
     },
+    formHelperText: {
+      fontSize: "0.75rem",
+      fontWeight: 400,
+    },
   },
 });
 

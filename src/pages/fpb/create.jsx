@@ -42,6 +42,7 @@ import Collapse from "@mui/material/Collapse";
 import TableChartRounded from "@mui/icons-material/TableChartRounded";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import { requesterCreateAction } from "@/components/mainTable/mainTableCustomCells";
+import RowTextSimple from "@/components/rowSimplified/rowTextSimple";
 
 const columns = [
   {
@@ -440,22 +441,7 @@ export default function FpbCreate() {
       </Box>
       <Divider />
       <Box className="alternate-backgound" sx={{ p: 2 }}>
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={2}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Requester</Typography>
-          </Grid>
-          <Grid item xs={12} md={10}>
-            <Typography variant="h7">: {userName}</Typography>
-          </Grid>
-        </Grid>
+        <RowTextSimple text="Requester" otherText={": " + userName} />
         <Grid container sx={{ pt: 2 }}>
           <Grid
             item

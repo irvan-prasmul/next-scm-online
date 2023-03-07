@@ -13,39 +13,67 @@ import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import CubeScanIcon from "mdi-react/CubeScanIcon";
-import { editAndDeleteAction } from "@/components/mainTable/mainTableCustomCells";
+import {
+  editAndDeleteAction,
+  openExpandedRow,
+} from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
 import Add from "@mui/icons-material/Add";
 import {
   confirmationType,
-  dialogTypesMasterMaterial,
-  masterMaterialStatus,
+  dialogTypesMaster,
+  masterStatus,
+  masterStatusDdlValues,
 } from "@/types";
-import ActionDialogMasterMaterial from "@/components/master/actionDialogMasterMaterial";
+import ActionDialogMaster from "@/components/master/actionDialogMaster";
 import FileDocumentOutlineIcon from "mdi-react/FileDocumentOutlineIcon";
 import FileExcelOutlineIcon from "mdi-react/FileExcelOutlineIcon";
 import FilePowerpointOutlineIcon from "mdi-react/FilePowerpointOutlineIcon";
 import ConfirmationDialog from "@/components/confirmationDialog";
+import CloudUpload from "@mui/icons-material/CloudUpload";
+import CloudDownload from "@mui/icons-material/CloudDownload";
+import DeleteRounded from "@mui/icons-material/DeleteRounded";
+import EditRounded from "@mui/icons-material/EditRounded";
+import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
+import Person from "@mui/icons-material/Person";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 
 const columns = [
   {
-    id: "action",
-    label: "Action",
+    id: "preview",
+    label: "Preview",
     minWidth: 160,
+    isShow: true,
+  },
+  {
+    id: "nik",
+    label: "NIK",
+    minWidth: 110,
     isShow: true,
   },
   {
     id: "name",
     label: "Name",
-    minWidth: 110,
+    minWidth: 120,
     isShow: true,
   },
   {
-    id: "description",
-    label: "Description",
-    minWidth: 500,
+    id: "initial",
+    label: "Initial",
+    minWidth: 120,
+    isShow: true,
+  },
+  {
+    id: "email1",
+    label: "E-mail",
+    minWidth: 120,
+    isShow: true,
+  },
+  {
+    id: "role",
+    label: "Role",
+    minWidth: 120,
     isShow: true,
   },
   {
@@ -56,31 +84,11 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    action: null,
-    name: "ATK",
-    description: "Alat tulis dan perlengkapan kantor",
-    status: masterMaterialStatus.active,
-  },
-  {
-    action: null,
-    name: "Other",
-    description: "Lain-lain",
-    status: masterMaterialStatus.active,
-  },
-];
-
-const statusDdlValues = [
-  { value: "all", text: "All" },
-  { value: "active", text: "Active" },
-  { value: "inactive", text: "Inactive" },
-];
-
-export default function MasterMaterialHead() {
+export default function MasterUser() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
+
   const [statusSelect, setStatusSelect] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
@@ -107,56 +115,140 @@ export default function MasterMaterialHead() {
   const [confirmType, setConfirmType] = React.useState("");
   const [confirmDialog, setConfirmDialog] = React.useState(false);
 
+  const [nik, setNik] = React.useState("");
   const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  const [initial, setInitial] = React.useState("");
+  const [email1, setEmail1] = React.useState("");
+  const [email2, setEmail2] = React.useState("");
+  const [role, setRole] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [department, setDepartment] = React.useState("");
+  const [position, setPosition] = React.useState("");
   const [rowStatusSelect, setRowStatusSelect] = React.useState(
-    masterMaterialStatus.active
+    masterStatus.active
   );
-  function handleActionEdit(row) {
-    setName(row.name);
-    setDescription(row.description);
-    setRowStatusSelect(masterMaterialStatus.active);
-    setDialogType(dialogTypesMasterMaterial.edit);
-    setOpenDialog(true);
+
+  function buttonExpandedRow(row) {
+    return (
+      <>
+        <Button
+          variant="contained"
+          size="small"
+          sx={{ mr: 1 }}
+          color="primaryButton"
+          onClick={(e) => {
+            setNik(row.nik);
+            setName(row.name);
+            setInitial(row.initial);
+            setRole(row.role);
+            setEmail1(row.email1);
+            setEmail2(row.expandedProps["E-mail 2"]);
+            setPassword(row.password);
+            setDepartment(row.expandedProps.department);
+            setPosition(row.Position);
+            setRowStatusSelect(masterStatus.active);
+            setDialogType(dialogTypesMaster.editUser);
+            setOpenDialog(true);
+          }}
+        >
+          <EditRounded /> Edit
+        </Button>
+        <Button
+          variant="contained"
+          size="small"
+          color="error"
+          onClick={(e) => {
+            setConfirmType(confirmationType.delete);
+            setConfirmDialog(true);
+          }}
+        >
+          <DeleteRounded /> Delete
+        </Button>
+      </>
+    );
   }
 
-  function handleActionDelete(e) {
-    setConfirmType(confirmationType.delete);
-    setConfirmDialog(true);
-  }
+  const rows = [
+    {
+      preview: null,
+      initial: "ACCNT",
+      nik: "1231412",
+      name: "Accounting",
+      email1: "acc@pmbs.ac.id",
+      role: "pjb",
+      password: "1234",
+      status: masterStatus.active,
+      Position: "DK",
+      expandedProps: {
+        Action: buttonExpandedRow,
+        Department: "YPM - Keuangan",
+        "E-mail 2": "acc@pmbs.ac.id",
+      },
+    },
+    {
+      preview: null,
+      initial: "ADF",
+      nik: "223",
+      name: "Ade Febransyah",
+      email1: "acc@pmbs.ac.id",
+      role: "Requester",
+      password: "1234",
+      Position: "",
+      status: masterStatus.active,
+      expandedProps: {
+        Action: buttonExpandedRow,
+        Department: "YPM - Keuangan",
+        "E-mail 2": "acc@pmbs.ac.id",
+      },
+    },
+  ];
 
   const customCell = [
-    editAndDeleteAction({
-      id: "action",
-      handleEdit: handleActionEdit,
-      handleDelete: handleActionDelete,
-    }),
+    openExpandedRow({ id: "preview" }),
+    tableExpandedRows({ id: "expandedRow" }),
   ];
 
   return (
     <>
       <Head>
-        <title>Material Head</title>
+        <title>Master Users</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <PageHeader icon={<CubeScanIcon />} title="Master Material Head" />
+      <PageHeader icon={<Person />} title="Master Users" />
       <Box sx={{ p: 2 }}>
         <RowButtonSimple
           md={1}
-          text="Material"
+          text="User"
+          buttonText="Add New user"
           buttonOnClick={(e) => {
+            setNik("");
+            setInitial("");
             setName("");
-            setDescription("");
-            setDialogType(dialogTypesMasterMaterial.add);
+            setEmail1("");
+            setEmail2("");
+            setRole("Choose");
+            setPassword("");
+            setDepartment("Choose");
+            setPosition("Choose");
+            setDialogType(dialogTypesMaster.addUser);
             setOpenDialog(true);
+          }}
+        />
+        <RowDdlSimple
+          md={1}
+          text="Role"
+          ddlValue={statusSelect}
+          ddlValues={masterStatusDdlValues}
+          ddlOnChange={(e) => {
+            setStatusSelect(e.target.value);
           }}
         />
         <RowDdlSimple
           md={1}
           text="Status"
           ddlValue={statusSelect}
-          ddlValues={statusDdlValues}
+          ddlValues={masterStatusDdlValues}
           ddlOnChange={(e) => {
             setStatusSelect(e.target.value);
           }}
@@ -185,7 +277,7 @@ export default function MasterMaterialHead() {
               <Typography variant="bodyCst1">CSV</Typography>
             </Button>,
             <Button
-              key="21"
+              key="2"
               size="small"
               onClick={(e) => {
                 const URL =
@@ -220,20 +312,35 @@ export default function MasterMaterialHead() {
             rows={rows}
             maxHeight={1000}
             customCell={customCell}
+            isExpandable={true}
           />
         </Paper>
       </Box>
-      <ActionDialogMasterMaterial
+      <ActionDialogMaster
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
         action={(e) => {
           console.log("action");
         }}
+        nik={nik}
+        setNik={setNik}
+        initial={initial}
+        setInitial={setInitial}
         name={name}
         setName={setName}
-        description={description}
-        setDescription={setDescription}
+        role={role}
+        setRole={setRole}
+        email1={email1}
+        setEmail1={setEmail1}
+        email2={email2}
+        setEmail2={setEmail2}
+        password={password}
+        setPassword={setPassword}
+        department={department}
+        setDepartment={setDepartment}
+        position={position}
+        setPosition={setPosition}
         rowStatusSelect={rowStatusSelect}
         setRowStatusSelect={setRowStatusSelect}
       />

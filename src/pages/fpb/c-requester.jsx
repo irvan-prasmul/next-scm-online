@@ -29,6 +29,8 @@ import {
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
 import { paginationPropType } from "@/types";
+import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
+import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 
 const columns = [
   { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
@@ -248,6 +250,14 @@ const rows = [
   },
 ];
 
+const statusDdlValues = [
+  { value: "all", text: "All" },
+  { value: "waiting", text: "Waiting for Approval" },
+  { value: "approved", text: "Approved" },
+  { value: "rejected", text: "Rejected" },
+  { value: "canceled", text: "Canceled" },
+];
+
 function handleEdit(row, col) {
   console.log("handle edit:", col);
   console.log(row);
@@ -257,10 +267,7 @@ export default function FpbRequester() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
-  const [statusSelect, setStatusSelect] = React.useState("All");
-  const handleStatusSelect = (event) => {
-    setStatusSelect(event.target.value);
-  };
+  const [statusSelect, setStatusSelect] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
@@ -336,61 +343,21 @@ export default function FpbRequester() {
       </Head>
       <PageHeader icon={<ShoppingCart />} title="FPB Dashboard (Non-Stock)" />
       <Box sx={{ p: 2 }}>
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={1}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">FPB</Typography>
-          </Grid>
-          <Grid item xs={12} md={11}>
-            <Button
-              variant="contained"
-              color="primaryButton"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-              onClick={(e) => router.replace("/fpb/create")}
-            >
-              <Add sx={{ mr: 1 }} /> Create New
-            </Button>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={1}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Status</Typography>
-          </Grid>
-          <Grid item xs={12} md={11}>
-            <FormControl
-              variant="outlined"
-              size="small"
-              margin="normal"
-              sx={{ width: "300px" }}
-            >
-              <Select value={statusSelect} onChange={handleStatusSelect}>
-                <MenuItem value={"All"}>All</MenuItem>
-                <MenuItem value={"Waiting for Approval"}>
-                  Waiting for Approval
-                </MenuItem>
-                <MenuItem value={"Approved"}>Approved</MenuItem>
-                <MenuItem value={"Rejected"}>Rejected</MenuItem>
-                <MenuItem value={"Canceled"}>Canceled</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
+        <RowButtonSimple
+          md={1}
+          text="FPB"
+          buttonText="Create New"
+          buttonOnClick={(e) => router.replace("/fpb/create")}
+        />
+        <RowDdlSimple
+          md={1}
+          text="Status"
+          ddlValue={statusSelect}
+          ddlValues={statusDdlValues}
+          ddlOnChange={(e) => {
+            setStatusSelect(e.target.value);
+          }}
+        />
         <MainTableMenu
           handleRefreshTable={(e) => {
             console.log("refresh table");

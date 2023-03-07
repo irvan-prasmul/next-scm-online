@@ -23,6 +23,7 @@ import SaveRounded from "@mui/icons-material/SaveRounded";
 import Note from "@mui/icons-material/Note";
 import TextField from "@mui/material/TextField";
 import { dialogTypesFpb } from "@/types";
+import RowDdlSimple from "../rowSimplified/rowDdlSimple";
 
 export default function ActionDialogFpb({
   type,
@@ -31,12 +32,12 @@ export default function ActionDialogFpb({
   action,
   bodyValue,
 }) {
-  const [fileInput, setFileInput] = React.useState("All");
+  const [fileInput, setFileInput] = React.useState([]);
   const handleFileInput = (files) => {
     console.log("file", files);
     setFileInput([...files]);
   };
-  const [statusSelect, setStatusSelect] = React.useState("All");
+  const [statusSelect, setStatusSelect] = React.useState("all");
 
   function renderHeader(type) {
     return (
@@ -126,34 +127,35 @@ export default function ActionDialogFpb({
     if (type == dialogTypesFpb.reviewer) {
       return (
         <Box sx={{ p: 2 }}>
-          <Grid container>
-            <Grid
-              item
-              xs="auto"
-              sx={{ display: "flex", alignItems: "center", pr: 2 }}
-            >
-              <Typography variant="h6">Reviewer</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                sx={{ width: "300px" }}
-              >
-                <Select
-                  value={statusSelect}
-                  onChange={(e) => setStatusSelect(e.target.value)}
-                >
-                  <MenuItem value={"All"}>All</MenuItem>
-                  <MenuItem value={"DIL"}>DIL</MenuItem>
-                  <MenuItem value={"ESO"}>ESO</MenuItem>
-                  <MenuItem value={"FRP"}>FRP</MenuItem>
-                  <MenuItem value={"PNK"}>PNK</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
+          <RowDdlSimple
+            md={3}
+            text="Reviewer"
+            ddlValue={statusSelect}
+            ddlValues={[
+              {
+                value: "all",
+                text: "All",
+              },
+              {
+                value: "dil",
+                text: "DIL",
+              },
+              {
+                value: "eso",
+                text: "ESO",
+              },
+              {
+                value: "frp",
+                text: "FRP",
+              },
+              {
+                value: "pnk",
+                text: "PNK",
+              },
+            ]}
+            fullWidth
+            ddlOnChange={(e) => setStatusSelect(e.target.value)}
+          />
         </Box>
       );
     } else if (type == dialogTypesFpb.pta || type == dialogTypesFpb.other)
@@ -275,6 +277,7 @@ export default function ActionDialogFpb({
   return (
     <Dialog
       maxWidth="xs"
+      fullWidth
       open={isOpen}
       onClose={handleClose}
       disableScrollLock={true}

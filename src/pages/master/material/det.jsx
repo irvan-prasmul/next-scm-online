@@ -20,6 +20,7 @@ import {
   confirmationType,
   dialogTypesMasterMaterial,
   masterMaterialStatus,
+  masterStatusDdlValues,
 } from "@/types";
 import ActionDialogMasterMaterial from "@/components/master/actionDialogMasterMaterial";
 import FileDocumentOutlineIcon from "mdi-react/FileDocumentOutlineIcon";
@@ -31,6 +32,9 @@ import CloudDownload from "@mui/icons-material/CloudDownload";
 import DeleteRounded from "@mui/icons-material/DeleteRounded";
 import EditRounded from "@mui/icons-material/EditRounded";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
+import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
+import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
+import RowMasterImport from "@/components/rowSimplified/rowMasterImport";
 
 const columns = [
   {
@@ -93,7 +97,7 @@ export default function MasterMaterialDet() {
     setFileInput(e.target.files[0]);
     console.log("file:", fileInput);
   };
-  const [statusSelect, setStatusSelect] = React.useState("All");
+  const [statusSelect, setStatusSelect] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
@@ -228,144 +232,43 @@ export default function MasterMaterialDet() {
       </Head>
       <PageHeader icon={<CubeScanIcon />} title="Master Material Detail" />
       <Box sx={{ p: 2 }}>
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={1}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Material</Typography>
-          </Grid>
-          <Grid item xs={12} md={11}>
-            <Button
-              variant="contained"
-              color="primaryButton"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-              onClick={(e) => {
-                setName("");
-                setPlu("");
-                setMaterialHead("Choose");
-                setPrice("");
-                setStock("");
-                setReorderPoint("");
-                setUom("Choose");
-                setMaterialType("Choose");
-                setMaterialGroup("Choose");
-                setDialogType(dialogTypesMasterMaterial.addDetail);
-                setOpenDialog(true);
-              }}
-            >
-              <Add sx={{ mr: 1 }} /> Add New
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid container sx={{ pt: 2 }}>
-          <Grid
-            item
-            xs={12}
-            md={1}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Import</Typography>
-          </Grid>
-          <Grid item xs={12} md="auto" sx={{ pr: 2 }}>
-            <input
-              accept=".xslx, .csv"
-              type="file"
-              onChange={handleFileInput}
-            />
-          </Grid>
-          <Grid item xs={12} md="auto">
-            <Button
-              variant="contained"
-              color="primaryButton"
-              size="small"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-              onClick={(e) => {
-                console.log("import");
-              }}
-            >
-              <CloudUpload sx={{ mr: 1 }} /> Import
-            </Button>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md="auto"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              px: 1,
-            }}
-          >
-            <Typography variant="h7"> OR </Typography>
-          </Grid>
-          <Grid item xs={12} md>
-            <Button
-              variant="contained"
-              color="secondaryButton"
-              size="small"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-              onClick={(e) => {
-                const URL =
-                  "https://ws-dev.prasetiyamulya.ac.id/fpb/C_master/download_template_material";
-                if (typeof window !== "undefined") {
-                  window.location.href = URL;
-                }
-              }}
-            >
-              <CloudDownload sx={{ mr: 1 }} /> Download Template
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={1}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Status</Typography>
-          </Grid>
-          <Grid item xs={12} md={11}>
-            <FormControl
-              variant="outlined"
-              size="small"
-              margin="normal"
-              sx={{ width: "300px" }}
-            >
-              <Select
-                value={statusSelect}
-                onChange={(e) => setStatusSelect(e.target.value)}
-              >
-                <MenuItem value={masterMaterialStatus.all}>All</MenuItem>
-                <MenuItem value={masterMaterialStatus.active}>Active</MenuItem>
-                <MenuItem value={masterMaterialStatus.inactive}>
-                  Inactive
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
+        <RowButtonSimple
+          md={1}
+          text="Material"
+          buttonOnClick={(e) => {
+            setName("");
+            setPlu("");
+            setMaterialHead("Choose");
+            setPrice("");
+            setStock("");
+            setReorderPoint("");
+            setUom("Choose");
+            setMaterialType("Choose");
+            setMaterialGroup("Choose");
+            setDialogType(dialogTypesMasterMaterial.addDetail);
+            setOpenDialog(true);
+          }}
+        />
+        <RowMasterImport
+          md={1}
+          handleButton2={(e) => {
+            const URL =
+              "https://ws-dev.prasetiyamulya.ac.id/fpb/C_master/download_template_material";
+            if (typeof window !== "undefined") {
+              window.location.href = URL;
+            }
+          }}
+          handleFileInput={handleFileInput}
+        />
+        <RowDdlSimple
+          md={1}
+          text="Status"
+          ddlValue={statusSelect}
+          ddlValues={masterStatusDdlValues}
+          ddlOnChange={(e) => {
+            setStatusSelect(e.target.value);
+          }}
+        />
         <MainTableMenu
           handleRefreshTable={(e) => {
             console.log("refresh table");

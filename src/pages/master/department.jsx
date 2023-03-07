@@ -13,20 +13,30 @@ import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import CubeScanIcon from "mdi-react/CubeScanIcon";
-import { editAndDeleteAction } from "@/components/mainTable/mainTableCustomCells";
+import {
+  editAndDeleteAction,
+  openExpandedRow,
+} from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
 import Add from "@mui/icons-material/Add";
 import {
   confirmationType,
-  dialogTypesMasterMaterial,
-  masterMaterialStatus,
+  dialogTypesMaster,
+  masterStatus,
+  masterStatusDdlValues,
 } from "@/types";
-import ActionDialogMasterMaterial from "@/components/master/actionDialogMasterMaterial";
+import ActionDialogMaster from "@/components/master/actionDialogMaster";
 import FileDocumentOutlineIcon from "mdi-react/FileDocumentOutlineIcon";
 import FileExcelOutlineIcon from "mdi-react/FileExcelOutlineIcon";
 import FilePowerpointOutlineIcon from "mdi-react/FilePowerpointOutlineIcon";
 import ConfirmationDialog from "@/components/confirmationDialog";
+import CloudUpload from "@mui/icons-material/CloudUpload";
+import CloudDownload from "@mui/icons-material/CloudDownload";
+import DeleteRounded from "@mui/icons-material/DeleteRounded";
+import EditRounded from "@mui/icons-material/EditRounded";
+import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
+import RowMasterImport from "@/components/rowSimplified/rowMasterImport";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 
 const columns = [
@@ -37,15 +47,21 @@ const columns = [
     isShow: true,
   },
   {
-    id: "name",
-    label: "Name",
+    id: "idUnit",
+    label: "ID Unit",
     minWidth: 110,
     isShow: true,
   },
   {
-    id: "description",
-    label: "Description",
-    minWidth: 500,
+    id: "company",
+    label: "Company",
+    minWidth: 120,
+    isShow: true,
+  },
+  {
+    id: "unitName",
+    label: "Unit Name",
+    minWidth: 300,
     isShow: true,
   },
   {
@@ -56,31 +72,16 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    action: null,
-    name: "ATK",
-    description: "Alat tulis dan perlengkapan kantor",
-    status: masterMaterialStatus.active,
-  },
-  {
-    action: null,
-    name: "Other",
-    description: "Lain-lain",
-    status: masterMaterialStatus.active,
-  },
-];
-
-const statusDdlValues = [
-  { value: "all", text: "All" },
-  { value: "active", text: "Active" },
-  { value: "inactive", text: "Inactive" },
-];
-
-export default function MasterMaterialHead() {
+export default function MasterDepartment() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
+
+  const [fileInput, setFileInput] = React.useState([]);
+  const handleFileInput = (e) => {
+    setFileInput(e.target.files[0]);
+    console.log("file:", fileInput);
+  };
   const [statusSelect, setStatusSelect] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
@@ -107,16 +108,36 @@ export default function MasterMaterialHead() {
   const [confirmType, setConfirmType] = React.useState("");
   const [confirmDialog, setConfirmDialog] = React.useState(false);
 
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  const [idUnit, setIdUnit] = React.useState("");
+  const [company, setCompany] = React.useState("");
+  const [unitName, setUnitName] = React.useState("");
   const [rowStatusSelect, setRowStatusSelect] = React.useState(
-    masterMaterialStatus.active
+    masterStatus.active
   );
+
+  const rows = [
+    {
+      action: null,
+      unitName: "Pengembangan Ent E E",
+      idUnit: "UK98",
+      company: "STEM",
+      status: masterStatus.active,
+    },
+    {
+      action: null,
+      unitName: "Pengembangan CSE",
+      idUnit: "UK99",
+      company: "STEM",
+      status: masterStatus.active,
+    },
+  ];
+
   function handleActionEdit(row) {
-    setName(row.name);
-    setDescription(row.description);
-    setRowStatusSelect(masterMaterialStatus.active);
-    setDialogType(dialogTypesMasterMaterial.edit);
+    setIdUnit(row.idUnit);
+    setCompany(row.company);
+    setUnitName(row.unitName);
+    setRowStatusSelect(masterStatus.active);
+    setDialogType(dialogTypesMaster.editDepartment);
     setOpenDialog(true);
   }
 
@@ -136,27 +157,39 @@ export default function MasterMaterialHead() {
   return (
     <>
       <Head>
-        <title>Material Head</title>
+        <title>Master Department</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <PageHeader icon={<CubeScanIcon />} title="Master Material Head" />
+      <PageHeader icon={<CubeScanIcon />} title="Master Department" />
       <Box sx={{ p: 2 }}>
         <RowButtonSimple
           md={1}
-          text="Material"
+          text="Dept."
           buttonOnClick={(e) => {
-            setName("");
-            setDescription("");
-            setDialogType(dialogTypesMasterMaterial.add);
+            setIdUnit("");
+            setUnitName("");
+            setCompany("");
+            setDialogType(dialogTypesMaster.addDepartment);
             setOpenDialog(true);
           }}
+        />
+        <RowMasterImport
+          md={1}
+          handleButton2={(e) => {
+            const URL =
+              "https://ws-dev.prasetiyamulya.ac.id/fpb/C_master/download_template_material";
+            if (typeof window !== "undefined") {
+              window.location.href = URL;
+            }
+          }}
+          handleFileInput={handleFileInput}
         />
         <RowDdlSimple
           md={1}
           text="Status"
           ddlValue={statusSelect}
-          ddlValues={statusDdlValues}
+          ddlValues={masterStatusDdlValues}
           ddlOnChange={(e) => {
             setStatusSelect(e.target.value);
           }}
@@ -185,7 +218,7 @@ export default function MasterMaterialHead() {
               <Typography variant="bodyCst1">CSV</Typography>
             </Button>,
             <Button
-              key="21"
+              key="2"
               size="small"
               onClick={(e) => {
                 const URL =
@@ -220,20 +253,23 @@ export default function MasterMaterialHead() {
             rows={rows}
             maxHeight={1000}
             customCell={customCell}
+            isExpandable={true}
           />
         </Paper>
       </Box>
-      <ActionDialogMasterMaterial
+      <ActionDialogMaster
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
         action={(e) => {
           console.log("action");
         }}
-        name={name}
-        setName={setName}
-        description={description}
-        setDescription={setDescription}
+        idUnit={idUnit}
+        setIdUnit={setIdUnit}
+        unitName={unitName}
+        setUnitName={setUnitName}
+        company={company}
+        setCompany={setCompany}
         rowStatusSelect={rowStatusSelect}
         setRowStatusSelect={setRowStatusSelect}
       />
