@@ -123,7 +123,6 @@ const columns = [
     label: "PIC Purc.",
     minWidth: 110,
     isShow: true,
-    align: "left",
   },
   {
     id: "approval",

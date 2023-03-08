@@ -25,8 +25,8 @@ export const confirmationType = {
 };
 
 export const dialogTypesMasterMaterial = {
-  add: "Add Master Material Head",
-  edit: "Edit Master Material Head",
+  addHead: "Add Master Material Head",
+  editHead: "Edit Master Material Head",
   addDetail: "Add Master Material Detail",
   editDetail: "Edit Master Material Detail",
   addType: "Add Master Material Type",
@@ -66,4 +66,42 @@ export const masterStatusDdlValues = [
   { value: "all", text: "All" },
   { value: "active", text: "Active" },
   { value: "inactive", text: "Inactive" },
+];
+
+export const dummyDdlChoose = [
+  {
+    value: "choose",
+    text: "Choose",
+  },
+  {
+    value: "opt1",
+    text: "opt1",
+  },
+  {
+    value: "opt2",
+    text: "opt2",
+  },
+  {
+    value: "opt3",
+    text: "opt3",
+  },
+];
+
+export const dummyDdlAll = [
+  {
+    value: "all",
+    text: "All",
+  },
+  {
+    value: "opt1",
+    text: "opt1",
+  },
+  {
+    value: "opt2",
+    text: "opt2",
+  },
+  {
+    value: "opt3",
+    text: "opt3",
+  },
 ];

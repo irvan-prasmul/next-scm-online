@@ -62,13 +62,13 @@ const rows = [
     action: null,
     materialType: "ZM01",
     description: "Prasmul Stock, valuated",
-    status: masterMaterialStatus.active,
+    status: "active",
   },
   {
     action: null,
     materialType: "ZM02",
     description: "Prasmul Stock, Non-value",
-    status: masterMaterialStatus.active,
+    status: "active",
   },
 ];
 
@@ -104,14 +104,15 @@ export default function MasterMaterialType() {
 
   const [materialType, setMaterialType] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [rowStatusSelect, setRowStatusSelect] = React.useState(
-    masterMaterialStatus.active
-  );
+  const [rowStatusSelect, setRowStatusSelect] = React.useState("active");
+
+  const [isValidate, setValidate] = React.useState(false);
 
   function handleActionEdit(row) {
+    setValidate(false);
     setMaterialType(row.materialType);
     setDescription(row.description);
-    setRowStatusSelect(masterMaterialStatus.active);
+    setRowStatusSelect("active");
     setDialogType(dialogTypesMasterMaterial.editType);
     setOpenDialog(true);
   }
@@ -142,6 +143,7 @@ export default function MasterMaterialType() {
           md={1}
           text="Material"
           buttonOnClick={(e) => {
+            setValidate(false);
             setMaterialType("");
             setDescription("");
             setDialogType(dialogTypesMasterMaterial.addType);
@@ -223,15 +225,14 @@ export default function MasterMaterialType() {
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
-        action={(e) => {
-          console.log("action");
-        }}
+        action={(e) => setValidate(true)}
         materialType={materialType}
         setMaterialType={setMaterialType}
         description={description}
         setDescription={setDescription}
         rowStatusSelect={rowStatusSelect}
         setRowStatusSelect={setRowStatusSelect}
+        isValidate={isValidate}
       />
       <ConfirmationDialog
         type={confirmType}

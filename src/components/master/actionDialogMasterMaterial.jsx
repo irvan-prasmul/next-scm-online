@@ -23,18 +23,25 @@ import SaveRounded from "@mui/icons-material/SaveRounded";
 import Note from "@mui/icons-material/Note";
 import TextField from "@mui/material/TextField";
 import InsertDriveFileRounded from "@mui/icons-material/InsertDriveFileRounded";
-import { dialogTypesMasterMaterial, masterMaterialStatus } from "@/types";
+import {
+  dialogTypesMasterMaterial,
+  dummyDdlChoose,
+  masterMaterialStatus,
+  masterStatusDdlValues,
+} from "@/types";
 import NoteEditOutlineIcon from "mdi-react/NoteEditOutlineIcon";
 import Refresh from "@mui/icons-material/Refresh";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormHelperText from "@mui/material/FormHelperText";
+import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
+import RowDdlSimple from "../rowSimplified/rowDdlSimple";
 
 export default function ActionDialogMasterMaterial({
   type,
   isOpen,
   handleClose,
-  action,
+  action = (e) => console.log("ActionDialogMasterMaterial"),
   // head
   name = "name",
   setName = (e) => console.log("undefined"),
@@ -58,11 +65,11 @@ export default function ActionDialogMasterMaterial({
   materialGroup = "materialGroup",
   setMaterialGroup = (e) => console.log("undefined"),
   // edit
-  rowStatusSelect = masterMaterialStatus.active,
+  rowStatusSelect = "active",
   setRowStatusSelect = (e) => console.log("undefined"),
+  isValidate = false,
+  setValidate = (e) => console.log("undefined"),
 }) {
-  const [isValidate, setValidate] = React.useState(false);
-
   function renderHeader(type) {
     return (
       <Box
@@ -84,12 +91,12 @@ export default function ActionDialogMasterMaterial({
               pr: 1,
             }}
           >
-            {type == dialogTypesMasterMaterial.add ||
+            {type == dialogTypesMasterMaterial.addHead ||
             type == dialogTypesMasterMaterial.addDetail ||
             type == dialogTypesMasterMaterial.addType ||
             type == dialogTypesMasterMaterial.addGroup ? (
               <InsertDriveFileRounded />
-            ) : type == dialogTypesMasterMaterial.edit ||
+            ) : type == dialogTypesMasterMaterial.editHead ||
               type == dialogTypesMasterMaterial.editDetail ||
               type == dialogTypesMasterMaterial.editType ||
               type == dialogTypesMasterMaterial.editGroup ? (
@@ -125,41 +132,18 @@ export default function ActionDialogMasterMaterial({
   }
 
   function statusRow(type) {
-    return type == dialogTypesMasterMaterial.edit ||
+    return type == dialogTypesMasterMaterial.editHead ||
       type == dialogTypesMasterMaterial.editDetail ||
       type == dialogTypesMasterMaterial.editType ||
       type == dialogTypesMasterMaterial.editGroup ? (
-      <Grid container>
-        <Grid
-          item
-          xs={3}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h7">Status</Typography>
-        </Grid>
-        <Grid item xs>
-          <FormControl
-            variant="outlined"
-            size="small"
-            margin="normal"
-            fullWidth
-          >
-            <Select
-              value={rowStatusSelect}
-              onChange={(e) => setRowStatusSelect(e.target.value)}
-            >
-              <MenuItem value={masterMaterialStatus.all}>All</MenuItem>
-              <MenuItem value={masterMaterialStatus.active}>Active</MenuItem>
-              <MenuItem value={masterMaterialStatus.inactive}>
-                Inactive
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
+      <RowDdlSimple
+        md={3}
+        fullWidth
+        text="Status"
+        ddlValue={rowStatusSelect}
+        ddlValues={masterStatusDdlValues}
+        ddlOnChange={(e) => setRowStatusSelect(e.target.value)}
+      />
     ) : (
       <></>
     );
@@ -167,54 +151,28 @@ export default function ActionDialogMasterMaterial({
 
   function renderBody(type) {
     if (
-      type == dialogTypesMasterMaterial.add ||
-      type == dialogTypesMasterMaterial.edit
+      type == dialogTypesMasterMaterial.addHead ||
+      type == dialogTypesMasterMaterial.editHead
     )
       return (
         <Box sx={{ p: 2 }}>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7" sx={{ mt: 1 }}>
-                Name
-              </Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Description</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                multiline
-                rows={3}
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={description}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
+          <RowTextFieldSimple
+            text="Name"
+            textFieldValue={name}
+            textFieldOnChange={(e) => setName(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Description"
+            textFieldValue={description}
+            textFieldOnChange={(e) => setDescription(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+            multiline
+          />
           {statusRow(type)}
         </Box>
       );
@@ -224,244 +182,85 @@ export default function ActionDialogMasterMaterial({
     )
       return (
         <Box sx={{ p: 2 }}>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">PLU</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={plu}
-                onChange={(e) => {
-                  setPlu(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Material Head</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-              >
-                <Select
-                  value={materialHead}
-                  onChange={(e) => setMaterialHead(e.target.value)}
-                >
-                  <MenuItem value={"opt1"}>opt1</MenuItem>
-                  <MenuItem value={"opt2"}>opt2</MenuItem>
-                  <MenuItem value={"opt3"}>opt3</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Material Name</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Price</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl variant="outlined" fullWidth size="small">
-                <OutlinedInput
-                  type="number"
-                  startAdornment={
-                    <InputAdornment position="start">Rp.</InputAdornment>
-                  }
-                  value={price}
-                  onChange={(e) => {
-                    setPrice(e.target.value);
-                  }}
-                  error={isValidate && price == ""}
-                  fullWidth
-                />
-                <FormHelperText sx={{ color: "error.main" }}>
-                  {isValidate && price == ""
-                    ? "Please fill out this field."
-                    : ""}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Stock</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={stock}
-                onChange={(e) => {
-                  setStock(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Reorder Point</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={reorderPoint}
-                onChange={(e) => {
-                  setReorderPoint(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">UOM</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-              >
-                <Select value={uom} onChange={(e) => setUom(e.target.value)}>
-                  <MenuItem value={"opt1"}>opt1</MenuItem>
-                  <MenuItem value={"opt2"}>opt2</MenuItem>
-                  <MenuItem value={"opt3"}>opt3</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Material Type</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-              >
-                <Select
-                  value={materialType}
-                  onChange={(e) => setMaterialType(e.target.value)}
-                >
-                  <MenuItem value={"opt1"}>opt1</MenuItem>
-                  <MenuItem value={"opt2"}>opt2</MenuItem>
-                  <MenuItem value={"opt3"}>opt3</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Material Group</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-              >
-                <Select
-                  value={materialGroup}
-                  onChange={(e) => setMaterialGroup(e.target.value)}
-                >
-                  <MenuItem value={"opt1"}>opt1</MenuItem>
-                  <MenuItem value={"opt2"}>opt2</MenuItem>
-                  <MenuItem value={"opt3"}>opt3</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
+          <RowTextFieldSimple
+            text="PLU"
+            textFieldValue={plu}
+            textFieldOnChange={(e) => setPlu(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Material Head"
+            ddlValue={materialHead}
+            ddlValues={dummyDdlChoose}
+            ddlOnChange={(e) => setMaterialHead(e.target.value)}
+            isValidate={isValidate}
+          />
+          <RowTextFieldSimple
+            text="Material Name"
+            textFieldValue={name}
+            textFieldOnChange={(e) => setName(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Price"
+            textFieldValue={price}
+            textFieldOnChange={(e) => setPrice(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            startAdornment={
+              <InputAdornment position="start">Rp.</InputAdornment>
+            }
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Stock"
+            textFieldValue={stock}
+            textFieldOnChange={(e) => setStock(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Reorder Point"
+            textFieldValue={reorderPoint}
+            textFieldOnChange={(e) => setReorderPoint(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="UOM"
+            ddlValue={uom}
+            ddlValues={dummyDdlChoose}
+            ddlOnChange={(e) => setUom(e.target.value)}
+            isValidate={isValidate}
+          />
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Material Type"
+            ddlValue={materialType}
+            ddlValues={dummyDdlChoose}
+            ddlOnChange={(e) => setMaterialType(e.target.value)}
+            isValidate={isValidate}
+          />
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Material Group"
+            ddlValue={materialGroup}
+            ddlValues={dummyDdlChoose}
+            ddlOnChange={(e) => setMaterialGroup(e.target.value)}
+            isValidate={isValidate}
+          />
           {statusRow(type)}
         </Box>
       );
@@ -471,49 +270,23 @@ export default function ActionDialogMasterMaterial({
     )
       return (
         <Box sx={{ p: 2 }}>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7" sx={{ mt: 1 }}>
-                Material Type
-              </Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={materialType}
-                onChange={(e) => {
-                  setMaterialType(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Description</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                multiline
-                rows={3}
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={description}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
+          <RowTextFieldSimple
+            text="Material Type"
+            textFieldValue={materialType}
+            textFieldOnChange={(e) => setMaterialType(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Description"
+            textFieldValue={description}
+            textFieldOnChange={(e) => setDescription(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+            multiline
+          />
           {statusRow(type)}
         </Box>
       );
@@ -523,49 +296,23 @@ export default function ActionDialogMasterMaterial({
     )
       return (
         <Box sx={{ p: 2 }}>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7" sx={{ mt: 1 }}>
-                Material Group
-              </Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={materialGroup}
-                onChange={(e) => {
-                  setMaterialGroup(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Description</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                multiline
-                rows={3}
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={description}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
+          <RowTextFieldSimple
+            text="Material Group"
+            textFieldValue={materialGroup}
+            textFieldOnChange={(e) => setMaterialGroup(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Description"
+            textFieldValue={description}
+            textFieldOnChange={(e) => setDescription(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+            multiline
+          />
           {statusRow(type)}
         </Box>
       );
@@ -573,7 +320,7 @@ export default function ActionDialogMasterMaterial({
 
   function renderAction(type) {
     if (
-      type == dialogTypesMasterMaterial.add ||
+      type == dialogTypesMasterMaterial.addHead ||
       type == dialogTypesMasterMaterial.addDetail ||
       type == dialogTypesMasterMaterial.addType ||
       type == dialogTypesMasterMaterial.addGroup
@@ -596,7 +343,7 @@ export default function ActionDialogMasterMaterial({
       );
     }
     if (
-      type == dialogTypesMasterMaterial.edit ||
+      type == dialogTypesMasterMaterial.editHead ||
       type == dialogTypesMasterMaterial.editDetail ||
       type == dialogTypesMasterMaterial.editType ||
       type == dialogTypesMasterMaterial.editGroup

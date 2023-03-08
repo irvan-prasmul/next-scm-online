@@ -1,8 +1,9 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import ArrowForward from "@mui/icons-material/ArrowForward";
 
-export default function PageHeader({ icon, title }) {
+export default function PageHeader({ icon, title = "text" }) {
   return (
     <>
       <Box
@@ -15,9 +16,35 @@ export default function PageHeader({ icon, title }) {
         }}
       >
         {icon}
-        <Typography variant="h6" sx={{ marginLeft: "3px" }}>
+        {Array.isArray(title) ? (
+          title.map((t, index) => {
+            return (
+              <>
+                <Typography
+                  variant="h6"
+                  sx={{ marginLeft: index == 0 ? "3px" : "0px" }}
+                >
+                  {t}
+                </Typography>
+                {title[index + 1] ? (
+                  <>
+                    <div>&nbsp;</div> <ArrowForward />
+                    <div>&nbsp;</div>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            );
+          })
+        ) : (
+          <Typography variant="h6" sx={{ marginLeft: "3px" }}>
+            {title}
+          </Typography>
+        )}
+        {/* <Typography variant="h6" sx={{ marginLeft: "3px" }}>
           {title}
-        </Typography>
+        </Typography> */}
       </Box>
       <Divider />
     </>

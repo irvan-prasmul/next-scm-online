@@ -81,7 +81,7 @@ export default function ConfirmationDialog({
   type,
   isOpen,
   handleClose,
-  action,
+  action = (e) => console.log("ConfirmationDialog"),
   isValue = false,
 }) {
   return (

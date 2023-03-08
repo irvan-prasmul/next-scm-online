@@ -29,7 +29,7 @@ import FileUpload from "react-mui-fileuploader";
 import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
 import RowDdlSimple from "../rowSimplified/rowDdlSimple";
 import RowDatePickerSimple from "../rowSimplified/rowDatePickerSimple";
-import RowSelectFileSimple from "../rowSimplified/rowSelectFileSimple";
+import RowSearchList from "../rowSimplified/rowSearchList";
 
 export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
   const [materialSearch, setMaterialSearch] = React.useState("");
@@ -125,38 +125,16 @@ export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
           </Grid>
         </Box>
         <Box sx={{ pt: 1, pr: 2, pb: 2, pl: 2 }}>
-          <Grid container>
-            <Grid item xs={12} md={3} sx={{ pt: 3 }}>
-              <Typography variant="h7"> Search</Typography>
-            </Grid>
-            <Grid item xs={12} md={9}>
-              <FormControl variant="outlined" fullWidth>
-                <OutlinedInput
-                  value={materialSearch}
-                  fullWidth
-                  placeholder="Search by material name"
-                  size="small"
-                  onChange={handleMaterialSearch}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={handleClickShowMaterialSearch}
-                        onMouseDown={handleMouseDownMaterialSearch}
-                      >
-                        <SearchRounded />
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-                <FormHelperText>
-                  <Typography variant="bodyTable1" color="error">
-                    * If the item name is not available, please contact
-                    anisa.mirza@pmbs.ac.id.
-                  </Typography>
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-          </Grid>
+          <RowSearchList
+            text="Search"
+            textFieldValue={materialSearch}
+            textFieldOnChange={handleMaterialSearch}
+            endAdornmentAction={handleClickShowMaterialSearch}
+            fullWidth
+            md={3}
+            placeholder="Search by material name"
+            searchNote="* If the item name is not available, please contact anisa.mirza@pmbs.ac.id."
+          />
           <Divider sx={{ mb: 2, pt: 2 }} />
           <RowTextFieldSimple
             md={3}

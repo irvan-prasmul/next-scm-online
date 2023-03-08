@@ -114,14 +114,14 @@ export default function MasterCostCenter() {
   const [confirmType, setConfirmType] = React.useState("");
   const [confirmDialog, setConfirmDialog] = React.useState(false);
 
-  const [costCenterId, setIdUnit] = React.useState("");
+  const [costCenterId, setCostCenterId] = React.useState("");
   const [controllingArea, setControllingArea] = React.useState("");
-  const [companyCode, setUnitName] = React.useState("");
+  const [companyCode, setCompanyCode] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [profitCenter, setProfitCenter] = React.useState("");
-  const [rowStatusSelect, setRowStatusSelect] = React.useState(
-    masterStatus.active
-  );
+  const [rowStatusSelect, setRowStatusSelect] = React.useState("active");
+
+  const [isValidate, setValidate] = React.useState(false);
 
   const rows = [
     {
@@ -131,7 +131,7 @@ export default function MasterCostCenter() {
       controllingArea: "STEM",
       description: "SBE BVDI",
       profitCenter: "SBE",
-      status: masterStatus.active,
+      status: "active",
     },
     {
       action: null,
@@ -140,17 +140,18 @@ export default function MasterCostCenter() {
       controllingArea: "STEM",
       description: "SBE Dekanat",
       profitCenter: "SBE",
-      status: masterStatus.active,
+      status: "active",
     },
   ];
 
   function handleActionEdit(row) {
-    setIdUnit(row.costCenterId);
+    setValidate(false);
+    setCostCenterId(row.costCenterId);
     setControllingArea(row.controllingArea);
-    setUnitName(row.companyCode);
+    setCompanyCode(row.companyCode);
     setProfitCenter(row.profitCenter);
     setDescription(row.description);
-    setRowStatusSelect(masterStatus.active);
+    setRowStatusSelect("active");
     setDialogType(dialogTypesMaster.editCostCenter);
     setOpenDialog(true);
   }
@@ -264,13 +265,11 @@ export default function MasterCostCenter() {
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
-        action={(e) => {
-          console.log("action");
-        }}
+        action={(e) => setValidate(true)}
         costCenterId={costCenterId}
-        setIdUnit={setIdUnit}
+        setCostCenterId={setCostCenterId}
         companyCode={companyCode}
-        setUnitName={setUnitName}
+        setCompanyCode={setCompanyCode}
         controllingArea={controllingArea}
         setControllingArea={setControllingArea}
         profitCenter={profitCenter}
@@ -279,6 +278,7 @@ export default function MasterCostCenter() {
         setDescription={setDescription}
         rowStatusSelect={rowStatusSelect}
         setRowStatusSelect={setRowStatusSelect}
+        isValidate={isValidate}
       />
       <ConfirmationDialog
         type={confirmType}

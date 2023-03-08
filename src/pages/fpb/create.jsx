@@ -43,6 +43,7 @@ import TableChartRounded from "@mui/icons-material/TableChartRounded";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import { requesterCreateAction } from "@/components/mainTable/mainTableCustomCells";
 import RowTextSimple from "@/components/rowSimplified/rowTextSimple";
+import PageHeader from "@/components/pageHeader";
 
 const columns = [
   {
@@ -421,24 +422,7 @@ export default function FpbCreate() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <Box
-        className="alternate-background-header"
-        sx={{
-          pt: 1,
-          pl: 2,
-          pb: 1,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "start",
-          alignItems: "center",
-        }}
-      >
-        <ShoppingCart />
-        <Typography variant="h6">FPB </Typography>
-        <div>&nbsp;</div> <ArrowForward />
-        <div>&nbsp;</div>
-        <Typography variant="h6"> Create</Typography>
-      </Box>
+      <PageHeader icon={<ShoppingCart />} title={["FPB", "Create"]} />
       <Divider />
       <Box className="alternate-backgound" sx={{ p: 2 }}>
         <RowTextSimple text="Requester" otherText={": " + userName} />

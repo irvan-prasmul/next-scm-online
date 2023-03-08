@@ -21,14 +21,7 @@ export default function RowDatePickerSimple({
 }) {
   return (
     <Grid container>
-      <Grid
-        item
-        xs={12}
-        md={md}
-        sx={{
-          mt: 1,
-        }}
-      >
+      <Grid item xs={12} md={md} style={{ marginTop: 16 }}>
         <Typography variant="h7">{text}</Typography>
       </Grid>
       <Grid item xs={12} md={12 - md}>

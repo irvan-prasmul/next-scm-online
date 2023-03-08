@@ -23,13 +23,21 @@ import SaveRounded from "@mui/icons-material/SaveRounded";
 import Note from "@mui/icons-material/Note";
 import TextField from "@mui/material/TextField";
 import InsertDriveFileRounded from "@mui/icons-material/InsertDriveFileRounded";
-import { dialogTypesMaster, masterStatus } from "@/types";
+import {
+  dialogTypesMaster,
+  dummyDdlChoose,
+  masterStatus,
+  masterStatusDdlValues,
+} from "@/types";
 import NoteEditOutlineIcon from "mdi-react/NoteEditOutlineIcon";
 import Refresh from "@mui/icons-material/Refresh";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormHelperText from "@mui/material/FormHelperText";
 import SearchRounded from "@mui/icons-material/SearchRounded";
+import RowDdlSimple from "../rowSimplified/rowDdlSimple";
+import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
+import RowSearchList from "../rowSimplified/rowSearchList";
 
 export default function ActionDialogMaster({
   type,
@@ -90,11 +98,11 @@ export default function ActionDialogMaster({
   setEmail = (e) => console.lgo("undefined"),
 
   // edit
-  rowStatusSelect = masterStatus.active,
+  rowStatusSelect = "active",
   setRowStatusSelect = (e) => console.log("undefined"),
+  isValidate = false,
+  setValidate = (e) => console.lgo("undefined"),
 }) {
-  const [isValidate, setValidate] = React.useState(false);
-
   function renderHeader(type) {
     return (
       <Box
@@ -158,35 +166,14 @@ export default function ActionDialogMaster({
       type == dialogTypesMaster.editCostCenter ||
       type == dialogTypesMaster.editUser ||
       type == dialogTypesMaster.editVendor ? (
-      <Grid container>
-        <Grid
-          item
-          xs={3}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h7">Status</Typography>
-        </Grid>
-        <Grid item xs>
-          <FormControl
-            variant="outlined"
-            size="small"
-            margin="normal"
-            fullWidth
-          >
-            <Select
-              value={rowStatusSelect}
-              onChange={(e) => setRowStatusSelect(e.target.value)}
-            >
-              <MenuItem value={masterStatus.all}>All</MenuItem>
-              <MenuItem value={masterStatus.active}>Active</MenuItem>
-              <MenuItem value={masterStatus.inactive}>Inactive</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
+      <RowDdlSimple
+        md={3}
+        fullWidth
+        text="Status"
+        ddlValue={rowStatusSelect}
+        ddlValues={masterStatusDdlValues}
+        ddlOnChange={(e) => setRowStatusSelect(e.target.value)}
+      />
     ) : (
       <></>
     );
@@ -199,63 +186,30 @@ export default function ActionDialogMaster({
     )
       return (
         <Box sx={{ p: 2 }}>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7" sx={{ mt: 1 }}>
-                ID Unit
-              </Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={idUnit}
-                onChange={(e) => {
-                  setIdUnit(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Company</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={company}
-                onChange={(e) => {
-                  setCompany(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Unit Name</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={unitName}
-                onChange={(e) => {
-                  setUnitName(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
+          <RowTextFieldSimple
+            text="ID Unit"
+            textFieldValue={idUnit}
+            textFieldOnChange={(e) => setIdUnit(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Company"
+            textFieldValue={company}
+            textFieldOnChange={(e) => setCompany(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Unit Name"
+            textFieldValue={unitName}
+            textFieldOnChange={(e) => setUnitName(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
           {statusRow(type)}
         </Box>
       );
@@ -265,403 +219,173 @@ export default function ActionDialogMaster({
     )
       return (
         <Box sx={{ p: 2 }}>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Cost Center Id</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={costCenterId}
-                onChange={(e) => {
-                  setCostCenterId(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Controlling Area</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={controllingArea}
-                onChange={(e) => {
-                  setControllingArea(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Company Code</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-              >
-                <Select
-                  value={companyCode}
-                  onChange={(e) => setCompanyCode(e.target.value)}
-                >
-                  <MenuItem value={"opt1"}>opt1</MenuItem>
-                  <MenuItem value={"opt2"}>opt2</MenuItem>
-                  <MenuItem value={"opt3"}>opt3</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Profit Center</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-              >
-                <Select
-                  value={profitCenter}
-                  onChange={(e) => setProfitCenter(e.target.value)}
-                >
-                  <MenuItem value={"opt1"}>opt1</MenuItem>
-                  <MenuItem value={"opt2"}>opt2</MenuItem>
-                  <MenuItem value={"opt3"}>opt3</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Description</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={description}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
+          <RowTextFieldSimple
+            text="Cost Center Id"
+            textFieldValue={costCenterId}
+            textFieldOnChange={(e) => setCostCenterId(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Controlling Area"
+            textFieldValue={controllingArea}
+            textFieldOnChange={(e) => setControllingArea(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Company Code"
+            ddlValue={companyCode}
+            ddlValues={dummyDdlChoose}
+            ddlOnChange={(e) => setCompanyCode(e.target.value)}
+            isValidate={isValidate}
+          />
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Profit Center"
+            ddlValue={profitCenter}
+            ddlValues={dummyDdlChoose}
+            ddlOnChange={(e) => setProfitCenter(e.target.value)}
+            isValidate={isValidate}
+          />
+          <RowTextFieldSimple
+            text="Description"
+            textFieldValue={description}
+            textFieldOnChange={(e) => setDescription(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
           {statusRow(type)}
         </Box>
       );
     if (type == dialogTypesMaster.addUser || type == dialogTypesMaster.editUser)
       return (
         <Box sx={{ p: 2 }}>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Role</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-              >
-                <Select value={role} onChange={(e) => setRole(e.target.value)}>
-                  <MenuItem value={"Choose"}>Choose</MenuItem>
-                  <MenuItem value={"pjb"}>pjb</MenuItem>
-                  <MenuItem value={"pjk"}>pjk</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">NIK</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={nik}
-                onChange={(e) => {
-                  setNik(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Name</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Initial</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={nik}
-                onChange={(e) => {
-                  setInitial(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Email 1</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                placeholder="Email@pmbs"
-                value={email1}
-                onChange={(e) => {
-                  setEmail1(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Email 2</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                placeholder="Email@prasetiyamulya"
-                value={email2}
-                onChange={(e) => {
-                  setEmail2(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Password</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                type="password"
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Department</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-              >
-                <Select
-                  value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
-                >
-                  <MenuItem value={"Choose"}>Choose</MenuItem>
-                  <MenuItem value={"opt1"}>opt1</MenuItem>
-                  <MenuItem value={"opt2"}>opt2</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Position</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-                disabled
-              >
-                <Select
-                  value={position}
-                  onChange={(e) => setPosition(e.target.value)}
-                >
-                  <MenuItem value={"Choose"}>Choose</MenuItem>
-                  <MenuItem value={"DK"}>DK</MenuItem>
-                  <MenuItem value={"opt2"}>opt2</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Role"
+            ddlValue={role}
+            ddlValues={[
+              { value: "choose", text: "Choose" },
+              { value: "pjb", text: "PJB" },
+              { value: "pjk", text: "PJK" },
+            ]}
+            ddlOnChange={(e) => setRole(e.target.value)}
+            isValidate={isValidate}
+          />
+          <RowTextFieldSimple
+            text="NIK"
+            textFieldValue={nik}
+            textFieldOnChange={(e) => setNik(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Name"
+            textFieldValue={name}
+            textFieldOnChange={(e) => setName(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Initial"
+            textFieldValue={nik}
+            textFieldOnChange={(e) => setInitial(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Email 1"
+            textFieldValue={email1}
+            textFieldOnChange={(e) => setEmail1(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+            placeholder="Email@pmbs"
+          />
+          <RowTextFieldSimple
+            text="Email 2"
+            textFieldValue={email2}
+            textFieldOnChange={(e) => setEmail2(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+            placeholder="Email@prasetiyamulya"
+          />
+          <RowTextFieldSimple
+            text="Password"
+            textFieldValue={password}
+            textFieldOnChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+            type="password"
+          />
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Department"
+            ddlValue={department}
+            ddlValues={dummyDdlChoose}
+            ddlOnChange={(e) => setDepartment(e.target.value)}
+            isValidate={isValidate}
+          />
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Position"
+            ddlValue={position}
+            ddlValues={[
+              { value: "choose", text: "Choose" },
+              { value: "dk", text: "Dekan" },
+              { value: "pjk", text: "PJK" },
+            ]}
+            ddlOnChange={(e) => setPosition(e.target.value)}
+            isValidate={isValidate}
+          />
           {statusRow(type)}
         </Box>
       );
     if (type == dialogTypesMaster.addPjb || type == dialogTypesMaster.editPjb)
       return (
         <Box sx={{ p: 2 }}>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">User</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-              >
-                <Select value={user} onChange={(e) => setUser(e.target.value)}>
-                  <MenuItem value={"Choose"}>Choose</MenuItem>
-                  <MenuItem value={"pjb"}>pjb</MenuItem>
-                  <MenuItem value={"pjk"}>pjk</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Company</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl
-                variant="outlined"
-                size="small"
-                margin="normal"
-                fullWidth
-              >
-                <Select
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
-                >
-                  <MenuItem value={"Choose"}>Choose</MenuItem>
-                  <MenuItem value={"pjb"}>pjb</MenuItem>
-                  <MenuItem value={"pjk"}>pjk</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7">Level</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                type="number"
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={level}
-                onChange={(e) => {
-                  setLevel(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="User"
+            ddlValue={user}
+            ddlValues={dummyDdlChoose}
+            ddlOnChange={(e) => setUser(e.target.value)}
+            isValidate={isValidate}
+          />
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Company"
+            ddlValue={company}
+            ddlValues={dummyDdlChoose}
+            ddlOnChange={(e) => setCompany(e.target.value)}
+            isValidate={isValidate}
+          />
+          <RowTextFieldSimple
+            text="Level"
+            textFieldValue={level}
+            textFieldOnChange={(e) => setLevel(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+            type="number"
+          />
         </Box>
       );
     if (
@@ -670,130 +394,48 @@ export default function ActionDialogMaster({
     )
       return (
         <Box sx={{ p: 2 }}>
-          <Grid container>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Name</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={vendor}
-                onChange={(e) => {
-                  setVendor(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Telp</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={telp}
-                onChange={(e) => {
-                  setTelp(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">E-mail</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid
-              item
-              xs={3}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h7">Address</Typography>
-            </Grid>
-            <Grid item xs>
-              <TextField
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={address}
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container sx={{ pt: 2 }}>
-            <Grid item xs={3} sx={{ mt: 1 }}>
-              <Typography variant="h7"> Material</Typography>
-            </Grid>
-            <Grid item xs>
-              <FormControl variant="outlined" fullWidth>
-                <OutlinedInput
-                  value={material}
-                  fullWidth
-                  placeholder="Search by material name"
-                  size="small"
-                  onChange={(e) => setMaterial(e.target.value)}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={(e) => {}}
-                        onMouseDown={(e) => e.preventDefault()}
-                      >
-                        <SearchRounded />
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-                <FormHelperText>
-                  <Typography variant="bodyTable1" color="error">
-                    *If the item name is not available, please contact
-                    warehouse.
-                  </Typography>
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-          </Grid>
+          <RowTextFieldSimple
+            text="Name"
+            textFieldValue={vendor}
+            textFieldOnChange={(e) => setVendor(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Telp"
+            textFieldValue={telp}
+            textFieldOnChange={(e) => setTelp(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="E-mail"
+            textFieldValue={email}
+            textFieldOnChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowTextFieldSimple
+            text="Address"
+            textFieldValue={address}
+            textFieldOnChange={(e) => setAddress(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+          />
+          <RowSearchList
+            text="Material"
+            textFieldValue={material}
+            textFieldOnChange={(e) => setMaterial(e.target.value)}
+            fullWidth
+            isValidate={isValidate}
+            md={3}
+            placeholder="Search by material name"
+            searchNote="*If the item name is not available, please contact warehouse."
+          />
           {statusRow(type)}
         </Box>
       );

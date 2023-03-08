@@ -61,13 +61,13 @@ const rows = [
     action: null,
     name: "ATK",
     description: "Alat tulis dan perlengkapan kantor",
-    status: masterMaterialStatus.active,
+    status: "active",
   },
   {
     action: null,
     name: "Other",
     description: "Lain-lain",
-    status: masterMaterialStatus.active,
+    status: "active",
   },
 ];
 
@@ -109,14 +109,16 @@ export default function MasterMaterialHead() {
 
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [rowStatusSelect, setRowStatusSelect] = React.useState(
-    masterMaterialStatus.active
-  );
+  const [rowStatusSelect, setRowStatusSelect] = React.useState("active");
+
+  const [isValidate, setValidate] = React.useState(false);
+
   function handleActionEdit(row) {
     setName(row.name);
     setDescription(row.description);
-    setRowStatusSelect(masterMaterialStatus.active);
-    setDialogType(dialogTypesMasterMaterial.edit);
+    setValidate(false);
+    setRowStatusSelect("active");
+    setDialogType(dialogTypesMasterMaterial.editHead);
     setOpenDialog(true);
   }
 
@@ -148,7 +150,8 @@ export default function MasterMaterialHead() {
           buttonOnClick={(e) => {
             setName("");
             setDescription("");
-            setDialogType(dialogTypesMasterMaterial.add);
+            setValidate(false);
+            setDialogType(dialogTypesMasterMaterial.addHead);
             setOpenDialog(true);
           }}
         />
@@ -227,22 +230,21 @@ export default function MasterMaterialHead() {
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
-        action={(e) => {
-          console.log("action");
-        }}
+        action={(e) => setValidate(true)}
         name={name}
         setName={setName}
         description={description}
         setDescription={setDescription}
         rowStatusSelect={rowStatusSelect}
         setRowStatusSelect={setRowStatusSelect}
+        isValidate={isValidate}
       />
       <ConfirmationDialog
         type={confirmType}
         isOpen={confirmDialog}
         handleClose={(e) => setConfirmDialog(false)}
-        action={() => {
-          console.log("confirm action");
+        action={(e) => {
+          console.log("action");
         }}
       />
     </>

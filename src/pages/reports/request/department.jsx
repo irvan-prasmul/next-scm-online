@@ -22,6 +22,7 @@ import Add from "@mui/icons-material/Add";
 import {
   confirmationType,
   dialogTypesMaster,
+  dummyDdlAll,
   masterStatus,
   masterStatusDdlValues,
 } from "@/types";
@@ -37,58 +38,241 @@ import EditRounded from "@mui/icons-material/EditRounded";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import ClosedCaptionOutlined from "@mui/icons-material/ClosedCaptionOutlined";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
+import NewspaperVariantMultipleOutlineIcon from "mdi-react/NewspaperVariantMultipleOutlineIcon";
+import ArrowForward from "@mui/icons-material/ArrowForward";
+import RowDatePickerSimple from "@/components/rowSimplified/rowDatePickerSimple";
+import RowDateRangePickerSimple from "@/components/rowSimplified/rowDateRangePickerSimple";
+import { addDays } from "date-fns";
 
 const columns = [
   {
-    id: "action",
-    label: "Action",
-    minWidth: 160,
+    id: "id",
+    label: "#",
+    minWidth: 22,
     isShow: true,
+  },
+  {
+    id: "fpbnumber",
+    label: "No. FPB",
+    minWidth: 175,
+    isShow: true,
+  },
+  {
+    id: "noPo",
+    label: "No. PO",
+    minWidth: 80,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
   },
   {
     id: "vendor",
     label: "Vendor",
-    minWidth: 200,
+    minWidth: 100,
     isShow: true,
   },
   {
-    id: "telp",
-    label: "Telp",
+    id: "created",
+    label: "Created",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => moment(value).format("YYYY-MM-DD"),
+  },
+  {
+    id: "requester",
+    label: "Requester",
+    minWidth: 130,
+    isShow: true,
+  },
+  {
+    id: "department",
+    label: "Department",
+    minWidth: 130,
+    isShow: true,
+  },
+  {
+    id: "activity",
+    label: "Activity",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "ioBudget",
+    label: "IO Budget",
     minWidth: 120,
     isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
   },
   {
-    id: "email",
-    label: "Email",
-    minWidth: 120,
+    id: "materialName",
+    label: "Material Name",
+    minWidth: 230,
     isShow: true,
   },
   {
-    id: "address",
-    label: "Address",
-    minWidth: 170,
+    id: "category",
+    label: "Category",
+    minWidth: 90,
     isShow: true,
   },
   {
-    id: "material",
-    label: "Material",
+    id: "qtyPB",
+    label: "Qty PB",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "uom",
+    label: "UOM",
+    minWidth: 80,
+    isShow: true,
+  },
+  {
+    id: "estPrice",
+    label: "Est Price",
     minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "totalEst",
+    label: "Total Est",
+    minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "netPrice",
+    label: "Net Price",
+    minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "totalNet",
+    label: "Total Net",
+    minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "constCenter",
+    label: "Cost Center",
+    minWidth: 156,
+    isShow: true,
+  },
+  {
+    id: "planDate",
+    label: "Plan Date",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => moment(value).format("YYYY-MM-DD"),
+  },
+  {
+    id: "picPurchase",
+    label: "PIC Purc.",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "requesterNotes",
+    label: "Requester Notes",
+    minWidth: 202,
+    isShow: true,
+  },
+  {
+    id: "purchasingNotes",
+    label: "Purchasing Notes",
+    minWidth: 256,
+    isShow: true,
+  },
+  {
+    id: "approvalPjk",
+    label: "Approval PJK",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "approvalPjb",
+    label: "Approval PJB",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "approvalProcurement",
+    label: "Approval Procurement",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "reviewIct",
+    label: "Review ICT",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "approvalPurchasing",
+    label: "Approval Purchasing",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "documentStatus",
+    label: "Document Status",
+    minWidth: 500,
+    isShow: true,
+  },
+  {
+    id: "docDate",
+    label: "Document Date",
+    minWidth: 130,
+    isShow: true,
+    format: (value) => moment(value).format("YYYY-MM-DD"),
+  },
+  {
+    id: "delivered",
+    label: "Delivered",
+    minWidth: 110,
     isShow: true,
   },
   {
     id: "status",
     label: "Status",
-    minWidth: 110,
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "informationStatus",
+    label: "Information Status",
+    minWidth: 500,
     isShow: true,
   },
 ];
 
-export default function MasterVendor() {
+export default function ReportsRequestDepartment() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
 
-  const [statusSelect, setStatusSelect] = React.useState("all");
+  const [period, setPeriod] = React.useState([
+    {
+      startDate: addDays(new Date(), -7),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+  const [status, setStatus] = React.useState("all");
+  const [profitCenter, setProfitCenter] = React.useState("all");
+  const [plant, setPlant] = React.useState("all");
+  const [department, setDepartment] = React.useState("all");
+  const [costCenter, setCostCenter] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
@@ -113,79 +297,65 @@ export default function MasterVendor() {
   const [openDialog, setOpenDialog] = React.useState(false);
   const [confirmType, setConfirmType] = React.useState("");
   const [confirmDialog, setConfirmDialog] = React.useState(false);
+  const rows = [];
 
-  const [vendor, setVendor] = React.useState("");
-  const [telp, setTelp] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [address, setAddress] = React.useState("");
-  const [material, setMaterial] = React.useState("");
-  const [rowStatusSelect, setRowStatusSelect] = React.useState("active");
-
-  const [isValidate, setValidate] = React.useState(false);
-
-  const rows = [
-    {
-      action: null,
-      email: "",
-      vendor: "Zeals Digital Asia",
-      telp: "2139810938",
-      address: "SBE BVDI",
-      material: "SBE",
-      status: "active",
-    },
-    {
-      action: null,
-      email: "",
-      vendor: "Yasin Global Training",
-      telp: "1313123123",
-      address: "SBE Dekanat",
-      material: "SBE",
-      status: "active",
-    },
-  ];
-
-  function handleActionEdit(row) {
-    setValidate(false);
-    setVendor(row.vendor);
-    setTelp(row.telp);
-    setEmail(row.email);
-    setAddress(row.address);
-    setMaterial(row.material);
-    setRowStatusSelect("active");
-    setDialogType(dialogTypesMaster.editVendor);
-    setOpenDialog(true);
-  }
-
-  function handleActionDelete(e) {
-    setConfirmType(confirmationType.delete);
-    setConfirmDialog(true);
-  }
-
-  const customCell = [
-    editAndDeleteAction({
-      id: "action",
-      handleEdit: handleActionEdit,
-      handleDelete: handleActionDelete,
-    }),
-  ];
+  const customCell = [];
 
   return (
     <>
       <Head>
-        <title>Master Vendor</title>
+        <title>Report</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <PageHeader icon={<CubeScanIcon />} title="Master Vendor" />
+      <PageHeader
+        icon={<NewspaperVariantMultipleOutlineIcon />}
+        title={["Report", "Request", "Department"]}
+      />
       <Box sx={{ p: 2 }}>
-        <RowDdlSimple
-          md={1}
-          text="Status"
-          ddlValue={statusSelect}
-          ddlValues={masterStatusDdlValues}
-          ddlOnChange={(e) => {
-            setStatusSelect(e.target.value);
+        <RowDateRangePickerSimple
+          md={2}
+          text="Period"
+          dateValue={period}
+          dateOnChange={(e) => {
+            console.log("setdate:", e);
+            setPeriod([e.selection]);
           }}
+        />
+        <RowDdlSimple
+          md={2}
+          text="Status"
+          ddlValue={status}
+          ddlValues={dummyDdlAll}
+          ddlOnChange={(e) => setStatus(e.target.value)}
+        />
+        <RowDdlSimple
+          md={2}
+          text="Profit Center"
+          ddlValue={profitCenter}
+          ddlValues={dummyDdlAll}
+          ddlOnChange={(e) => setProfitCenter(e.target.value)}
+        />
+        <RowDdlSimple
+          md={2}
+          text="Plant"
+          ddlValue={plant}
+          ddlValues={dummyDdlAll}
+          ddlOnChange={(e) => setPlant(e.target.value)}
+        />
+        <RowDdlSimple
+          md={2}
+          text="Department"
+          ddlValue={department}
+          ddlValues={dummyDdlAll}
+          ddlOnChange={(e) => setDepartment(e.target.value)}
+        />
+        <RowDdlSimple
+          md={2}
+          text="Cost center"
+          ddlValue={costCenter}
+          ddlValues={dummyDdlAll}
+          ddlOnChange={(e) => setCostCenter(e.target.value)}
         />
         <MainTableMenu
           handleRefreshTable={(e) => {
@@ -250,25 +420,13 @@ export default function MasterVendor() {
           />
         </Paper>
       </Box>
-      <ActionDialogMaster
+      {/* <ActionDialogReports
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
         action={(e) => setValidate(true)}
         isValidate={isValidate}
-        vendor={vendor}
-        setVendor={setVendor}
-        telp={telp}
-        setTelp={setTelp}
-        email={email}
-        setEmail={setEmail}
-        address={address}
-        setAddress={setAddress}
-        material={material}
-        setMaterial={setMaterial}
-        rowStatusSelect={rowStatusSelect}
-        setRowStatusSelect={setRowStatusSelect}
-      />
+      /> */}
       <ConfirmationDialog
         type={confirmType}
         isOpen={confirmDialog}

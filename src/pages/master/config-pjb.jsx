@@ -99,6 +99,8 @@ export default function MasterPJB() {
   const [company, setCompany] = React.useState("");
   const [level, setLevel] = React.useState(0);
 
+  const [isValidate, setValidate] = React.useState(false);
+
   function buttonExpandedRow(row) {
     return (
       <>
@@ -108,6 +110,7 @@ export default function MasterPJB() {
           sx={{ mr: 1 }}
           color="primaryButton"
           onClick={(e) => {
+            setValidate(false);
             setUser(row.user);
             setCompany(row.company);
             setLevel(row.level);
@@ -177,9 +180,10 @@ export default function MasterPJB() {
           md={1}
           text="PJB"
           buttonOnClick={(e) => {
-            setUser("Choose");
+            setValidate(false);
+            setUser("choose");
             setLevel(0);
-            setCompany("Choose");
+            setCompany("choose");
             setDialogType(dialogTypesMaster.addPjb);
             setOpenDialog(true);
           }}
@@ -251,9 +255,8 @@ export default function MasterPJB() {
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
-        action={(e) => {
-          console.log("action");
-        }}
+        action={(e) => setValidate(true)}
+        isValidate={isValidate}
         user={user}
         setUser={setUser}
         level={level}

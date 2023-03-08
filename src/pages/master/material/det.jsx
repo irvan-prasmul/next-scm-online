@@ -132,9 +132,9 @@ export default function MasterMaterialDet() {
   const [uom, setUom] = React.useState("");
   const [materialType, setMaterialType] = React.useState("");
   const [materialGroup, setMaterialGroup] = React.useState("");
-  const [rowStatusSelect, setRowStatusSelect] = React.useState(
-    masterMaterialStatus.active
-  );
+  const [rowStatusSelect, setRowStatusSelect] = React.useState("active");
+
+  const [isValidate, setValidate] = React.useState(false);
 
   function buttonExpandedRow(row) {
     return (
@@ -145,7 +145,7 @@ export default function MasterMaterialDet() {
           sx={{ mr: 1 }}
           color="primaryButton"
           onClick={(e) => {
-            console.log(row);
+            setValidate(false);
             setName(row.materialName);
             setMaterialHead(row.expandedProps.materialHead);
             setPlu(row.plu);
@@ -155,7 +155,7 @@ export default function MasterMaterialDet() {
             setUom(row.expandedProps.uom);
             setMaterialType(row.expandedProps.materialType);
             setMaterialGroup(row.expandedProps.materialGroup);
-            setRowStatusSelect(masterMaterialStatus.active);
+            setRowStatusSelect("active");
             setDialogType(dialogTypesMasterMaterial.editDetail);
             setOpenDialog(true);
           }}
@@ -185,7 +185,7 @@ export default function MasterMaterialDet() {
       price: 12312,
       stock: 12,
       reorderPoint: 32,
-      status: masterMaterialStatus.active,
+      status: "active",
       expandedProps: {
         Action: buttonExpandedRow,
         "Material Head": "RT",
@@ -204,7 +204,7 @@ export default function MasterMaterialDet() {
       price: 12312,
       stock: 12,
       reorderPoint: 32,
-      status: masterMaterialStatus.active,
+      status: "active",
       expandedProps: {
         Action: buttonExpandedRow("test"),
         "Material Head": "RT",
@@ -236,15 +236,16 @@ export default function MasterMaterialDet() {
           md={1}
           text="Material"
           buttonOnClick={(e) => {
+            setValidate(false);
             setName("");
             setPlu("");
-            setMaterialHead("Choose");
+            setMaterialHead("choose");
             setPrice("");
             setStock("");
             setReorderPoint("");
-            setUom("Choose");
-            setMaterialType("Choose");
-            setMaterialGroup("Choose");
+            setUom("choose");
+            setMaterialType("choose");
+            setMaterialGroup("choose");
             setDialogType(dialogTypesMasterMaterial.addDetail);
             setOpenDialog(true);
           }}
@@ -336,9 +337,7 @@ export default function MasterMaterialDet() {
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
-        action={(e) => {
-          console.log("action");
-        }}
+        action={(e) => setValidate(true)}
         name={name}
         setName={setName}
         plu={plu}
@@ -359,6 +358,7 @@ export default function MasterMaterialDet() {
         setMaterialGroup={setMaterialGroup}
         rowStatusSelect={rowStatusSelect}
         setRowStatusSelect={setRowStatusSelect}
+        isValidate={isValidate}
       />
       <ConfirmationDialog
         type={confirmType}

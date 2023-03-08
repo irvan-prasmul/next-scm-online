@@ -124,9 +124,9 @@ export default function MasterUser() {
   const [password, setPassword] = React.useState("");
   const [department, setDepartment] = React.useState("");
   const [position, setPosition] = React.useState("");
-  const [rowStatusSelect, setRowStatusSelect] = React.useState(
-    masterStatus.active
-  );
+  const [rowStatusSelect, setRowStatusSelect] = React.useState("active");
+
+  const [isValidate, setValidate] = React.useState(false);
 
   function buttonExpandedRow(row) {
     return (
@@ -137,6 +137,7 @@ export default function MasterUser() {
           sx={{ mr: 1 }}
           color="primaryButton"
           onClick={(e) => {
+            setValidate(false);
             setNik(row.nik);
             setName(row.name);
             setInitial(row.initial);
@@ -146,7 +147,7 @@ export default function MasterUser() {
             setPassword(row.password);
             setDepartment(row.expandedProps.department);
             setPosition(row.Position);
-            setRowStatusSelect(masterStatus.active);
+            setRowStatusSelect("active");
             setDialogType(dialogTypesMaster.editUser);
             setOpenDialog(true);
           }}
@@ -177,7 +178,7 @@ export default function MasterUser() {
       email1: "acc@pmbs.ac.id",
       role: "pjb",
       password: "1234",
-      status: masterStatus.active,
+      status: "active",
       Position: "DK",
       expandedProps: {
         Action: buttonExpandedRow,
@@ -194,7 +195,7 @@ export default function MasterUser() {
       role: "Requester",
       password: "1234",
       Position: "",
-      status: masterStatus.active,
+      status: "active",
       expandedProps: {
         Action: buttonExpandedRow,
         Department: "YPM - Keuangan",
@@ -222,15 +223,16 @@ export default function MasterUser() {
           text="User"
           buttonText="Add New user"
           buttonOnClick={(e) => {
+            setValidate(false);
             setNik("");
             setInitial("");
             setName("");
             setEmail1("");
             setEmail2("");
-            setRole("Choose");
+            setRole("choose");
             setPassword("");
-            setDepartment("Choose");
-            setPosition("Choose");
+            setDepartment("choose");
+            setPosition("choose");
             setDialogType(dialogTypesMaster.addUser);
             setOpenDialog(true);
           }}
@@ -320,9 +322,7 @@ export default function MasterUser() {
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
-        action={(e) => {
-          console.log("action");
-        }}
+        action={(e) => setValidate(true)}
         nik={nik}
         setNik={setNik}
         initial={initial}
@@ -343,6 +343,7 @@ export default function MasterUser() {
         setPosition={setPosition}
         rowStatusSelect={rowStatusSelect}
         setRowStatusSelect={setRowStatusSelect}
+        isValidate={isValidate}
       />
       <ConfirmationDialog
         type={confirmType}

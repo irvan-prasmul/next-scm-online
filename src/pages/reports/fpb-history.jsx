@@ -22,6 +22,7 @@ import Add from "@mui/icons-material/Add";
 import {
   confirmationType,
   dialogTypesMaster,
+  dummyDdlAll,
   masterStatus,
   masterStatusDdlValues,
 } from "@/types";
@@ -35,54 +36,238 @@ import CloudDownload from "@mui/icons-material/CloudDownload";
 import DeleteRounded from "@mui/icons-material/DeleteRounded";
 import EditRounded from "@mui/icons-material/EditRounded";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
-import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
-import RowMasterImport from "@/components/rowSimplified/rowMasterImport";
+import ClosedCaptionOutlined from "@mui/icons-material/ClosedCaptionOutlined";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
+import NewspaperVariantMultipleOutlineIcon from "mdi-react/NewspaperVariantMultipleOutlineIcon";
+import ArrowForward from "@mui/icons-material/ArrowForward";
+import RowDatePickerSimple from "@/components/rowSimplified/rowDatePickerSimple";
+import RowDateRangePickerSimple from "@/components/rowSimplified/rowDateRangePickerSimple";
+import { addDays } from "date-fns";
 
 const columns = [
   {
-    id: "action",
-    label: "Action",
-    minWidth: 160,
+    id: "id",
+    label: "#",
+    minWidth: 22,
     isShow: true,
   },
   {
-    id: "idUnit",
-    label: "ID Unit",
+    id: "fpbnumber",
+    label: "No. FPB",
+    minWidth: 175,
+    isShow: true,
+  },
+  {
+    id: "noPo",
+    label: "No. PO",
+    minWidth: 80,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "created",
+    label: "Created",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => moment(value).format("YYYY-MM-DD"),
+  },
+  {
+    id: "requester",
+    label: "Requester",
+    minWidth: 130,
+    isShow: true,
+  },
+  {
+    id: "department",
+    label: "Department",
+    minWidth: 130,
+    isShow: true,
+  },
+  {
+    id: "activity",
+    label: "Activity",
     minWidth: 110,
     isShow: true,
   },
   {
-    id: "company",
-    label: "Company",
+    id: "ioBudget",
+    label: "IO Budget",
     minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "materialName",
+    label: "Material Name",
+    minWidth: 230,
     isShow: true,
   },
   {
-    id: "unitName",
-    label: "Unit Name",
-    minWidth: 300,
+    id: "category",
+    label: "Category",
+    minWidth: 90,
+    isShow: true,
+  },
+  {
+    id: "qtyPB",
+    label: "Qty PB",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "uom",
+    label: "UOM",
+    minWidth: 80,
+    isShow: true,
+  },
+  {
+    id: "estPrice",
+    label: "Est Price",
+    minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "totalEst",
+    label: "Total Est",
+    minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "netPrice",
+    label: "Net Price",
+    minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "totalNet",
+    label: "Total Net",
+    minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "constCenter",
+    label: "Cost Center",
+    minWidth: 156,
+    isShow: true,
+  },
+  {
+    id: "image",
+    label: "Image",
+    minWidth: 115,
+    isShow: true,
+  },
+  {
+    id: "planDate",
+    label: "Plan Date",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => moment(value).format("YYYY-MM-DD"),
+  },
+  {
+    id: "picPurchase",
+    label: "PIC Purc.",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "requesterNotes",
+    label: "Requester Notes",
+    minWidth: 202,
+    isShow: true,
+  },
+  {
+    id: "purchasingNotes",
+    label: "Purchasing Notes",
+    minWidth: 256,
+    isShow: true,
+  },
+  {
+    id: "approvalPjk",
+    label: "Approval PJK",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "approvalPjb",
+    label: "Approval PJB",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "approvalProcurement",
+    label: "Approval Procurement",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "reviewIct",
+    label: "Review ICT",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "approvalPurchasing",
+    label: "Approval Purchasing",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "documentStatus",
+    label: "Document Status",
+    minWidth: 500,
+    isShow: true,
+  },
+  {
+    id: "docDate",
+    label: "Document Date",
+    minWidth: 130,
+    isShow: true,
+    format: (value) => moment(value).format("YYYY-MM-DD"),
+  },
+  {
+    id: "delivered",
+    label: "Delivered",
+    minWidth: 110,
     isShow: true,
   },
   {
     id: "status",
     label: "Status",
-    minWidth: 110,
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "informationStatus",
+    label: "Information Status",
+    minWidth: 500,
     isShow: true,
   },
 ];
-
-export default function MasterDepartment() {
+export default function ReportsFpbHistory() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
 
-  const [fileInput, setFileInput] = React.useState([]);
-  const handleFileInput = (e) => {
-    setFileInput(e.target.files[0]);
-    console.log("file:", fileInput);
-  };
-  const [statusSelect, setStatusSelect] = React.useState("all");
+  const [period, setPeriod] = React.useState([
+    {
+      startDate: addDays(new Date(), -7),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+  const [status, setStatus] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
@@ -107,94 +292,37 @@ export default function MasterDepartment() {
   const [openDialog, setOpenDialog] = React.useState(false);
   const [confirmType, setConfirmType] = React.useState("");
   const [confirmDialog, setConfirmDialog] = React.useState(false);
+  const rows = [];
 
-  const [idUnit, setIdUnit] = React.useState("");
-  const [company, setCompany] = React.useState("");
-  const [unitName, setUnitName] = React.useState("");
-  const [rowStatusSelect, setRowStatusSelect] = React.useState("active");
-
-  const [isValidate, setValidate] = React.useState(false);
-
-  const rows = [
-    {
-      action: null,
-      unitName: "Pengembangan Ent E E",
-      idUnit: "UK98",
-      company: "STEM",
-      status: "active",
-    },
-    {
-      action: null,
-      unitName: "Pengembangan CSE",
-      idUnit: "UK99",
-      company: "STEM",
-      status: "active",
-    },
-  ];
-
-  function handleActionEdit(row) {
-    setValidate(false);
-    setIdUnit(row.idUnit);
-    setCompany(row.company);
-    setUnitName(row.unitName);
-    setRowStatusSelect("active");
-    setDialogType(dialogTypesMaster.editDepartment);
-    setOpenDialog(true);
-  }
-
-  function handleActionDelete(e) {
-    setConfirmType(confirmationType.delete);
-    setConfirmDialog(true);
-  }
-
-  const customCell = [
-    editAndDeleteAction({
-      id: "action",
-      handleEdit: handleActionEdit,
-      handleDelete: handleActionDelete,
-    }),
-  ];
+  const customCell = [];
 
   return (
     <>
       <Head>
-        <title>Master Department</title>
+        <title>Report</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <PageHeader icon={<CubeScanIcon />} title="Master Department" />
+      <PageHeader
+        icon={<NewspaperVariantMultipleOutlineIcon />}
+        title={["Report", "FPB History"]}
+      />
       <Box sx={{ p: 2 }}>
-        <RowButtonSimple
-          md={1}
-          text="Dept."
-          buttonOnClick={(e) => {
-            setValidate(false);
-            setIdUnit("");
-            setUnitName("");
-            setCompany("");
-            setDialogType(dialogTypesMaster.addDepartment);
-            setOpenDialog(true);
+        <RowDateRangePickerSimple
+          md={2}
+          text="Period"
+          dateValue={period}
+          dateOnChange={(e) => {
+            console.log("setdate:", e);
+            setPeriod([e.selection]);
           }}
-        />
-        <RowMasterImport
-          md={1}
-          handleButton2={(e) => {
-            const URL =
-              "https://ws-dev.prasetiyamulya.ac.id/fpb/C_master/download_template_material";
-            if (typeof window !== "undefined") {
-              window.location.href = URL;
-            }
-          }}
-          handleFileInput={handleFileInput}
         />
         <RowDdlSimple
-          md={1}
+          md={2}
           text="Status"
-          ddlValue={statusSelect}
-          ddlValues={masterStatusDdlValues}
-          ddlOnChange={(e) => {
-            setStatusSelect(e.target.value);
-          }}
+          ddlValue={status}
+          ddlValues={dummyDdlAll}
+          ddlOnChange={(e) => setStatus(e.target.value)}
         />
         <MainTableMenu
           handleRefreshTable={(e) => {
@@ -259,21 +387,13 @@ export default function MasterDepartment() {
           />
         </Paper>
       </Box>
-      <ActionDialogMaster
+      {/* <ActionDialogReports
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
         action={(e) => setValidate(true)}
-        idUnit={idUnit}
-        setIdUnit={setIdUnit}
-        unitName={unitName}
-        setUnitName={setUnitName}
-        company={company}
-        setCompany={setCompany}
-        rowStatusSelect={rowStatusSelect}
-        setRowStatusSelect={setRowStatusSelect}
         isValidate={isValidate}
-      />
+      /> */}
       <ConfirmationDialog
         type={confirmType}
         isOpen={confirmDialog}

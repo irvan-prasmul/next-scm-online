@@ -221,7 +221,6 @@ const columns = [
     label: "Review ICT",
     minWidth: 110,
     isShow: true,
-    align: "left",
   },
   {
     id: "ictNotes",

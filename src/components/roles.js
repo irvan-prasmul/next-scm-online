@@ -127,6 +127,60 @@ export const roles = {
             },
           ],
         },
+        {
+          name: "Reports",
+          icon: "TableIcon",
+          isOpen: false,
+          child: [
+            {
+              href: "/reports/price-comparison",
+              name: "Price Comparison",
+              icon: "Shortcut",
+            },
+            {
+              name: "request",
+              icon: "Shortcut",
+              isOpen: false,
+              child: [
+                {
+                  href: "/reports/request/vendor",
+                  name: "Vendor",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "/reports/request/material",
+                  name: "Material",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "/reports/request/pic",
+                  name: "PIC",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "/reports/request/department",
+                  name: "Department",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "/reports/request/status",
+                  name: "Status",
+                  icon: "CircleOutlineIcon",
+                },
+              ],
+            },
+            {
+              href: "/reports/fpb-history",
+              name: "FPB History",
+              icon: "Shortcut",
+            },
+            {
+              href: "/reports/fpb-all",
+              name: "FPB All",
+              icon: "Shortcut",
+            },
+          ],
+        },
       ],
     },
   ],
@@ -282,7 +336,7 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/reports/price-compare",
+          href: "/reports/price-comparison",
           name: "Price Comparison",
           icon: "Shortcut",
         },
@@ -297,7 +351,7 @@ export const roles = {
               icon: "CircleOutlineIcon",
             },
             {
-              href: "/reports/request/master/",
+              href: "/reports/request/material",
               name: "Material",
               icon: "CircleOutlineIcon",
             },

@@ -319,7 +319,7 @@ const statusDdlValues = [
   { value: "reviewed", text: "Reviewed" },
 ];
 
-export default function FpbReviewer() {
+export default function FpbReviewerPurchasing() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
