@@ -170,7 +170,12 @@ export default function Layout({ children }) {
   const generateMenus = (menu) => {
     if (menu.child) {
       return (
-        <ListItem key={menu.name} disablePadding sx={{ display: "block" }}>
+        <ListItem
+          key={menu.name}
+          component="div"
+          disablePadding
+          sx={{ display: "block" }}
+        >
           <ListItemButton
             id="sidebar-child-selected"
             selected={menu.isOpen}
@@ -194,17 +199,22 @@ export default function Layout({ children }) {
             {open ? menu.isOpen ? <ExpandLess /> : <ExpandMore /> : <></>}
           </ListItemButton>
           <Collapse in={menu.isOpen} timeout="auto" unmountOnExit>
-            <List component="div" sx={{ pl: 1 }}>
+            <Box id="box-layout-1" sx={{ pl: 1 }}>
               {menu.child.map((menu, index) => {
                 return generateMenus(menu);
               })}
-            </List>
+            </Box>
           </Collapse>
         </ListItem>
       );
     } else {
       return (
-        <ListItem key={menu.name} disablePadding sx={{ display: "block" }}>
+        <ListItem
+          key={menu.name}
+          component="div"
+          disablePadding
+          sx={{ display: "block" }}
+        >
           <ListItemButton
             selected={menu.href == router.pathname}
             sx={{
@@ -272,7 +282,7 @@ export default function Layout({ children }) {
             </Grid>
             <Grid xs></Grid>
             <Grid xs="auto">
-              <Typography variant="h6" noWrap component="div">
+              <Typography variant="h6" noWrap>
                 Avatar here
               </Typography>
             </Grid>
@@ -297,7 +307,6 @@ export default function Layout({ children }) {
         >
           <Typography
             variant="body1"
-            component="div"
             sx={{
               fontWeight: "300",
               fontSize: "24px",
