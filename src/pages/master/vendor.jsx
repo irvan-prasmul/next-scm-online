@@ -37,50 +37,16 @@ import EditRounded from "@mui/icons-material/EditRounded";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import ClosedCaptionOutlined from "@mui/icons-material/ClosedCaptionOutlined";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
+import { columnNormalize } from "@/column-normalize";
 
 const columns = [
-  {
-    id: "action",
-    label: "Action",
-    minWidth: 160,
-    isShow: true,
-  },
-  {
-    id: "vendor",
-    label: "Vendor",
-    minWidth: 200,
-    isShow: true,
-  },
-  {
-    id: "telp",
-    label: "Telp",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "email",
-    label: "Email",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "address",
-    label: "Address",
-    minWidth: 170,
-    isShow: true,
-  },
-  {
-    id: "material",
-    label: "Material",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 110,
-    isShow: true,
-  },
+  columnNormalize.action2Button,
+  columnNormalize.vendorLong,
+  columnNormalize.telp,
+  columnNormalize.email,
+  columnNormalize.address,
+  columnNormalize.material,
+  columnNormalize.status,
 ];
 
 export default function MasterVendor() {

@@ -43,38 +43,14 @@ import FilePowerpointOutlineIcon from "mdi-react/FilePowerpointOutlineIcon";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
+import { columnNormalize } from "@/column-normalize";
 
 const columns = [
-  {
-    id: "action",
-    label: "Action",
-    minWidth: 160,
-    isShow: true,
-  },
-  {
-    id: "materialGroup",
-    label: "Material Group",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "description",
-    label: "Description",
-    minWidth: 380,
-    isShow: true,
-  },
-  {
-    id: "flagIct",
-    label: "Flag ICT",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 110,
-    isShow: true,
-  },
+  columnNormalize.action2Button,
+  columnNormalize.materialGroup,
+  columnNormalize.description,
+  columnNormalize.flagIct,
+  columnNormalize.status,
 ];
 
 const rows = [

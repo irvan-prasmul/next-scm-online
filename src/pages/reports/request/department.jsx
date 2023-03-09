@@ -43,217 +43,41 @@ import ArrowForward from "@mui/icons-material/ArrowForward";
 import RowDatePickerSimple from "@/components/rowSimplified/rowDatePickerSimple";
 import RowDateRangePickerSimple from "@/components/rowSimplified/rowDateRangePickerSimple";
 import { addDays } from "date-fns";
+import { columnNormalize } from "@/column-normalize";
 
 const columns = [
-  {
-    id: "id",
-    label: "#",
-    minWidth: 22,
-    isShow: true,
-  },
-  {
-    id: "fpbnumber",
-    label: "No. FPB",
-    minWidth: 175,
-    isShow: true,
-  },
-  {
-    id: "noPo",
-    label: "No. PO",
-    minWidth: 80,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "vendor",
-    label: "Vendor",
-    minWidth: 100,
-    isShow: true,
-  },
-  {
-    id: "created",
-    label: "Created",
-    minWidth: 100,
-    isShow: true,
-    format: (value) => moment(value).format("YYYY-MM-DD"),
-  },
-  {
-    id: "requester",
-    label: "Requester",
-    minWidth: 130,
-    isShow: true,
-  },
-  {
-    id: "department",
-    label: "Department",
-    minWidth: 130,
-    isShow: true,
-  },
-  {
-    id: "activity",
-    label: "Activity",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "ioBudget",
-    label: "IO Budget",
-    minWidth: 120,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "materialName",
-    label: "Material Name",
-    minWidth: 230,
-    isShow: true,
-  },
-  {
-    id: "category",
-    label: "Category",
-    minWidth: 90,
-    isShow: true,
-  },
-  {
-    id: "qtyPB",
-    label: "Qty PB",
-    minWidth: 100,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "uom",
-    label: "UOM",
-    minWidth: 80,
-    isShow: true,
-  },
-  {
-    id: "estPrice",
-    label: "Est Price",
-    minWidth: 120,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "totalEst",
-    label: "Total Est",
-    minWidth: 120,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "netPrice",
-    label: "Net Price",
-    minWidth: 120,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "totalNet",
-    label: "Total Net",
-    minWidth: 120,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "constCenter",
-    label: "Cost Center",
-    minWidth: 156,
-    isShow: true,
-  },
-  {
-    id: "planDate",
-    label: "Plan Date",
-    minWidth: 100,
-    isShow: true,
-    format: (value) => moment(value).format("YYYY-MM-DD"),
-  },
-  {
-    id: "picPurchase",
-    label: "PIC Purc.",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "requesterNotes",
-    label: "Requester Notes",
-    minWidth: 202,
-    isShow: true,
-  },
-  {
-    id: "purchasingNotes",
-    label: "Purchasing Notes",
-    minWidth: 256,
-    isShow: true,
-  },
-  {
-    id: "approvalPjk",
-    label: "Approval PJK",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "approvalPjb",
-    label: "Approval PJB",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "approvalProcurement",
-    label: "Approval Procurement",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "reviewIct",
-    label: "Review ICT",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "approvalPurchasing",
-    label: "Approval Purchasing",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "documentStatus",
-    label: "Document Status",
-    minWidth: 500,
-    isShow: true,
-  },
-  {
-    id: "docDate",
-    label: "Document Date",
-    minWidth: 130,
-    isShow: true,
-    format: (value) => moment(value).format("YYYY-MM-DD"),
-  },
-  {
-    id: "delivered",
-    label: "Delivered",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 100,
-    isShow: true,
-  },
-  {
-    id: "informationStatus",
-    label: "Information Status",
-    minWidth: 500,
-    isShow: true,
-  },
+  columnNormalize.id,
+  columnNormalize.fpbNo,
+  columnNormalize.noPo,
+  columnNormalize.vendor,
+  columnNormalize.created,
+  columnNormalize.requester,
+  columnNormalize.department,
+  columnNormalize.activity,
+  columnNormalize.ioBudget,
+  columnNormalize.materialName,
+  columnNormalize.category,
+  columnNormalize.qtyPB,
+  columnNormalize.uom,
+  columnNormalize.estPrice,
+  columnNormalize.totalEst,
+  columnNormalize.netPrice,
+  columnNormalize.totalNet,
+  columnNormalize.constCenter,
+  columnNormalize.planDate,
+  columnNormalize.picPurc,
+  columnNormalize.requesterNotes,
+  columnNormalize.purchasingNotes,
+  columnNormalize.approvalPjk,
+  columnNormalize.approvalPjb,
+  columnNormalize.approvalProcurement,
+  columnNormalize.reviewIct,
+  columnNormalize.approvalPurchasing,
+  columnNormalize.documentStatus,
+  columnNormalize.docDate,
+  columnNormalize.delivered,
+  columnNormalize.status,
+  columnNormalize.informationStatus,
 ];
 
 export default function ReportsRequestDepartment() {
@@ -317,10 +141,7 @@ export default function ReportsRequestDepartment() {
           md={2}
           text="Period"
           dateValue={period}
-          dateOnChange={(e) => {
-            console.log("setdate:", e);
-            setPeriod([e.selection]);
-          }}
+          dateOnChange={(e) => setPeriod([e.selection])}
         />
         <RowDdlSimple
           md={2}

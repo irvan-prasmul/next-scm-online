@@ -35,56 +35,16 @@ import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import RowMasterImport from "@/components/rowSimplified/rowMasterImport";
+import { columnNormalize } from "@/column-normalize";
 
 const columns = [
-  {
-    id: "preview",
-    label: "Preview",
-    minWidth: 160,
-    isShow: true,
-  },
-  {
-    id: "plu",
-    label: "PLU",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "materialName",
-    label: "Material Name",
-    minWidth: 300,
-    isShow: true,
-  },
-  {
-    id: "price",
-    label: "Price",
-    minWidth: 120,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "stock",
-    label: "Stock",
-    minWidth: 110,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "reorderPoint",
-    label: "Reorder Point",
-    minWidth: 110,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 110,
-    isShow: true,
-  },
+  columnNormalize.preview,
+  columnNormalize.plu,
+  columnNormalize.materialNameWide,
+  columnNormalize.price,
+  columnNormalize.stock,
+  columnNormalize.reorderPoint,
+  columnNormalize.status,
 ];
 
 export default function MasterMaterialDet() {

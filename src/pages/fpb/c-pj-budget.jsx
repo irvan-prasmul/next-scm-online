@@ -22,47 +22,15 @@ import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import { paginationPropType } from "@/types";
 import PageHeader from "@/components/pageHeader";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
+import { columnNormalize } from "@/column-normalize";
 
 const columns = [
-  {
-    id: "preview",
-    label: "Preview",
-    minWidth: 100,
-    isShow: true,
-  },
-  {
-    id: "fpbnumber",
-    label: "FPB Number",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "createdDate",
-    label: "Created Date",
-    minWidth: 150,
-    isShow: true,
-    format: (value) => moment(value).format("YYYY-MM-DD"),
-  },
-  {
-    id: "unit",
-    label: "Unit",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "doctype",
-    label: "Doctype",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "total",
-    label: "Total",
-    minWidth: 121,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
+  columnNormalize.preview,
+  columnNormalize.fpbNumber,
+  columnNormalize.createdDate,
+  columnNormalize.unit,
+  columnNormalize.doctype,
+  columnNormalize.total,
 ];
 
 const statusDdlValues = [
@@ -112,7 +80,7 @@ export default function FpbPJBudget() {
   const rows = [
     {
       preview: null,
-      fpbnumber: "F23100468",
+      fpbNumber: "F23100468",
       createdDate: "1976-04-19T12:59-0500",
       unit: "BSD",
       doctype: "UNI",
@@ -131,7 +99,7 @@ export default function FpbPJBudget() {
     },
     {
       preview: null,
-      fpbnumber: "F2313210468",
+      fpbNumber: "F2313210468",
       createdDate: "1976-04-19T12:59-0500",
       unit: "Cilandak",
       doctype: "UNI",

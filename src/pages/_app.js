@@ -53,6 +53,11 @@ const theme = createTheme({
       fontSize: "0.875rem",
       fontWeight: 400,
     },
+    bodyTableBoldItalic: {
+      fontSize: "0.875rem",
+      fontWeight: 700,
+      fontStyle: "italic",
+    },
     formHelperText: {
       fontSize: "0.75rem",
       fontWeight: 400,

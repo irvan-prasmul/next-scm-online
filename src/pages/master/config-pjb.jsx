@@ -32,38 +32,14 @@ import EditRounded from "@mui/icons-material/EditRounded";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import Person from "@mui/icons-material/Person";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
+import { columnNormalize } from "@/column-normalize";
 
 const columns = [
-  {
-    id: "preview",
-    label: "Preview",
-    minWidth: 160,
-    isShow: true,
-  },
-  {
-    id: "user",
-    label: "Name",
-    minWidth: 160,
-    isShow: true,
-  },
-  {
-    id: "nik",
-    label: "NIK",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "company",
-    label: "Company",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "level",
-    label: "Level",
-    minWidth: 120,
-    isShow: true,
-  },
+  columnNormalize.preview,
+  columnNormalize.userLabelName,
+  columnNormalize.nik,
+  columnNormalize.company,
+  columnNormalize.level,
 ];
 
 export default function MasterPJB() {

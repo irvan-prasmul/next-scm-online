@@ -23,7 +23,9 @@ export default function TableInfomationStatus({ statusList }) {
       <HourglassFullTwoTone />
     ) : status == "Canceled by User" ? (
       <Cancel color="warning" />
-    ) : status == "Approved" ? (
+    ) : status == "Approved" ||
+      status == "Reviewed" ||
+      status == "Approved by Procurement" ? (
       <CheckBox color="success" />
     ) : status == "Rejected" ? (
       <CloseRounded color="error" />
@@ -31,7 +33,7 @@ export default function TableInfomationStatus({ statusList }) {
       <ShoppingCartCheckoutRounded color="primaryButton" />
     ) : status == "Ready for pick up" || status == "Goods Receipt" ? (
       <Inventory2Rounded color="info" />
-    ) : status == "Delivered" || status == "Good Issue" ? (
+    ) : status == "Delivered" || status == "Goods Issue" ? (
       <Flag color="success" />
     ) : status == "Finance" ? (
       <LocalAtmRounded color="success" />

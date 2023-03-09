@@ -9,130 +9,115 @@ import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
+import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
-import Add from "@mui/icons-material/Add";
-import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import Link from "@mui/material/Link";
+import ImageOutlined from "@mui/icons-material/ImageOutlined";
+import EditRounded from "@mui/icons-material/EditRounded";
+import CheckBox from "@mui/icons-material/CheckBox";
+import CloseRounded from "@mui/icons-material/CloseRounded";
+import Cancel from "@mui/icons-material/Cancel";
+import HourglassFullTwoTone from "@mui/icons-material/HourglassFullTwoTone";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import moment from "moment/moment";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
-import ConfirmationDialog from "@/components/confirmationDialog";
+import GradingRounded from "@mui/icons-material/GradingRounded";
+import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
+import DriveFileRenameOutlineRounded from "@mui/icons-material/DriveFileRenameOutlineRounded";
+import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
 import {
-  textWithEditOrCancelTextButton,
-  imageView,
-  uploadDocument,
-  longTextWithReadMore,
   iconView,
-  trackStatus,
+  ictReviewFpb,
+  imageView,
+  longTextWithReadMore,
+  materialNameEdit,
+  setReviewerFpb,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { paginationPropType } from "@/types";
-import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
+import { confirmationType, dialogTypesFpb, paginationPropType } from "@/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
+import ConfirmationDialog from "@/components/confirmationDialog";
 import { columnNormalize } from "@/column-normalize";
 
 const columns = [
   columnNormalize.id,
-  columnNormalize.created,
-  columnNormalize.fpbNumber,
-  columnNormalize.pta,
-  columnNormalize.other,
+  columnNormalize.action1Button,
+  columnNormalize.fpbNo,
   columnNormalize.materialName,
-  columnNormalize.category,
-  columnNormalize.price,
-  columnNormalize.qtyPB,
+  columnNormalize.qtyPO,
   columnNormalize.uom,
+  columnNormalize.price,
   columnNormalize.total,
+  columnNormalize.noPo,
   columnNormalize.constCenter,
   columnNormalize.planDate,
   columnNormalize.file,
+  columnNormalize.requesterName,
   columnNormalize.requesterNotes,
   columnNormalize.ictNotes,
-  columnNormalize.picPurc,
   columnNormalize.purchasingNotes,
-  columnNormalize.noPo,
-  columnNormalize.approval,
-  columnNormalize.purchase,
-  columnNormalize.informationStatus,
-  columnNormalize.trackStatus,
+  columnNormalize.documentStatus,
 ];
 
 const rows = [
   {
     id: 1,
-    created: "1976-04-19T12:59-0500",
-    fpbNumber: "F23100468",
-    pta: null,
-    io: null,
-    other: null,
-    materialName: "Hydrogen Fuel Cell extra long",
-    category: "Non-ICT",
-    price: 8989871212112,
-    qtyPB: 111111,
+    action: false,
+    fpbnumber: "F23100468",
+    materialName: "Fuel Cell",
+    qtyPo: 1,
     uom: "UN",
-    total: 898989122121212,
+    price: 898987,
+    total: 898989,
+    noPo: null,
     constCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
-    file: "",
+    file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
+    requesterName: "Irvan",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    // ictNotes: "",
     ictNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    picPurc: "bukan aku",
-    // purchasingNotes: "",
     purchasingNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    noPo: 123,
-    approval: "pending",
-    purchase: "approved",
-    // informationStatus: "",
-    informationStatus:
+    documentStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
     id: 2,
-    created: "1976-04-19T12:59-0500",
-    fpbNumber: "F23100469",
-    pta: null,
-    io: null,
-    other: null,
+    action: true,
+    fpbnumber: "F23100468",
     materialName: "Fuel Cell",
-    category: "Non-ICT",
-    price: 898987,
-    qtyPB: 1,
+    qtyPo: 1,
     uom: "UN",
+    price: 898987,
     total: 898989,
+    noPo: null,
     constCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
-    requesterNotes: "test",
-    ictNotes: "ictNotes",
-    picPurc: "bukan aku",
-    purchasingNotes: "tes",
-    noPo: 123,
-    approval: "canceled",
-    purchase: "rejected",
-    informationStatus: "none",
+    requesterName: "Irvan",
+    requesterNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    ictNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    purchasingNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    documentStatus:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
 ];
 
 const statusDdlValues = [
   { value: "all", text: "All" },
-  { value: "waiting", text: "Waiting for Approval" },
-  { value: "approved", text: "Approved" },
-  { value: "rejected", text: "Rejected" },
-  { value: "canceled", text: "Canceled" },
+  { value: "waiting", text: "Waiting" },
+  { value: "reviewed", text: "Reviewed" },
 ];
 
-function handleEdit(row, col) {
-  console.log("handle edit:", col);
-  console.log(row);
-}
-
-export default function FpbRequester() {
+export default function FpbReviewerIct() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
@@ -167,38 +152,26 @@ export default function FpbRequester() {
   }
 
   const customCell = [
-    textWithEditOrCancelTextButton({
-      id: "fpbNumber",
-      handleEdit,
-      setConfirmDialog,
+    ictReviewFpb({
+      id: "action",
+      handleClick: (row, col) => {
+        setDialogType(dialogTypesFpb.reviewerIct);
+        setDialogBody("");
+        setOpenDialog(true);
+      },
     }),
-    uploadDocument({
-      id: ["pta", "other"],
-      setDialogType,
-      setOpenDialog,
-    }),
-    imageView({ id: "file" }),
+    imageView({ id: ["file", "docPta", "docIo", "docOther"] }),
+    iconView({ id: "status" }),
     longTextWithReadMore({
-      id: [
-        "requesterNotes",
-        "ictNotes",
-        "purchasingNotes",
-        "informationStatus",
-      ],
+      id: ["requesterNotes", "ictNotes", "purchasingNotes", "documentStatus"],
       limit: {
         requesterNotes: 50,
         ictNotes: 50,
         purchasingNotes: 60,
-        informationStatus: 135,
+        documentStatus: 135,
       },
       setDialogType,
       setDialogBody,
-      setOpenDialog,
-    }),
-    iconView({ id: ["approval", "purchase"] }),
-    trackStatus({
-      id: "trackStatus",
-      setDialogType,
       setOpenDialog,
     }),
   ];
@@ -206,18 +179,12 @@ export default function FpbRequester() {
   return (
     <>
       <Head>
-        <title>FPB</title>
+        <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/next-scm/favicon.ico" />
       </Head>
-      <PageHeader icon={<ShoppingCart />} title="FPB Dashboard (Non-Stock)" />
+      <PageHeader icon={<GradingRounded />} title="Review FPB" />
       <Box sx={{ p: 2 }}>
-        <RowButtonSimple
-          md={1}
-          text="FPB"
-          buttonText="Create New"
-          buttonOnClick={(e) => router.replace("/fpb/create")}
-        />
         <RowDdlSimple
           md={1}
           text="Status"
@@ -250,11 +217,8 @@ export default function FpbRequester() {
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
             statusList={[
-              "Waiting",
-              "Canceled by User",
-              "Approved",
-              "Rejected",
-              "PO Process",
+              "Reviewed",
+              "Purchase Order",
               "Ready for pick up",
               "Delivered",
             ]}
@@ -265,11 +229,14 @@ export default function FpbRequester() {
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
-        action={dialogAction}
+        action={(e) => {
+          setConfirmDialog(true);
+        }}
         bodyValue={dialogBody}
+        setBodyValue={setDialogBody}
       />
       <ConfirmationDialog
-        type={"cancel"}
+        type={confirmationType.save}
         isOpen={confirmDialog}
         handleClose={(e) => setConfirmDialog(false)}
         action={dialogAction}

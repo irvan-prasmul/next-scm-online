@@ -38,44 +38,15 @@ import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import ClosedCaptionOutlined from "@mui/icons-material/ClosedCaptionOutlined";
 import RowMasterImport from "@/components/rowSimplified/rowMasterImport";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
+import { columnNormalize } from "@/column-normalize";
 
 const columns = [
-  {
-    id: "action",
-    label: "Action",
-    minWidth: 160,
-    isShow: true,
-  },
-  {
-    id: "costCenterId",
-    label: "Cost Center Id",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "controllingArea",
-    label: "Controlling Area",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "companyCode",
-    label: "Company Code",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "description",
-    label: "Company Description",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 110,
-    isShow: true,
-  },
+  columnNormalize.action2Button,
+  columnNormalize.costCenterId,
+  columnNormalize.controllingArea,
+  columnNormalize.companyCode,
+  columnNormalize.descriptionShort,
+  columnNormalize.status,
 ];
 
 export default function MasterCostCenter() {

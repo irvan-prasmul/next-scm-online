@@ -38,50 +38,16 @@ import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import Person from "@mui/icons-material/Person";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
+import { columnNormalize } from "@/column-normalize";
 
 const columns = [
-  {
-    id: "preview",
-    label: "Preview",
-    minWidth: 160,
-    isShow: true,
-  },
-  {
-    id: "nik",
-    label: "NIK",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "name",
-    label: "Name",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "initial",
-    label: "Initial",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "email1",
-    label: "E-mail",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "role",
-    label: "Role",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 110,
-    isShow: true,
-  },
+  columnNormalize.preview,
+  columnNormalize.nik,
+  columnNormalize.name,
+  columnNormalize.initial,
+  columnNormalize.email1,
+  columnNormalize.role,
+  columnNormalize.status,
 ];
 
 export default function MasterUser() {

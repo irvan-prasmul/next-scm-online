@@ -13,6 +13,7 @@ export const dialogTypesFpb = {
   informationStatus: "Information Status",
   documentStatus: "Document Status",
   reviewer: "Reviewer",
+  reviewerIct: "Reviewer ICT",
 };
 
 export const confirmationType = {
@@ -22,6 +23,7 @@ export const confirmationType = {
   approve: "approve",
   reject: "reject",
   flagIct: "flagIct",
+  save: "save",
 };
 
 export const dialogTypesMasterMaterial = {

@@ -24,6 +24,8 @@ import Note from "@mui/icons-material/Note";
 import TextField from "@mui/material/TextField";
 import { dialogTypesFpb } from "@/types";
 import RowDdlSimple from "../rowSimplified/rowDdlSimple";
+import SearchRounded from "@mui/icons-material/SearchRounded";
+import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
 
 export default function ActionDialogFpb({
   type,
@@ -31,6 +33,7 @@ export default function ActionDialogFpb({
   handleClose,
   action,
   bodyValue,
+  setBodyValue,
 }) {
   const [fileInput, setFileInput] = React.useState([]);
   const handleFileInput = (files) => {
@@ -74,6 +77,8 @@ export default function ActionDialogFpb({
               <BookmarkRounded />
             ) : type == dialogTypesFpb.requesterNotes + "#EDIT#" ? (
               <Note />
+            ) : type == dialogTypesFpb.reviewerIct ? (
+              <SearchRounded />
             ) : (
               <></>
             )}
@@ -103,6 +108,8 @@ export default function ActionDialogFpb({
               <Typography variant="h6">{type}</Typography>
             ) : type == dialogTypesFpb.requesterNotes + "#EDIT#" ? (
               <Typography variant="h6">Update Requester Notes</Typography>
+            ) : type == dialogTypesFpb.reviewerIct ? (
+              <Typography variant="h6">Review ICT</Typography>
             ) : (
               <></>
             )}
@@ -218,6 +225,19 @@ export default function ActionDialogFpb({
           />
         </Box>
       );
+    } else if (type == dialogTypesFpb.reviewerIct) {
+      return (
+        <Box sx={{ p: 2 }}>
+          <RowTextFieldSimple
+            text="Notes"
+            textFieldValue={bodyValue}
+            textFieldOnChange={setBodyValue}
+            fullWidth
+            multiline
+            row={5}
+          />
+        </Box>
+      );
     }
   }
 
@@ -237,7 +257,8 @@ export default function ActionDialogFpb({
       );
     if (
       type == dialogTypesFpb.reviewer ||
-      type == dialogTypesFpb.requesterNotes + "#EDIT#"
+      type == dialogTypesFpb.requesterNotes + "#EDIT#" ||
+      type == dialogTypesFpb.reviewerIct
     ) {
       return (
         <>
@@ -276,7 +297,7 @@ export default function ActionDialogFpb({
 
   return (
     <Dialog
-      maxWidth="xs"
+      maxWidth={type == dialogTypesFpb.reviewerIct ? "md" : "xs"}
       fullWidth
       open={isOpen}
       onClose={handleClose}

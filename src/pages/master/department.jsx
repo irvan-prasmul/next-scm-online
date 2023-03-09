@@ -38,38 +38,14 @@ import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowMasterImport from "@/components/rowSimplified/rowMasterImport";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
+import { columnNormalize } from "@/column-normalize";
 
 const columns = [
-  {
-    id: "action",
-    label: "Action",
-    minWidth: 160,
-    isShow: true,
-  },
-  {
-    id: "idUnit",
-    label: "ID Unit",
-    minWidth: 110,
-    isShow: true,
-  },
-  {
-    id: "company",
-    label: "Company",
-    minWidth: 120,
-    isShow: true,
-  },
-  {
-    id: "unitName",
-    label: "Unit Name",
-    minWidth: 300,
-    isShow: true,
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 110,
-    isShow: true,
-  },
+  columnNormalize.action2Button,
+  columnNormalize.idUnit,
+  columnNormalize.company,
+  columnNormalize.unitName,
+  columnNormalize.status,
 ];
 
 export default function MasterDepartment() {

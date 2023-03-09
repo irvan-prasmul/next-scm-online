@@ -25,6 +25,7 @@ import {
   masterMaterialStatus,
 } from "@/types";
 import Switch from "@mui/material/Switch";
+import SearchRounded from "@mui/icons-material/SearchRounded";
 
 function renderStatusIcon(status) {
   return status == "pending" ? (
@@ -347,6 +348,31 @@ export function setReviewerFpb({ id, setDialogType, setOpenDialog }) {
             <EditRounded fontSize="small" />
             <Typography variant="bodyTable1">Input</Typography>
           </Button>
+        </TableCell>
+      );
+    },
+  };
+}
+export function ictReviewFpb({ id, handleClick }) {
+  return {
+    id,
+    element: (row, col) => {
+      const value = row[col.id];
+      return (
+        <TableCell key={col.id} align="center">
+          {value ? (
+            <Typography variant="bodyTableBoldItalic">Reviewed</Typography>
+          ) : (
+            <Button
+              variant="contained"
+              size="small"
+              color="primaryButton"
+              onClick={(e) => handleClick(row, col)}
+            >
+              <SearchRounded fontSize="small" />
+              <Typography variant="bodyTable1">Review</Typography>
+            </Button>
+          )}
         </TableCell>
       );
     },

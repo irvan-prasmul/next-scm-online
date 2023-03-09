@@ -40,7 +40,7 @@ function warningVariant(type, isValue) {
         }}
       >
         <Typography variant="h5">
-          {type == confirmationType.flagIct
+          {type == confirmationType.flagIct || type == confirmationType.save
             ? "Confirmation"
             : "Are you sure you want to " + type + "?"}
         </Typography>
@@ -63,6 +63,8 @@ function warningVariant(type, isValue) {
             ? "Once reject, you will not be able to recovery this data!\n*** Please write the reason in the column below : "
             : type == confirmationType.flagIct
             ? (isValue ? "Unset" : "Set") + ' as "ICT" Material Group?'
+            : type == confirmationType.save
+            ? "Are you sure you want to save?"
             : ""}
         </Typography>
       </Grid>
@@ -98,7 +100,8 @@ export default function ConfirmationDialog({
         type == confirmationType.close ||
         type == confirmationType.approve ||
         type == confirmationType.reject ||
-        type == confirmationType.flagIct
+        type == confirmationType.flagIct ||
+        type == confirmationType.save
           ? warningVariant(type, isValue)
           : noType()}
       </DialogContent>

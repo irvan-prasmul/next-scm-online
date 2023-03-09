@@ -23,7 +23,7 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/fpb/c-reviewer",
+          href: "/fpb/c-reviewer-purchasing",
           name: "Home",
           icon: "Home",
         },
@@ -181,6 +181,52 @@ export const roles = {
             },
           ],
         },
+        {
+          name: "Chart",
+          icon: "ChartAreasplineVariantIcon",
+          isOpen: false,
+          child: [
+            {
+              href: "/chart/fpb",
+              name: "FPB",
+              icon: "Shortcut",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Reviewer ICT",
+      icon: "CircleOutlineIcon",
+      isOpen: false,
+      child: [
+        {
+          href: "/home/dashboard",
+          name: "Home",
+          icon: "Home",
+        },
+        {
+          href: "/fpb/c-reviewer-ict",
+          name: "Review FPB",
+          icon: "ShoppingCart",
+        },
+      ],
+    },
+    {
+      name: "Purchasing Head",
+      icon: "CircleOutlineIcon",
+      isOpen: false,
+      child: [
+        {
+          href: "/home/dashboard",
+          name: "Home",
+          icon: "Home",
+        },
+        {
+          href: "/fpb/c-purchasing-head",
+          name: "FPB List",
+          icon: "ShoppingCart",
+        },
       ],
     },
   ],
@@ -198,7 +244,7 @@ export const roles = {
   ],
   "Reviewer Purchasing": [
     {
-      href: "/fpb/c-reviewer",
+      href: "/fpb/c-reviewer-purchasing",
       name: "Home",
       icon: "Home",
     },
@@ -404,7 +450,7 @@ export const roles = {
       icon: "Home",
     },
     {
-      href: "/fpb/list",
+      href: "/fpb/c-purchasing-head",
       name: "FPB List",
       icon: "ShoppingCart",
     },

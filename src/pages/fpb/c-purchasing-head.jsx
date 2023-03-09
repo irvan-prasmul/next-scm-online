@@ -30,140 +30,216 @@ import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
 import {
   iconView,
+  ictReviewFpb,
   imageView,
   longTextWithReadMore,
   materialNameEdit,
   setReviewerFpb,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { paginationPropType } from "@/types";
+import { confirmationType, dialogTypesFpb, paginationPropType } from "@/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
-import { columnNormalize } from "@/column-normalize";
+import ConfirmationDialog from "@/components/confirmationDialog";
 
 const columns = [
-  columnNormalize.id,
-  columnNormalize.reviewer,
-  columnNormalize.fpbNumber,
-  columnNormalize.noPo,
-  columnNormalize.materialName,
-  columnNormalize.price,
-  columnNormalize.qtyPO,
-  columnNormalize.uom,
-  columnNormalize.total,
-  columnNormalize.vendor,
-  columnNormalize.constCenter,
-  columnNormalize.planDate,
-  columnNormalize.file,
-  columnNormalize.requesterName,
-  columnNormalize.requesterNotes,
-  columnNormalize.docPta,
-  columnNormalize.docIo,
-  columnNormalize.docOther,
-  columnNormalize.activity,
-  columnNormalize.ioBudget,
-  columnNormalize.eventName,
-  columnNormalize.eventDate,
-  columnNormalize.eventPic,
-  columnNormalize.eventContact,
-  columnNormalize.picPurc,
-  columnNormalize.purchasingNotes,
-  columnNormalize.status,
-  columnNormalize.informationStatus,
-  columnNormalize.documentStatus,
+  { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
+  {
+    id: "purcMethod",
+    label: "Purchase Method",
+    minWidth: 100,
+    isShow: true,
+  },
+  {
+    id: "picPurchase",
+    label: "PIC Purc.",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "fpbnumber",
+    label: "No. FPB",
+    minWidth: 110,
+    isShow: true,
+  },
+  {
+    id: "materialName",
+    label: "Material Name",
+    minWidth: 230,
+    isShow: true,
+  },
+  {
+    id: "category",
+    label: "Category",
+    minWidth: 90,
+    isShow: true,
+  },
+
+  {
+    id: "qtyPO",
+    label: "Qty PO",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "uom",
+    label: "UOM",
+    minWidth: 80,
+    isShow: true,
+  },
+  {
+    id: "price",
+    label: "Price",
+    minWidth: 120,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "total",
+    label: "Total",
+    minWidth: 121,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "noPo",
+    label: "No. PO",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
+  },
+  {
+    id: "constCenter",
+    label: "Cost Center",
+    minWidth: 156,
+    isShow: true,
+  },
+  {
+    id: "planDate",
+    label: "Plan Date",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => moment(value).format("YYYY-MM-DD"),
+  },
+  {
+    id: "file",
+    label: "File",
+    minWidth: 115,
+    isShow: true,
+  },
+  {
+    id: "requesterName",
+    label: "Requester Name",
+    minWidth: 130,
+    isShow: true,
+  },
+  {
+    id: "requesterNotes",
+    label: "Requester Notes",
+    minWidth: 202,
+    isShow: true,
+  },
+  {
+    id: "ictNotes",
+    label: "ICT Notes",
+    minWidth: 202,
+    isShow: true,
+  },
+  {
+    id: "purchasingNotes",
+    label: "Purchasing Notes",
+    minWidth: 256,
+    isShow: true,
+  },
+  {
+    id: "documentStatus",
+    label: "Document Status",
+    minWidth: 500,
+    isShow: true,
+  },
+  //
 ];
 
 const rows = [
   {
     id: 1,
-    reviewer: null,
-    fpbNumber: "F23100468",
-    noPo: null,
+    action: false,
+    fpbnumber: "F23100468",
     materialName: "Fuel Cell",
-    price: 898987,
     qtyPo: 1,
     uom: "UN",
+    price: 898987,
     total: 898989,
-    vendor: null,
+    noPo: null,
     constCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
     requesterName: "Irvan",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    docPta:
-      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14151233.png",
-    docIo:
-      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/151233.png",
-    docOther:
-      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181333.png",
-    activity: "IO",
-    ioBudget: 3313212,
-    eventName: "test Community Development II STEM (Periode 1)",
-    eventDate: "1976-04-19T12:59-0500",
-    eventPic: "test",
-    eventContact: "1231412",
-    requesterNotes:
+    ictNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    ictNotes: "ictNotes",
-    picPurc: "bukan aku",
     purchasingNotes:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    status: "pending",
-    informationStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     documentStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
-  // {
-  //   id: 2,
-  //   reviewer: null,
-  //   fpbNumber: "F23100468",
-  //   noPo: null,
-  //   materialName: "Fuel Cell",
-  //   price: 898987,
-  //   qtyPo: 1,
-  //   uom: "UN",
-  //   total: 898989,
-  //   vendor: null,
-  //   constCenter: "SBE Dekanat",
-  //   planDate: "1976-04-19T12:59-0500",
-  //   file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
-  //   requesterName: "Irvan",
-  //   requesterNotes:
-  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  //   docPta: null,
-  //   docIo: null,
-  //   docOther: null,
-  //   activity: "IO",
-  //   ioBudget: 3313212,
-  //   eventName: "test Community Development II STEM (Periode 1)",
-  //   eventDate: "1976-04-19T12:59-0500",
-  //   eventPic: "test",
-  //   requesterNotes: "test",
-  //   ictNotes: "ictNotes",
-  //   picPurc: "bukan aku",
-  //   purchasingNotes:
-  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  //   status: "pending",
-  //   informationStatus:
-  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  //   documetStatus:
-  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  // },
+  {
+    id: 2,
+    action: true,
+    fpbnumber: "F23100468",
+    materialName: "Fuel Cell",
+    qtyPo: 1,
+    uom: "UN",
+    price: 898987,
+    total: 898989,
+    noPo: null,
+    constCenter: "SBE Dekanat",
+    planDate: "1976-04-19T12:59-0500",
+    file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
+    requesterName: "Irvan",
+    requesterNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    ictNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    purchasingNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    documentStatus:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  },
 ];
 
-const statusDdlValues = [
+const purchaseMethodDdlValues = [
   { value: "all", text: "All" },
-  { value: "cancelled", text: "Cancelled by User" },
   { value: "waiting", text: "Waiting" },
-  { value: "reviewed", text: "Reviewed" },
+  { value: "cc", text: "CC" },
+  { value: "pic", text: "PIC" },
+  { value: "user", text: "User" },
 ];
 
-export default function FpbReviewerPurchasing() {
+const picPurchaseDdlValues = [
+  { value: "all", text: "All" },
+  { value: "dil", text: "DIL" },
+  { value: "eso", text: "ESO" },
+];
+
+const documenStatusDdlValues = [
+  { value: "all", text: "All" },
+  { value: "waiting", text: "Waiting" },
+  { value: "done", text: "Done" },
+];
+
+export default function FpbListPurchasingHead() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
-  const [statusSelect, setStatusSelect] = React.useState("all");
+  const [purchaseMethod, setStatusSelect] = React.useState("all");
+  const [picPurchase, setPicPurchase] = React.useState("all");
+  const [documentStatus, setDocumentStatus] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
@@ -187,29 +263,21 @@ export default function FpbReviewerPurchasing() {
   const [dialogType, setDialogType] = React.useState("");
   const [openDialog, setOpenDialog] = React.useState(false);
   const [dialogBody, setDialogBody] = React.useState("");
-
-  const [editItemDialog, setEditItemDialog] = React.useState(false);
+  const [confirmDialog, setConfirmDialog] = React.useState(false);
 
   function dialogAction() {
     console.log("dialogAction");
   }
 
   const customCell = [
-    setReviewerFpb({ id: "reviewer", setDialogType, setOpenDialog }),
-    materialNameEdit({ id: "materialName", setEditItemDialog }),
     imageView({ id: ["file", "docPta", "docIo", "docOther"] }),
     iconView({ id: "status" }),
     longTextWithReadMore({
-      id: [
-        "requesterNotes",
-        "purchasingNotes",
-        "informationStatus",
-        "documentStatus",
-      ],
+      id: ["requesterNotes", "ictNotes", "purchasingNotes", "documentStatus"],
       limit: {
         requesterNotes: 50,
+        ictNotes: 50,
         purchasingNotes: 60,
-        informationStatus: 135,
         documentStatus: 135,
       },
       setDialogType,
@@ -228,11 +296,27 @@ export default function FpbReviewerPurchasing() {
       <PageHeader icon={<GradingRounded />} title="Review FPB" />
       <Box sx={{ p: 2 }}>
         <RowDdlSimple
-          text="Review Status"
-          ddlValue={statusSelect}
-          ddlValues={statusDdlValues}
+          text="Purchase Method"
+          ddlValue={purchaseMethod}
+          ddlValues={purchaseMethodDdlValues}
           ddlOnChange={(e) => {
             setStatusSelect(e.target.value);
+          }}
+        />
+        <RowDdlSimple
+          text="PIC Purchase"
+          ddlValue={picPurchase}
+          ddlValues={picPurchaseDdlValues}
+          ddlOnChange={(e) => {
+            setPicPurchase(e.target.value);
+          }}
+        />
+        <RowDdlSimple
+          text="Document Status"
+          ddlValue={documentStatus}
+          ddlValues={documenStatusDdlValues}
+          ddlOnChange={(e) => {
+            setDocumentStatus(e.target.value);
           }}
         />
         <MainTableMenu
@@ -258,32 +342,30 @@ export default function FpbReviewerPurchasing() {
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
             statusList={[
-              "Waiting",
+              "Approved by Procurement",
               "Purchase Order",
-              "Finance",
               "Goods Receipt",
               "Goods Issue",
             ]}
           />
         </Paper>
       </Box>
-      <ActionDialogMaterialItem
-        isOpen={editItemDialog}
-        handleClose={(e) => setEditItemDialog(false)}
-      />
       <ActionDialogFpb
         type={dialogType}
         isOpen={openDialog}
         handleClose={(e) => setOpenDialog(false)}
-        action={dialogAction}
+        action={(e) => {
+          setConfirmDialog(true);
+        }}
         bodyValue={dialogBody}
+        setBodyValue={setDialogBody}
       />
-      {/* <ConfirmationDialog
-        type={"cancel"}
+      <ConfirmationDialog
+        type={confirmationType.save}
         isOpen={confirmDialog}
         handleClose={(e) => setConfirmDialog(false)}
         action={dialogAction}
-      /> */}
+      />
     </>
   );
 }
