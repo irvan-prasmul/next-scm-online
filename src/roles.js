@@ -227,6 +227,142 @@ export const roles = {
           name: "FPB List",
           icon: "ShoppingCart",
         },
+        {
+          name: "Master",
+          icon: "DropboxIcon",
+          isOpen: false,
+          child: [
+            {
+              href: "/master/user",
+              name: "User",
+              icon: "Shortcut",
+            },
+            {
+              href: "/master/config-pjb",
+              name: "Config PJB",
+              icon: "Shortcut",
+            },
+          ],
+        },
+        {
+          name: "Reports",
+          icon: "TableIcon",
+          isOpen: false,
+          child: [
+            {
+              href: "/reports/price-comparison",
+              name: "Price Comparison",
+              icon: "Shortcut",
+            },
+            {
+              name: "request",
+              icon: "Shortcut",
+              isOpen: false,
+              child: [
+                {
+                  href: "/reports/request/vendor",
+                  name: "Vendor",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "/reports/request/material",
+                  name: "Material",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "/reports/request/pic",
+                  name: "PIC",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "/reports/request/department",
+                  name: "Department",
+                  icon: "CircleOutlineIcon",
+                },
+                {
+                  href: "/reports/request/status",
+                  name: "Status",
+                  icon: "CircleOutlineIcon",
+                },
+              ],
+            },
+            {
+              href: "/reports/fpb-history",
+              name: "FPB History",
+              icon: "Shortcut",
+            },
+            {
+              href: "/reports/fpb-all",
+              name: "FPB All",
+              icon: "Shortcut",
+            },
+          ],
+        },
+        {
+          name: "Chart",
+          icon: "ChartAreasplineVariantIcon",
+          isOpen: false,
+          child: [
+            {
+              href: "/chart/fpb",
+              name: "FPB",
+              icon: "Shortcut",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "Warehouse",
+      icon: "CircleOutlineIcon",
+      isOpen: false,
+      child: [
+        {
+          href: "/home/dashboard",
+          name: "Home",
+          icon: "Home",
+        },
+        {
+          name: "FPB",
+          icon: "ShoppingCart",
+          isOpen: false,
+          child: [
+            {
+              href: "/fpb/c-receipt",
+              icon: "Shortcut",
+              name: "Receipt",
+            },
+          ],
+        },
+        {
+          name: "Master",
+          icon: "DropboxIcon",
+          isOpen: false,
+          child: [
+            {
+              href: "/master/material/det",
+              icon: "Shortcut",
+              name: "Material",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "PIC Purchasing",
+      icon: "CircleOutlineIcon",
+      isOpen: false,
+      child: [
+        {
+          href: "/fpb/c-pic-purchasing",
+          name: "Home",
+          icon: "Home",
+        },
+        {
+          href: "/sap",
+          name: "SAP",
+          icon: "ArrowTopRightBoldBoxIcon",
+        },
       ],
     },
   ],
@@ -275,7 +411,7 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/fpb/receipt",
+          href: "/fpb/c-receipt",
           icon: "Shortcut",
           name: "Receipt",
         },
@@ -287,21 +423,9 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/master/master/",
+          href: "/master/material/det",
           icon: "Shortcut",
           name: "Material",
-        },
-      ],
-    },
-    {
-      name: "Reports",
-      icon: "TableIcon",
-      isOpen: false,
-      child: [
-        {
-          href: "/reports/status",
-          name: "Status",
-          icon: "Shortcut",
         },
       ],
     },
@@ -477,7 +601,7 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/reports/price-compare",
+          href: "/reports/price-comparison",
           name: "Price Comparison",
           icon: "Shortcut",
         },
@@ -492,7 +616,7 @@ export const roles = {
               icon: "CircleOutlineIcon",
             },
             {
-              href: "/reports/request/master/",
+              href: "/reports/request/material",
               name: "Material",
               icon: "CircleOutlineIcon",
             },
@@ -552,7 +676,7 @@ export const roles = {
   ],
   "PIC Purchasing": [
     {
-      href: "/home/dashboard",
+      href: "/fpb/c-pic-purchasing",
       name: "Home",
       icon: "Home",
     },

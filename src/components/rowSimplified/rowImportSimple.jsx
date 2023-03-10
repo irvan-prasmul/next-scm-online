@@ -6,7 +6,7 @@ import CloudUpload from "@mui/icons-material/CloudUpload";
 import CloudDownload from "@mui/icons-material/CloudDownload";
 import TextField from "@mui/material/TextField";
 
-export default function RowMasterImport({
+export default function RowImportSimple({
   text = "Import",
   accept = ".xslx, .csv",
   buttonText1 = "Import",

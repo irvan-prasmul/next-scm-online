@@ -40,7 +40,9 @@ function warningVariant(type, isValue) {
         }}
       >
         <Typography variant="h5">
-          {type == confirmationType.flagIct || type == confirmationType.save
+          {type == confirmationType.flagIct ||
+          type == confirmationType.save ||
+          type == confirmationType.ready
             ? "Confirmation"
             : "Are you sure you want to " + type + "?"}
         </Typography>
@@ -65,12 +67,18 @@ function warningVariant(type, isValue) {
             ? (isValue ? "Unset" : "Set") + ' as "ICT" Material Group?'
             : type == confirmationType.save
             ? "Are you sure you want to save?"
+            : type == confirmationType.ready
+            ? "Are you sure the item have been taken?"
             : ""}
         </Typography>
       </Grid>
       {type == confirmationType.reject ? (
         <Grid item xs={12} sx={{ pt: 2 }}>
           <TextField size="small" label="Reason" fullWidth />
+        </Grid>
+      ) : type == confirmationType.ready ? (
+        <Grid item xs={12} sx={{ pt: 2 }}>
+          <TextField size="small" label="Recipient's Name" fullWidth />
         </Grid>
       ) : (
         <></>
@@ -101,7 +109,9 @@ export default function ConfirmationDialog({
         type == confirmationType.approve ||
         type == confirmationType.reject ||
         type == confirmationType.flagIct ||
-        type == confirmationType.save
+        type == confirmationType.save ||
+        type == confirmationType.receipt ||
+        type == confirmationType.ready
           ? warningVariant(type, isValue)
           : noType()}
       </DialogContent>

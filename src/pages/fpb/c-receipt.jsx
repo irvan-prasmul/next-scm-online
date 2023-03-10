@@ -29,13 +29,13 @@ import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem"
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
 import {
-  fpbNumberTextDownload,
   iconView,
   ictReviewFpb,
   imageView,
   longTextWithReadMore,
   materialNameEdit,
   setReviewerFpb,
+  warehouseFpbReceipt,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
 import { confirmationType, dialogTypesFpb, paginationPropType } from "@/types";
@@ -45,158 +45,108 @@ import { columnNormalize } from "@/column-normalize";
 
 const columns = [
   columnNormalize.id,
-  columnNormalize.purchaseMethod,
-  columnNormalize.picPurc,
-  columnNormalize.fpbNo,
+  columnNormalize.action1Button,
+  columnNormalize.status,
   columnNormalize.materialName,
-  columnNormalize.category,
   columnNormalize.qtyPO,
+  columnNormalize.qtyReceipt,
   columnNormalize.uom,
   columnNormalize.price,
   columnNormalize.total,
+  columnNormalize.fpbNo,
   columnNormalize.noPo,
-  columnNormalize.vendor,
   columnNormalize.constCenter,
   columnNormalize.planDate,
-  columnNormalize.file,
   columnNormalize.requesterNotes,
-  columnNormalize.createdDate,
-  columnNormalize.requesterName,
-  columnNormalize.department,
-  columnNormalize.activity,
-  columnNormalize.ioBudget,
-  columnNormalize.docPta,
-  columnNormalize.docIo,
-  columnNormalize.docOther,
-  columnNormalize.eventName,
-  columnNormalize.eventPic,
-  columnNormalize.eventContact,
-  columnNormalize.ictNotes,
+  columnNormalize.picPurc,
   columnNormalize.purchasingNotes,
-  columnNormalize.status,
   columnNormalize.informationStatus,
-  columnNormalize.documentStatus,
-  columnNormalize.drop,
 ];
 
 const rows = [
   {
     id: 1,
-    purchaseMethod: "CC",
-    picPurc: "None",
-    fpbNumber: "F23100468",
+    action: "waiting",
+    status: "active",
     materialName: "Fuel Cell",
-    category: "Non-ICT",
     qtyPo: 1,
     uom: "UN",
     price: 898987,
     total: 898989,
-    noPo: "409338102",
-    vendor: "Fatmajaya Cipta Media",
+    fpbNumber: "F23100468",
+    noPo: "4020006810",
     constCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
-    file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    createdDate: "1976-04-19T12:59-0500",
-    requesterName: "Irvan",
-    department: "ICT",
-    activity: "Non-IO",
-    ioBudget: "",
-    docPta:
-      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14151233.png",
-    docIo:
-      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/151233.png",
-    docOther:
-      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181333.png",
-    eventName: "test Community Development II STEM (Periode 1)",
-    eventDate: "1976-04-19T12:59-0500",
-    eventPic: "test",
-    eventContact: "1231412",
+    picPurc: "YYM",
     ictNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     purchasingNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    status: "active",
     informationStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    documentStatus:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    drop: "",
   },
   {
     id: 2,
-    purchaseMethod: "CC",
-    picPurc: "None",
-    fpbNumber: "F23100468",
+    action: "ready",
+    status: "active",
     materialName: "Fuel Cell",
-    category: "Non-ICT",
     qtyPo: 1,
     uom: "UN",
     price: 898987,
     total: 898989,
-    noPo: "409338102",
-    vendor: "Fatmajaya Cipta Media",
+    fpbNumber: "F23100468",
+    noPo: "4020006810",
     constCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
-    file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    createdDate: "1976-04-19T12:59-0500",
-    requesterName: "Irvan",
-    department: "ICT",
-    activity: "Non-IO",
-    ioBudget: "",
-    docPta:
-      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14151233.png",
-    docIo:
-      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/151233.png",
-    docOther:
-      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181333.png",
-    eventName: "test Community Development II STEM (Periode 1)",
-    eventDate: "1976-04-19T12:59-0500",
-    eventPic: "test",
-    eventContact: "1231412",
+    picPurc: "YYM",
     ictNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     purchasingNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    status: "active",
     informationStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    documentStatus:
+  },
+  {
+    id: 3,
+    action: "received",
+    status: "active",
+    materialName: "Fuel Cell",
+    qtyPo: 1,
+    uom: "UN",
+    price: 898987,
+    total: 898989,
+    fpbNumber: "F23100468",
+    noPo: "4020006810",
+    constCenter: "SBE Dekanat",
+    planDate: "1976-04-19T12:59-0500",
+    requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    drop: "",
+    picPurc: "YYM",
+    ictNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    purchasingNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    informationStatus:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
 ];
 
-const purchaseMethodDdlValues = [
+const statusDdlValues = [
   { value: "all", text: "All" },
   { value: "waiting", text: "Waiting" },
-  { value: "cc", text: "CC" },
-  { value: "pic", text: "PIC" },
-  { value: "user", text: "User" },
+  { value: "ready", text: "Ready for Pick up" },
+  { value: "recieved", text: "Already Recieved" },
 ];
 
-const picPurchaseDdlValues = [
-  { value: "all", text: "All" },
-  { value: "dil", text: "DIL" },
-  { value: "eso", text: "ESO" },
-];
-
-const documenStatusDdlValues = [
-  { value: "all", text: "All" },
-  { value: "waiting", text: "Waiting" },
-  { value: "done", text: "Done" },
-];
-
-export default function FpbListPurchasingHead() {
+export default function FpbReceipt() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
-  const [purchaseMethod, setStatusSelect] = React.useState("all");
-  const [picPurchase, setPicPurchase] = React.useState("all");
-  const [documentStatus, setDocumentStatus] = React.useState("all");
+  const [statusSelect, setStatusSelect] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
@@ -221,14 +171,29 @@ export default function FpbListPurchasingHead() {
   const [openDialog, setOpenDialog] = React.useState(false);
   const [dialogBody, setDialogBody] = React.useState("");
   const [confirmDialog, setConfirmDialog] = React.useState(false);
+  const [confirmDialogType, setConfirmDialogType] = React.useState(
+    confirmationType.receipt
+  );
 
   function dialogAction() {
     console.log("dialogAction");
   }
 
   const customCell = [
-    fpbNumberTextDownload({ id: "fpbNumer" }),
-    imageView({ id: ["file", "docPta", "docIo", "docOther"] }),
+    warehouseFpbReceipt({
+      id: "action",
+      handleClick: (row, col) => {
+        const value = row[col.id];
+        setConfirmDialogType(
+          value == "waiting"
+            ? confirmationType.receipt
+            : value == "ready"
+            ? confirmationType.ready
+            : ""
+        );
+        setConfirmDialog(true);
+      },
+    }),
     iconView({ id: "status" }),
     longTextWithReadMore({
       id: [
@@ -236,14 +201,12 @@ export default function FpbListPurchasingHead() {
         "ictNotes",
         "purchasingNotes",
         "informationStatus",
-        "documentStatus",
       ],
       limit: {
         requesterNotes: 50,
         ictNotes: 50,
         purchasingNotes: 60,
         informationStatus: 135,
-        documentStatus: 135,
       },
       setDialogType,
       setDialogBody,
@@ -261,27 +224,12 @@ export default function FpbListPurchasingHead() {
       <PageHeader icon={<GradingRounded />} title="Review FPB" />
       <Box sx={{ p: 2 }}>
         <RowDdlSimple
-          text="Purchase Method"
-          ddlValue={purchaseMethod}
-          ddlValues={purchaseMethodDdlValues}
+          md={1}
+          text="Status"
+          ddlValue={statusSelect}
+          ddlValues={statusDdlValues}
           ddlOnChange={(e) => {
             setStatusSelect(e.target.value);
-          }}
-        />
-        <RowDdlSimple
-          text="PIC Purchase"
-          ddlValue={picPurchase}
-          ddlValues={picPurchaseDdlValues}
-          ddlOnChange={(e) => {
-            setPicPurchase(e.target.value);
-          }}
-        />
-        <RowDdlSimple
-          text="Document Status"
-          ddlValue={documentStatus}
-          ddlValues={documenStatusDdlValues}
-          ddlOnChange={(e) => {
-            setDocumentStatus(e.target.value);
           }}
         />
         <MainTableMenu
@@ -306,12 +254,7 @@ export default function FpbListPurchasingHead() {
         </Paper>
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
-            statusList={[
-              "Approved by Procurement",
-              "Purchase Order",
-              "Goods Receipt",
-              "Goods Issue",
-            ]}
+            statusList={["Purchase Order", "Goods Receipt", "Goods Issue"]}
           />
         </Paper>
       </Box>
@@ -326,7 +269,7 @@ export default function FpbListPurchasingHead() {
         setBodyValue={setDialogBody}
       />
       <ConfirmationDialog
-        type={confirmationType.save}
+        type={confirmDialogType}
         isOpen={confirmDialog}
         handleClose={(e) => setConfirmDialog(false)}
         action={dialogAction}

@@ -35,130 +35,107 @@ import {
   imageView,
   longTextWithReadMore,
   materialNameEdit,
+  picPurchasingType,
   setReviewerFpb,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { confirmationType, dialogTypesFpb, paginationPropType } from "@/types";
+import {
+  confirmationType,
+  dialogTypesFpb,
+  paginationPropType,
+  purchasingTypeDdlValues,
+} from "@/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import { columnNormalize } from "@/column-normalize";
 
 const columns = [
   columnNormalize.id,
-  columnNormalize.purchaseMethod,
-  columnNormalize.picPurc,
+  columnNormalize.purchasingType1Button,
   columnNormalize.fpbNo,
+  columnNormalize.noPo,
   columnNormalize.materialName,
-  columnNormalize.category,
+  columnNormalize.price,
   columnNormalize.qtyPO,
   columnNormalize.uom,
-  columnNormalize.price,
   columnNormalize.total,
-  columnNormalize.noPo,
   columnNormalize.vendor,
   columnNormalize.constCenter,
   columnNormalize.planDate,
   columnNormalize.file,
-  columnNormalize.requesterNotes,
-  columnNormalize.createdDate,
   columnNormalize.requesterName,
-  columnNormalize.department,
-  columnNormalize.activity,
-  columnNormalize.ioBudget,
+  columnNormalize.requesterNotes,
   columnNormalize.docPta,
   columnNormalize.docIo,
   columnNormalize.docOther,
-  columnNormalize.eventName,
-  columnNormalize.eventPic,
-  columnNormalize.eventContact,
   columnNormalize.ictNotes,
+  columnNormalize.picPurc,
   columnNormalize.purchasingNotes,
   columnNormalize.status,
   columnNormalize.informationStatus,
   columnNormalize.documentStatus,
-  columnNormalize.drop,
 ];
 
 const rows = [
   {
     id: 1,
-    purchaseMethod: "CC",
-    picPurc: "None",
+    purchasingType: "waiting",
     fpbNumber: "F23100468",
+    noPo: "409338102",
     materialName: "Fuel Cell",
-    category: "Non-ICT",
+    price: 898987,
     qtyPo: 1,
     uom: "UN",
-    price: 898987,
     total: 898989,
-    noPo: "409338102",
     vendor: "Fatmajaya Cipta Media",
     constCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
+    requesterName: "Irvan",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    createdDate: "1976-04-19T12:59-0500",
-    requesterName: "Irvan",
-    department: "ICT",
-    activity: "Non-IO",
-    ioBudget: "",
     docPta:
       "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14151233.png",
     docIo:
       "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/151233.png",
     docOther:
       "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181333.png",
-    eventName: "test Community Development II STEM (Periode 1)",
-    eventDate: "1976-04-19T12:59-0500",
-    eventPic: "test",
-    eventContact: "1231412",
     ictNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    purchasingNotes:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    status: "active",
+    picPurc: "None",
+    purchasingNotes: "",
+    status: "waiting",
     informationStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     documentStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    drop: "",
   },
   {
     id: 2,
-    purchaseMethod: "CC",
-    picPurc: "None",
+    purchasingType: "PO",
     fpbNumber: "F23100468",
+    noPo: "409338102",
     materialName: "Fuel Cell",
-    category: "Non-ICT",
+    price: 898987,
     qtyPo: 1,
     uom: "UN",
-    price: 898987,
     total: 898989,
-    noPo: "409338102",
     vendor: "Fatmajaya Cipta Media",
     constCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
+    requesterName: "Irvan",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    createdDate: "1976-04-19T12:59-0500",
-    requesterName: "Irvan",
-    department: "ICT",
-    activity: "Non-IO",
-    ioBudget: "",
     docPta:
       "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14151233.png",
     docIo:
       "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/151233.png",
     docOther:
       "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181333.png",
-    eventName: "test Community Development II STEM (Periode 1)",
-    eventDate: "1976-04-19T12:59-0500",
-    eventPic: "test",
-    eventContact: "1231412",
     ictNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    picPurc: "None",
     purchasingNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     status: "active",
@@ -166,37 +143,90 @@ const rows = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     documentStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    drop: "",
+  },
+  {
+    id: 3,
+    purchasingType: "Petty Cash",
+    fpbNumber: "F23100468",
+    noPo: "409338102",
+    materialName: "Fuel Cell",
+    price: 898987,
+    qtyPo: 1,
+    uom: "UN",
+    total: 898989,
+    vendor: "Fatmajaya Cipta Media",
+    constCenter: "SBE Dekanat",
+    planDate: "1976-04-19T12:59-0500",
+    file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
+    requesterName: "Irvan",
+    requesterNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    docPta:
+      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14151233.png",
+    docIo:
+      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/151233.png",
+    docOther:
+      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181333.png",
+    ictNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    picPurc: "None",
+    purchasingNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    status: "finance",
+    informationStatus:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    documentStatus:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  },
+  {
+    id: 4,
+    purchasingType: "CC",
+    fpbNumber: "F23100468",
+    noPo: "409338102",
+    materialName: "Fuel Cell",
+    price: 898987,
+    qtyPo: 1,
+    uom: "UN",
+    total: 898989,
+    vendor: "Fatmajaya Cipta Media",
+    constCenter: "SBE Dekanat",
+    planDate: "1976-04-19T12:59-0500",
+    file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
+    requesterName: "Irvan",
+    requesterNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    docPta:
+      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14151233.png",
+    docIo:
+      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/151233.png",
+    docOther:
+      "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181333.png",
+    ictNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    picPurc: "None",
+    purchasingNotes:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    status: "finance",
+    informationStatus:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    documentStatus:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
 ];
 
-const purchaseMethodDdlValues = [
+const statusDdlValues = [
   { value: "all", text: "All" },
   { value: "waiting", text: "Waiting" },
-  { value: "cc", text: "CC" },
-  { value: "pic", text: "PIC" },
-  { value: "user", text: "User" },
+  { value: "po", text: "PO" },
+  { value: "keuangan", text: "Keuangan" },
 ];
 
-const picPurchaseDdlValues = [
-  { value: "all", text: "All" },
-  { value: "dil", text: "DIL" },
-  { value: "eso", text: "ESO" },
-];
-
-const documenStatusDdlValues = [
-  { value: "all", text: "All" },
-  { value: "waiting", text: "Waiting" },
-  { value: "done", text: "Done" },
-];
-
-export default function FpbListPurchasingHead() {
+export default function FpbPicPurchasingd() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
-  const [purchaseMethod, setStatusSelect] = React.useState("all");
+  const [status, setStatus] = React.useState("all");
   const [picPurchase, setPicPurchase] = React.useState("all");
-  const [documentStatus, setDocumentStatus] = React.useState("all");
 
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
   const handleColumnChange = (id) => {
@@ -227,6 +257,15 @@ export default function FpbListPurchasingHead() {
   }
 
   const customCell = [
+    picPurchasingType({
+      id: "purchasingType",
+      handleClick: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb.inputPurchasingtype);
+        setDialogBody(row["status"] == "finance" ? "value" : "all");
+        setOpenDialog(true);
+      },
+    }),
     fpbNumberTextDownload({ id: "fpbNumer" }),
     imageView({ id: ["file", "docPta", "docIo", "docOther"] }),
     iconView({ id: "status" }),
@@ -245,6 +284,7 @@ export default function FpbListPurchasingHead() {
         informationStatus: 135,
         documentStatus: 135,
       },
+      edit: { purchasingNotes: true },
       setDialogType,
       setDialogBody,
       setOpenDialog,
@@ -262,26 +302,18 @@ export default function FpbListPurchasingHead() {
       <Box sx={{ p: 2 }}>
         <RowDdlSimple
           text="Purchase Method"
-          ddlValue={purchaseMethod}
-          ddlValues={purchaseMethodDdlValues}
+          ddlValue={status}
+          ddlValues={statusDdlValues}
           ddlOnChange={(e) => {
-            setStatusSelect(e.target.value);
+            setStatus(e.target.value);
           }}
         />
         <RowDdlSimple
           text="PIC Purchase"
           ddlValue={picPurchase}
-          ddlValues={picPurchaseDdlValues}
+          ddlValues={purchasingTypeDdlValues}
           ddlOnChange={(e) => {
             setPicPurchase(e.target.value);
-          }}
-        />
-        <RowDdlSimple
-          text="Document Status"
-          ddlValue={documentStatus}
-          ddlValues={documenStatusDdlValues}
-          ddlOnChange={(e) => {
-            setDocumentStatus(e.target.value);
           }}
         />
         <MainTableMenu
@@ -307,8 +339,9 @@ export default function FpbListPurchasingHead() {
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
             statusList={[
-              "Approved by Procurement",
+              "Waiting",
               "Purchase Order",
+              "Finance",
               "Goods Receipt",
               "Goods Issue",
             ]}

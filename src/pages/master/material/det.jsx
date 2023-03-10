@@ -34,7 +34,7 @@ import EditRounded from "@mui/icons-material/EditRounded";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
-import RowMasterImport from "@/components/rowSimplified/rowMasterImport";
+import RowImportSimple from "@/components/rowSimplified/rowImportSimple";
 import { columnNormalize } from "@/column-normalize";
 
 const columns = [
@@ -192,6 +192,7 @@ export default function MasterMaterialDet() {
       </Head>
       <PageHeader icon={<CubeScanIcon />} title="Master Material Detail" />
       <Box sx={{ p: 2 }}>
+        {/* TODO:: HIDE ADD NEW AND IMPORT FOR WAREHOUSE USER */}
         <RowButtonSimple
           md={1}
           text="Material"
@@ -210,7 +211,7 @@ export default function MasterMaterialDet() {
             setOpenDialog(true);
           }}
         />
-        <RowMasterImport
+        <RowImportSimple
           md={1}
           handleButton2={(e) => {
             const URL =

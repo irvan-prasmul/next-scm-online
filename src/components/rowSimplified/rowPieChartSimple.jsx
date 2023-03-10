@@ -33,12 +33,6 @@ const renderActiveShape = (props) => {
   const ex = mx + (cos >= 0 ? 1 : -1) * 22;
   const ey = my;
   const textAnchor = cos >= 0 ? "start" : "end";
-
-  //   const ci = fill.findIndex((f) => f.name == payload.name);
-  // const color = fill[ci].color;
-  //   console.log("payload:", payload);
-  //   const color = "#999";
-
   return (
     <g>
       <text
@@ -75,16 +69,16 @@ const renderActiveShape = (props) => {
         fill="none"
       />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text
+      {/* <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`PV ${value}`}</text>
+      >{`${value}`}</text> */}
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
-        dy={18}
+        dy={5}
         textAnchor={textAnchor}
         fill="#999"
       >

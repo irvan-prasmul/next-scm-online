@@ -14,6 +14,7 @@ export const dialogTypesFpb = {
   documentStatus: "Document Status",
   reviewer: "Reviewer",
   reviewerIct: "Reviewer ICT",
+  inputPurchasingtype: "Input Purchasing Type",
 };
 
 export const confirmationType = {
@@ -24,6 +25,8 @@ export const confirmationType = {
   reject: "reject",
   flagIct: "flagIct",
   save: "save",
+  receipt: "receipt",
+  ready: "ready",
 };
 
 export const dialogTypesMasterMaterial = {
@@ -68,6 +71,20 @@ export const masterStatusDdlValues = [
   { value: "all", text: "All" },
   { value: "active", text: "Active" },
   { value: "inactive", text: "Inactive" },
+];
+
+export const purchasingTypeOptionDdlValues = [
+  { value: "choose", text: "Choose" },
+  { value: "once", text: "Run once" },
+  { value: "multiple", text: "Runs multiple" },
+];
+
+export const purchasingTypeDdlValues = [
+  { value: "all", text: "All" },
+  { value: "po", text: "PO" },
+  { value: "um", text: "UM" },
+  { value: "cc", text: "CC" },
+  { value: "pc", text: "Petty Cash" },
 ];
 
 export const dummyDdlChoose = [

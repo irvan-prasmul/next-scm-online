@@ -26,6 +26,7 @@ import {
 } from "@/types";
 import Switch from "@mui/material/Switch";
 import SearchRounded from "@mui/icons-material/SearchRounded";
+import Inventory2Rounded from "@mui/icons-material/Inventory2Rounded";
 
 function renderStatusIcon(status) {
   return status == "pending" ? (
@@ -186,16 +187,26 @@ export function longTextWithReadMore({
                     setOpenDialog(true);
                   }}
                 >
-                  Edit{" "}
+                  Edit
                   <DriveFileRenameOutlineRounded sx={{ fontSize: "1.2rem" }} />
                 </Button>
-              ) : (
-                <></>
-              )}
+              ) : null}
             </>
-          ) : (
-            <></>
-          )}
+          ) : edit && edit[col.id] && (value.length == 0 || value == "") ? (
+            <Button
+              variant="contained"
+              size="small"
+              color="primaryButton"
+              onClick={(e) => {
+                setDialogType(dialogTypesFpb[col.id] + "#EDIT#");
+                setDialogBody("");
+                setOpenDialog(true);
+              }}
+            >
+              <EditRounded fontSize="small" />
+              <Typography variant="bodyTable1">Input</Typography>
+            </Button>
+          ) : null}
         </TableCell>
       );
     },
@@ -306,6 +317,55 @@ export function renderSwitch({ id, onChange }) {
   };
 }
 
+// HYBRID TEXT BUTTON
+export function picPurchasingType({ id, handleClick }) {
+  return {
+    id,
+    element: (row, col) => {
+      const value = row[col.id];
+      const status = row["status"];
+      if (status && status == "waiting")
+        return (
+          <TableCell key={col.id} align="center">
+            <Button
+              variant="contained"
+              size="small"
+              color="primaryButton"
+              onClick={(e) => {
+                handleClick(row, col);
+              }}
+            >
+              <EditRounded fontSize="small" />
+              <Typography variant="bodyTable1">Input</Typography>
+            </Button>
+          </TableCell>
+        );
+      else if (status && status == "finance")
+        return (
+          <TableCell key={col.id} align="center">
+            <Button
+              variant="text"
+              size="small"
+              color="primaryButton"
+              onClick={(e) => {
+                handleClick(row, col);
+              }}
+            >
+              <Typography variant="bodyTable1">{value}</Typography>
+              <DriveFileRenameOutlineRounded fontSize="small" />
+            </Button>
+          </TableCell>
+        );
+      else
+        return (
+          <TableCell key={col.id} align="center">
+            <Typography variant="bodyTable1">{value}</Typography>
+          </TableCell>
+        );
+    },
+  };
+}
+
 // BELOW ARE SINGLE BUTTON TO OPEN DIALOG
 export function trackStatus({ id, setDialogType, setOpenDialog }) {
   return {
@@ -371,6 +431,41 @@ export function ictReviewFpb({ id, handleClick }) {
             >
               <SearchRounded fontSize="small" />
               <Typography variant="bodyTable1">Review</Typography>
+            </Button>
+          )}
+        </TableCell>
+      );
+    },
+  };
+}
+
+export function warehouseFpbReceipt({ id, handleClick }) {
+  return {
+    id,
+    element: (row, col) => {
+      const value = row[col.id];
+      return (
+        <TableCell key={col.id} align="center">
+          {value == "received" ? (
+            <Typography variant="bodyTableBoldItalic">Done</Typography>
+          ) : (
+            <Button
+              variant="contained"
+              size="small"
+              color="primaryButton"
+              onClick={(e) => handleClick(row, col)}
+            >
+              {value == "ready" ? (
+                <>
+                  <CheckBox fontSize="small" />
+                  <Typography variant="bodyTable1">Ready</Typography>
+                </>
+              ) : value == "waiting" ? (
+                <>
+                  <Inventory2Rounded fontSize="small" />
+                  <Typography variant="bodyTable1">Receipt</Typography>
+                </>
+              ) : null}
             </Button>
           )}
         </TableCell>

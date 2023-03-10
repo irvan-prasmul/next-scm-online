@@ -71,7 +71,7 @@ export default function ChartFpb() {
           dateValue={period}
           dateOnChange={(e) => setPeriod([e.selection])}
         />
-        {/* <RowLineChartSimple data={data} chartColor={chartColor} /> */}
+        <RowLineChartSimple data={data} chartColor={chartColor} />
         <RowPieChartSimple data={dataPie} chartColor={chartColor} />
       </Box>
     </>

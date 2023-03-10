@@ -36,7 +36,7 @@ import DeleteRounded from "@mui/icons-material/DeleteRounded";
 import EditRounded from "@mui/icons-material/EditRounded";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import ClosedCaptionOutlined from "@mui/icons-material/ClosedCaptionOutlined";
-import RowMasterImport from "@/components/rowSimplified/rowMasterImport";
+import RowImportSimple from "@/components/rowSimplified/rowImportSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/column-normalize";
 
@@ -149,7 +149,7 @@ export default function MasterCostCenter() {
       </Head>
       <PageHeader icon={<ClosedCaptionOutlined />} title="Master Cost Center" />
       <Box sx={{ p: 2 }}>
-        <RowMasterImport
+        <RowImportSimple
           md={1}
           handleButton2={(e) => {
             const URL =

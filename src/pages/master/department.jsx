@@ -36,7 +36,7 @@ import DeleteRounded from "@mui/icons-material/DeleteRounded";
 import EditRounded from "@mui/icons-material/EditRounded";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
-import RowMasterImport from "@/components/rowSimplified/rowMasterImport";
+import RowImportSimple from "@/components/rowSimplified/rowImportSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/column-normalize";
 
@@ -152,7 +152,7 @@ export default function MasterDepartment() {
             setOpenDialog(true);
           }}
         />
-        <RowMasterImport
+        <RowImportSimple
           md={1}
           handleButton2={(e) => {
             const URL =

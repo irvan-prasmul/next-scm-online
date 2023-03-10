@@ -22,7 +22,11 @@ import MenuItem from "@mui/material/MenuItem";
 import SaveRounded from "@mui/icons-material/SaveRounded";
 import Note from "@mui/icons-material/Note";
 import TextField from "@mui/material/TextField";
-import { dialogTypesFpb } from "@/types";
+import {
+  dialogTypesFpb,
+  purchasingTypeDdlValues,
+  purchasingTypeOptionDdlValues,
+} from "@/types";
 import RowDdlSimple from "../rowSimplified/rowDdlSimple";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
@@ -36,6 +40,7 @@ export default function ActionDialogFpb({
   setBodyValue,
 }) {
   const [fileInput, setFileInput] = React.useState([]);
+  const [applyOption, setApplyption] = React.useState("choose");
   const handleFileInput = (files) => {
     console.log("file", files);
     setFileInput([...files]);
@@ -67,7 +72,8 @@ export default function ActionDialogFpb({
               <AccountTreeRounded />
             ) : type == dialogTypesFpb.pta || type == dialogTypesFpb.other ? (
               <FileUploadRounded />
-            ) : type == dialogTypesFpb.reviewer ? (
+            ) : type == dialogTypesFpb.reviewer ||
+              type == dialogTypesFpb.inputPurchasingtype ? (
               <LocalAtmRounded />
             ) : type == dialogTypesFpb.requesterNotes ||
               type == dialogTypesFpb.ictNotes ||
@@ -75,13 +81,12 @@ export default function ActionDialogFpb({
               type == dialogTypesFpb.informationStatus ||
               type == dialogTypesFpb.documentStatus ? (
               <BookmarkRounded />
-            ) : type == dialogTypesFpb.requesterNotes + "#EDIT#" ? (
+            ) : type == dialogTypesFpb.requesterNotes + "#EDIT#" ||
+              type == dialogTypesFpb.purchasingNotes + "#EDIT#" ? (
               <Note />
             ) : type == dialogTypesFpb.reviewerIct ? (
               <SearchRounded />
-            ) : (
-              <></>
-            )}
+            ) : null}
           </Grid>
           <Grid
             item
@@ -100,18 +105,13 @@ export default function ActionDialogFpb({
               <Typography variant="h6">Upload Other Documents</Typography>
             ) : type == dialogTypesFpb.reviewer ? (
               <Typography variant="h6">Review FPB</Typography>
-            ) : type == dialogTypesFpb.requesterNotes ||
-              type == dialogTypesFpb.ictNotes ||
-              type == dialogTypesFpb.purchasingNotes ||
-              type == dialogTypesFpb.informationStatus ||
-              type == dialogTypesFpb.documentStatus ? (
-              <Typography variant="h6">{type}</Typography>
-            ) : type == dialogTypesFpb.requesterNotes + "#EDIT#" ? (
+            ) : type == dialogTypesFpb.requesterNotes + "#EDIT#" ||
+              type == dialogTypesFpb.purchasingNotes + "#EDIT#" ? (
               <Typography variant="h6">Update Requester Notes</Typography>
             ) : type == dialogTypesFpb.reviewerIct ? (
               <Typography variant="h6">Review ICT</Typography>
             ) : (
-              <></>
+              <Typography variant="h6">{type}</Typography>
             )}
           </Grid>
           <Grid item xs={1}>
@@ -209,15 +209,19 @@ export default function ActionDialogFpb({
           <Typography variant="bodyCst1">{bodyValue}</Typography>
         </Box>
       );
-    } else if (type == dialogTypesFpb.requesterNotes + "#EDIT#") {
+    } else if (
+      type == dialogTypesFpb.requesterNotes + "#EDIT#" ||
+      type == dialogTypesFpb.purchasingNotes + "#EDIT#"
+    ) {
       return (
-        <Box sx={{ backgroundColor: "#f2f2f2", textAlign: "justify" }}>
+        <Box sx={{ backgroundColor: "#f2f2f2", textAlign: "justify", m: 2 }}>
           <TextField
             multiline
             rows={5}
             variant="outlined"
             size="small"
-            sx={{ width: 450 }}
+            // sx={{ width: 450 }}
+            fullWidth
             value={bodyValue}
             // onChange={(e) => {
             //   setInformation(e.target.value);
@@ -235,6 +239,27 @@ export default function ActionDialogFpb({
             fullWidth
             multiline
             row={5}
+          />
+        </Box>
+      );
+    } else if (type == dialogTypesFpb.inputPurchasingtype) {
+      return (
+        <Box sx={{ p: 2 }}>
+          <RowDdlSimple
+            md={4}
+            text="Purchasing Type"
+            ddlValue={bodyValue}
+            ddlValues={purchasingTypeDdlValues}
+            fullWidth
+            ddlOnChange={(e) => setBodyValue(e.target.value)}
+          />
+          <RowDdlSimple
+            md={4}
+            text="Apply Option"
+            ddlValue={applyOption}
+            ddlValues={purchasingTypeOptionDdlValues}
+            fullWidth
+            ddlOnChange={(e) => setApplyOption(e.target.value)}
           />
         </Box>
       );
@@ -258,7 +283,9 @@ export default function ActionDialogFpb({
     if (
       type == dialogTypesFpb.reviewer ||
       type == dialogTypesFpb.requesterNotes + "#EDIT#" ||
-      type == dialogTypesFpb.reviewerIct
+      type == dialogTypesFpb.purchasingNotes + "#EDIT#" ||
+      type == dialogTypesFpb.reviewerIct ||
+      type == dialogTypesFpb.inputPurchasingtype
     ) {
       return (
         <>
@@ -297,7 +324,19 @@ export default function ActionDialogFpb({
 
   return (
     <Dialog
-      maxWidth={type == dialogTypesFpb.reviewerIct ? "md" : "xs"}
+      maxWidth={
+        type == dialogTypesFpb.reviewerIct
+          ? "md"
+          : type == dialogTypesFpb.requesterNotes ||
+            type == dialogTypesFpb.ictNotes ||
+            type == dialogTypesFpb.purchasingNotes ||
+            type == dialogTypesFpb.informationStatus ||
+            type == dialogTypesFpb.documentStatus ||
+            type == dialogTypesFpb.requesterNotes + "#EDIT#" ||
+            type == dialogTypesFpb.purchasingNotes + "#EDIT#"
+          ? "sm"
+          : "xs"
+      }
       fullWidth
       open={isOpen}
       onClose={handleClose}

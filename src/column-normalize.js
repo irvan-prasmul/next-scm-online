@@ -312,6 +312,12 @@ export const columnNormalize = {
     minWidth: 100,
     isShow: true,
   },
+  purchasingType1Button: {
+    id: "purchasingType",
+    label: "Purchasing Type",
+    minWidth: 130,
+    isShow: true,
+  },
   action2Button: {
     id: "action",
     label: "Action",
@@ -598,5 +604,25 @@ export const columnNormalize = {
     label: "Track Approval",
     minWidth: 100,
     isShow: true,
+  },
+  purchaseMethod: {
+    id: "purchaseMethod",
+    label: "Purchase Method",
+    minWidth: 100,
+    isShow: true,
+  },
+  drop: {
+    id: "drop",
+    label: "Drop",
+    minWidth: 100,
+    isShow: true,
+  },
+  qtyReceipt: {
+    id: "qtyReceipt",
+    label: "Qty Receipt",
+    minWidth: 100,
+    isShow: true,
+    format: (value) => value.toLocaleString("id"),
+    align: "right",
   },
 };
