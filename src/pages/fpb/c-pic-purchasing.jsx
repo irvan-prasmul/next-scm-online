@@ -41,7 +41,7 @@ import {
   dialogTypesFpb,
   paginationPropType,
   purchasingTypeDdlValues,
-} from "@/types";
+} from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import { columnNormalize } from "@/column-normalize";
@@ -292,8 +292,6 @@ export default function FpbPicPurchasingd() {
     <>
       <Head>
         <title>Home</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<GradingRounded />} title="Review FPB" />
       <Box sx={{ p: 2 }}>

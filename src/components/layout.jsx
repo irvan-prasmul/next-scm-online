@@ -31,7 +31,7 @@ import PackageVariantClosedIcon from "mdi-react/PackageVariantClosedIcon";
 import CircleOutlineIcon from "mdi-react/CircleOutlineIcon";
 import ChartAreasplineVariantIcon from "mdi-react/ChartAreasplineVariantIcon";
 import ArrowTopRightBoldBoxIcon from "mdi-react/ArrowTopRightBoldBoxIcon";
-import { roles } from "@/roles";
+import { roles } from "@/globals/roles";
 import { useSelector, useDispatch } from "react-redux";
 
 const drawerWidth = 256;

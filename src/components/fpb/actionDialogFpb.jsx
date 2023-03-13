@@ -26,7 +26,7 @@ import {
   dialogTypesFpb,
   purchasingTypeDdlValues,
   purchasingTypeOptionDdlValues,
-} from "@/types";
+} from "@/globals/types";
 import RowDdlSimple from "../rowSimplified/rowDdlSimple";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";

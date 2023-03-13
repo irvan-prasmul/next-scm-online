@@ -23,7 +23,7 @@ import {
   dialogTypesFpb,
   dialogTypesMasterMaterial,
   masterMaterialStatus,
-} from "@/types";
+} from "@/globals/types";
 import Switch from "@mui/material/Switch";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import Inventory2Rounded from "@mui/icons-material/Inventory2Rounded";

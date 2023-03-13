@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  basePath: "/scm-online",
+  basePath: process.env.REACT_APP_BASE_URL,
   images: {
     unoptimized: true,
   },

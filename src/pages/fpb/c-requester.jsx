@@ -2,19 +2,10 @@ import Head from "next/head";
 import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Add from "@mui/icons-material/Add";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
-import moment from "moment/moment";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
@@ -28,10 +19,10 @@ import {
   trackStatus,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { paginationPropType } from "@/types";
+import { paginationPropType } from "@/globals/types";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
-import { columnNormalize } from "@/column-normalize";
+import { columnNormalize } from "@/globals/column-normalize";
 
 const columns = [
   columnNormalize.id,
@@ -207,8 +198,6 @@ export default function FpbRequester() {
     <>
       <Head>
         <title>FPB</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<ShoppingCart />} title="FPB Dashboard (Non-Stock)" />
       <Box sx={{ p: 2 }}>

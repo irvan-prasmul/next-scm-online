@@ -3,7 +3,6 @@ import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
@@ -11,16 +10,12 @@ import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import CubeScanIcon from "mdi-react/CubeScanIcon";
 import { openExpandedRow } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import Add from "@mui/icons-material/Add";
 import {
   confirmationType,
   dialogTypesMasterMaterial,
   masterStatusDdlValues,
-} from "@/types";
+} from "@/globals/types";
 import ActionDialogMasterMaterial from "@/components/master/actionDialogMasterMaterial";
-import FileDocumentOutlineIcon from "mdi-react/FileDocumentOutlineIcon";
-import FileExcelOutlineIcon from "mdi-react/FileExcelOutlineIcon";
-import FilePowerpointOutlineIcon from "mdi-react/FilePowerpointOutlineIcon";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import DeleteRounded from "@mui/icons-material/DeleteRounded";
 import EditRounded from "@mui/icons-material/EditRounded";
@@ -28,7 +23,7 @@ import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import RowImportSimple from "@/components/rowSimplified/rowImportSimple";
-import { columnNormalize } from "@/column-normalize";
+import { columnNormalize } from "@/globals/column-normalize";
 
 const columns = [
   columnNormalize.preview,
@@ -180,8 +175,6 @@ export default function MasterMaterialDet() {
     <>
       <Head>
         <title>Material Detail</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<CubeScanIcon />} title="Master Material Detail" />
       <Box sx={{ p: 2 }}>

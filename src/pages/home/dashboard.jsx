@@ -23,8 +23,6 @@ export default function Dashboard() {
     <>
       <Head>
         <title>Dashboard</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <Box>
         <AutoPlaySwipeableViews
@@ -59,40 +57,6 @@ export default function Dashboard() {
             }}
           />
         </AutoPlaySwipeableViews>
-        {/* <MobileStepper
-              sx={{ width: "100%" }}
-              steps={maxSteps}
-              position="static"
-              activeStep={activeStep}
-              nextButton={
-                <Button
-                  size="small"
-                  onClick={handleNext}
-                  disabled={activeStep === maxSteps - 1}
-                >
-                  Next
-                  {theme.direction === "rtl" ? (
-                    <KeyboardArrowLeft />
-                  ) : (
-                    <KeyboardArrowRight />
-                  )}
-                </Button>
-              }
-              backButton={
-                <Button
-                  size="small"
-                  onClick={handleBack}
-                  disabled={activeStep === 0}
-                >
-                  {theme.direction === "rtl" ? (
-                    <KeyboardArrowRight />
-                  ) : (
-                    <KeyboardArrowLeft />
-                  )}
-                  Back
-                </Button>
-              }
-            /> */}
       </Box>
     </>
   );

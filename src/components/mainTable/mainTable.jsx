@@ -9,7 +9,7 @@ import TableBody from "@mui/material/TableBody";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Collapse from "@mui/material/Collapse";
-import { paginationPropType } from "@/types";
+import { paginationPropType } from "@/globals/types";
 
 export default function MainTable({
   columns,

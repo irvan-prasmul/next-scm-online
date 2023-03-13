@@ -2,48 +2,26 @@ import Head from "next/head";
 import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
-import Table from "@mui/material/Table";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
-import CheckBox from "@mui/icons-material/CheckBox";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
-import moment from "moment/moment";
-import IconButton from "@mui/material";
-import AddCircle from "@mui/icons-material/AddCircle";
-import RemoveCircle from "@mui/icons-material/RemoveCircle";
-import Search from "@mui/icons-material/Search";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
 import CubeScanIcon from "mdi-react/CubeScanIcon";
 import {
   editAndDeleteAction,
   renderSwitch,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import Add from "@mui/icons-material/Add";
 import {
   confirmationType,
   dialogTypesMasterMaterial,
-  masterMaterialStatus,
   masterStatusDdlValues,
-} from "@/types";
+} from "@/globals/types";
 import ActionDialogMasterMaterial from "@/components/master/actionDialogMasterMaterial";
-import FileDocumentOutlineIcon from "mdi-react/FileDocumentOutlineIcon";
-import FileExcelOutlineIcon from "mdi-react/FileExcelOutlineIcon";
-import FilePowerpointOutlineIcon from "mdi-react/FilePowerpointOutlineIcon";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
-import { columnNormalize } from "@/column-normalize";
+import { columnNormalize } from "@/globals/column-normalize";
 
 const columns = [
   columnNormalize.action2Button,
@@ -142,8 +120,6 @@ export default function MasterMaterialGroup() {
     <>
       <Head>
         <title>Material Group</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<CubeScanIcon />} title="Master Material Group" />
       <Box sx={{ p: 2 }}>

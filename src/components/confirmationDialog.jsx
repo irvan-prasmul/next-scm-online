@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import TextField from "@mui/material/TextField";
-import { confirmationType } from "@/types";
+import { confirmationType } from "@/globals/types";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Zoom ref={ref} {...props} />;

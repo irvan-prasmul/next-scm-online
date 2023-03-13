@@ -12,10 +12,10 @@ import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
 import { openExpandedRow } from "@/components/mainTable/mainTableCustomCells";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
-import { paginationPropType } from "@/types";
+import { paginationPropType } from "@/globals/types";
 import PageHeader from "@/components/pageHeader";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
-import { columnNormalize } from "@/column-normalize";
+import { columnNormalize } from "@/globals/column-normalize";
 
 const columns = [
   columnNormalize.preview,
@@ -177,8 +177,6 @@ export default function FpbPJBudget() {
     <>
       <Head>
         <title>Home</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<CheckBox />} title="Approval PJ Budget" />
       <Box sx={{ p: 2 }}>

@@ -2,43 +2,23 @@ import Head from "next/head";
 import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import CubeScanIcon from "mdi-react/CubeScanIcon";
-import {
-  editAndDeleteAction,
-  openExpandedRow,
-} from "@/components/mainTable/mainTableCustomCells";
+import { editAndDeleteAction } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import Add from "@mui/icons-material/Add";
 import {
   confirmationType,
   dialogTypesMaster,
-  masterStatus,
   masterStatusDdlValues,
-} from "@/types";
+} from "@/globals/types";
 import ActionDialogMaster from "@/components/master/actionDialogMaster";
-import FileDocumentOutlineIcon from "mdi-react/FileDocumentOutlineIcon";
-import FileExcelOutlineIcon from "mdi-react/FileExcelOutlineIcon";
-import FilePowerpointOutlineIcon from "mdi-react/FilePowerpointOutlineIcon";
 import ConfirmationDialog from "@/components/confirmationDialog";
-import CloudUpload from "@mui/icons-material/CloudUpload";
-import CloudDownload from "@mui/icons-material/CloudDownload";
-import DeleteRounded from "@mui/icons-material/DeleteRounded";
-import EditRounded from "@mui/icons-material/EditRounded";
-import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import ClosedCaptionOutlined from "@mui/icons-material/ClosedCaptionOutlined";
 import RowImportSimple from "@/components/rowSimplified/rowImportSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
-import { columnNormalize } from "@/column-normalize";
+import { columnNormalize } from "@/globals/column-normalize";
 
 const columns = [
   columnNormalize.action2Button,
@@ -144,8 +124,6 @@ export default function MasterCostCenter() {
     <>
       <Head>
         <title>Master Cost Center</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<ClosedCaptionOutlined />} title="Master Cost Center" />
       <Box sx={{ p: 2 }}>

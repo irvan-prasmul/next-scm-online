@@ -1,51 +1,38 @@
 import Head from "next/head";
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
-import MenuList from "@mui/material/MenuList";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Grow from "@mui/material/Grow";
-import Popper from "@mui/material/Popper";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import Paper from "@mui/material/Paper";
-import TableCell from "@mui/material/TableCell";
 import Typography from "@mui/material/Typography";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Add from "@mui/icons-material/Add";
-import Refresh from "@mui/icons-material/Refresh";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import ArrowDropDown from "@mui/icons-material/ArrowDropDown";
-import EditRounded from "@mui/icons-material/EditRounded";
-import ArrowForward from "@mui/icons-material/ArrowForward";
 import SaveRounded from "@mui/icons-material/SaveRounded";
 import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
-import DeleteRounded from "@mui/icons-material/DeleteRounded";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import FormHelperText from "@mui/material/FormHelperText";
 import InputAdornment from "@mui/material/InputAdornment";
 import PersonRounded from "@mui/icons-material/PersonRounded";
 import PhoneRounded from "@mui/icons-material/PhoneRounded";
 import Collapse from "@mui/material/Collapse";
-import TableChartRounded from "@mui/icons-material/TableChartRounded";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import { requesterCreateAction } from "@/components/mainTable/mainTableCustomCells";
 import RowTextSimple from "@/components/rowSimplified/rowTextSimple";
 import PageHeader from "@/components/pageHeader";
 import RowTextFieldSimple from "@/components/rowSimplified/rowTexfieldSimple";
 import RowDatePickerSimple from "@/components/rowSimplified/rowDatePickerSimple";
+import { testError } from "../api/hello";
+import { client } from "@/globals/axios";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 const regexPhone = /^\d+$/;
 
@@ -106,12 +93,19 @@ const rows = [
 
 export default function FpbCreate() {
   const auth = useSelector((state) => state.auth);
-  //   const dispatch = useDispatch();
+  const error = useSelector((state) => state.error);
+  const dispatch = useDispatch();
   const [userName, setUserName] = React.useState("");
 
+  // useDeepCompareEffect(() => {
+  //   console.log("auth useDeepCompareEffect:", auth);
+  //   setUserName(auth.userName);
+  // }, [auth]);
+
   React.useEffect(() => {
+    console.log("auth effect:", auth);
     setUserName(auth.userName);
-  }, [auth]);
+  }, [auth.userName]);
 
   const [profitCenter, setProfitCenter] = React.useState("Choose");
   const HandleProfitCenterSelect = (event) => {
@@ -277,8 +271,6 @@ export default function FpbCreate() {
     <>
       <Head>
         <title>{"FPB Create"}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<ShoppingCart />} title={["FPB", "Create"]} />
       <Divider />
@@ -478,6 +470,11 @@ export default function FpbCreate() {
                 alignItems: "center",
               }}
               onClick={(e) => {
+                console.log("dismiss:", error);
+                console.log("dismiss:", auth);
+                // dispatch({
+                //   type: "dismissError",
+                // });
                 setConfirmType("close");
                 setConfirmDialog(true);
               }}
@@ -493,7 +490,24 @@ export default function FpbCreate() {
                 display: "flex",
                 alignItems: "center",
               }}
-              onClick={(e) => setValidate(true)}
+              onClick={(e) => {
+                client
+                  .get("/")
+                  .then((res) => {
+                    console.log("success");
+                  })
+                  .catch((err) => {
+                    console.log("in page error:", err);
+                  });
+                setValidate(true);
+                // dispatch({
+                //   type: "setAuth",
+                //   payload: {
+                //     userToken: "dummy token",
+                //     userName: "setError",
+                //   },
+                // });
+              }}
             >
               <SaveRounded sx={{ mr: 1 }} /> Save
             </Button>

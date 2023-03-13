@@ -2,16 +2,9 @@ import Head from "next/head";
 import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
-import moment from "moment/moment";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
@@ -24,10 +17,10 @@ import {
   procurementAction,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { paginationPropType } from "@/types";
+import { paginationPropType } from "@/globals/types";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
-import { columnNormalize } from "@/column-normalize";
+import { columnNormalize } from "@/globals/column-normalize";
 
 const columns = [
   columnNormalize.id,
@@ -196,8 +189,6 @@ export default function FpbProcurement() {
     <>
       <Head>
         <title>Home</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<NewspaperVariantOutlineIcon />} title="FPB List" />
       <Box sx={{ p: 2 }}>

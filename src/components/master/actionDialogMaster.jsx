@@ -28,7 +28,7 @@ import {
   dummyDdlChoose,
   masterStatus,
   masterStatusDdlValues,
-} from "@/types";
+} from "@/globals/types";
 import NoteEditOutlineIcon from "mdi-react/NoteEditOutlineIcon";
 import Refresh from "@mui/icons-material/Refresh";
 import OutlinedInput from "@mui/material/OutlinedInput";

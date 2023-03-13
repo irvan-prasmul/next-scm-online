@@ -1,6 +1,5 @@
 import PageHeader from "@/components/pageHeader";
 import RowImportSimple from "@/components/rowSimplified/rowImportSimple";
-import RowTextFieldSimple from "@/components/rowSimplified/rowTexfieldSimple";
 import Box from "@mui/material/Box";
 import ArrowTopRightBoldBoxIcon from "mdi-react/ArrowTopRightBoldBoxIcon";
 import Head from "next/head";
@@ -13,8 +12,6 @@ export default function SapIndex() {
     <>
       <Head>
         <title>Import PO</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader
         icon={<ArrowTopRightBoldBoxIcon />}

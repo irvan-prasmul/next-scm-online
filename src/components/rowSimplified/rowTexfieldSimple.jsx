@@ -53,8 +53,8 @@ export default function RowTextFieldSimple({
             rows={rows}
             startAdornment={startAdornment}
             endAdornment={endAdornment}
-            value={controlled ? textFieldValue : null}
-            defaultValue={controlled ? null : textFieldValue}
+            value={controlled ? textFieldValue : undefined}
+            defaultValue={controlled ? undefined : textFieldValue}
             placeholder={placeholder}
             onChange={textFieldOnChange}
             inputProps={{ type: type, accept: accept }}

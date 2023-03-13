@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Layout from "@/components/layout";
 // import store from "@/store";
 import { Provider } from "react-redux";
-import { useStore } from "@/store";
+import { useStore } from "@/globals/store";
 // import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 // import LocalizationProvider from "@mui/x-date-pickers/LocalizationProvider";
 
