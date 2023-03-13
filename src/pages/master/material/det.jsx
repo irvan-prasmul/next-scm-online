@@ -3,10 +3,6 @@ import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import MainTable from "@/components/mainTable/mainTable";
@@ -19,7 +15,6 @@ import Add from "@mui/icons-material/Add";
 import {
   confirmationType,
   dialogTypesMasterMaterial,
-  masterMaterialStatus,
   masterStatusDdlValues,
 } from "@/types";
 import ActionDialogMasterMaterial from "@/components/master/actionDialogMasterMaterial";
@@ -27,8 +22,6 @@ import FileDocumentOutlineIcon from "mdi-react/FileDocumentOutlineIcon";
 import FileExcelOutlineIcon from "mdi-react/FileExcelOutlineIcon";
 import FilePowerpointOutlineIcon from "mdi-react/FilePowerpointOutlineIcon";
 import ConfirmationDialog from "@/components/confirmationDialog";
-import CloudUpload from "@mui/icons-material/CloudUpload";
-import CloudDownload from "@mui/icons-material/CloudDownload";
 import DeleteRounded from "@mui/icons-material/DeleteRounded";
 import EditRounded from "@mui/icons-material/EditRounded";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
@@ -188,7 +181,7 @@ export default function MasterMaterialDet() {
       <Head>
         <title>Material Detail</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/next-scm/favicon.ico" />
+        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<CubeScanIcon />} title="Master Material Detail" />
       <Box sx={{ p: 2 }}>
@@ -239,50 +232,30 @@ export default function MasterMaterialDet() {
           handleSearchTable={handleSearchTable}
           columnSelect={columnSelect}
           handleColumnChange={handleColumnChange}
-          customButtons={[
-            <Button
-              key="1"
-              size="small"
-              onClick={(e) => {
-                const URL =
-                  "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
-                if (typeof window !== "undefined") {
-                  window.location.href = URL;
-                }
-              }}
-            >
-              <FileDocumentOutlineIcon sx={{ mr: 1 }} />
-              <Typography variant="bodyCst1">CSV</Typography>
-            </Button>,
-            <Button
-              key="2"
-              size="small"
-              onClick={(e) => {
-                const URL =
-                  "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
-                if (typeof window !== "undefined") {
-                  window.location.href = URL;
-                }
-              }}
-            >
-              <FileExcelOutlineIcon sx={{ mr: 1 }} />
-              <Typography variant="bodyCst1">Excel</Typography>
-            </Button>,
-            <Button
-              key="3"
-              size="small"
-              onClick={(e) => {
-                const URL =
-                  "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
-                if (typeof window !== "undefined") {
-                  window.location.href = URL;
-                }
-              }}
-            >
-              <FilePowerpointOutlineIcon sx={{ mr: 1 }} />
-              <Typography variant="bodyCst1">PDF</Typography>
-            </Button>,
-          ]}
+          csvButton
+          csvButtonAction={(e) => {
+            const URL =
+              "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
+            if (typeof window !== "undefined") {
+              window.location.href = URL;
+            }
+          }}
+          excelButton
+          excelButtonAction={(e) => {
+            const URL =
+              "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
+            if (typeof window !== "undefined") {
+              window.location.href = URL;
+            }
+          }}
+          pdfButton
+          pdfButtonAction={(e) => {
+            const URL =
+              "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
+            if (typeof window !== "undefined") {
+              window.location.href = URL;
+            }
+          }}
         />
         <Paper sx={{ width: "100%", mt: 2 }}>
           <MainTable

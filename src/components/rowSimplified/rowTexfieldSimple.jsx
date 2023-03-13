@@ -25,18 +25,24 @@ export default function RowTextFieldSimple({
   rows = 3,
   placeholder = "",
   fullWidth = false,
+  offset = 0,
+  whiteBackground = false,
+  controlled = false,
   // errorCondition =
 }) {
   return (
     <Grid container>
+      <Grid item xs={0} md={offset} />
       <Grid item xs={12} md={md} style={{ marginTop: 16 }}>
         <Typography variant="h7">{text}</Typography>
       </Grid>
-      <Grid item xs={12} md={12 - md}>
+      <Grid item xs={12} md={12 - md - offset}>
         <FormControl
           disabled={disabled}
           variant="outlined"
+          className={whiteBackground ? "form-white-backgound" : null}
           size="small"
+          error={isValidate && textFieldValue == ""}
           sx={{
             width: fullWidth ? "-webkit-fill-available" : textFieldLength,
             my: 1,
@@ -47,7 +53,8 @@ export default function RowTextFieldSimple({
             rows={rows}
             startAdornment={startAdornment}
             endAdornment={endAdornment}
-            defaultValue={textFieldValue}
+            value={controlled ? textFieldValue : null}
+            defaultValue={controlled ? null : textFieldValue}
             placeholder={placeholder}
             onChange={textFieldOnChange}
             inputProps={{ type: type, accept: accept }}

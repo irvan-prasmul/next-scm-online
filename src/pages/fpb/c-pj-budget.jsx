@@ -3,17 +3,10 @@ import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import CheckBox from "@mui/icons-material/CheckBox";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
-import moment from "moment/moment";
 import Search from "@mui/icons-material/Search";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
@@ -64,7 +57,7 @@ export default function FpbPJBudget() {
     console.log("refresh table");
   }
 
-  function buttonExpandedRow(data) {
+  function buttonExpandedRow() {
     return (
       <Button
         variant="text"
@@ -86,7 +79,7 @@ export default function FpbPJBudget() {
       doctype: "UNI",
       total: 123141231,
       expandedProps: {
-        Action: buttonExpandedRow("test"),
+        Action: buttonExpandedRow(),
         Requester: "Theresia Uma Nurwiranti",
         Department: "UNI-PAFM",
         Activity: "Non-IO",
@@ -105,7 +98,64 @@ export default function FpbPJBudget() {
       doctype: "UNI",
       total: 22222,
       expandedProps: {
-        Action: buttonExpandedRow("test"),
+        Action: buttonExpandedRow(),
+        Requester: "tes",
+        Department: "UNI-PAFM",
+        Activity: "Non-IO",
+        Budget: "",
+        "Event Name": "",
+        "Event Date": "",
+        "PIC Name": "",
+        "PIC Phone": "",
+      },
+    },
+    {
+      preview: null,
+      fpbNumber: "F2313210468",
+      createdDate: "1976-04-19T12:59-0500",
+      unit: "Cilandak",
+      doctype: "UNI",
+      total: 22222,
+      expandedProps: {
+        Action: buttonExpandedRow(),
+        Requester: "tes",
+        Department: "UNI-PAFM",
+        Activity: "Non-IO",
+        Budget: "",
+        "Event Name": "",
+        "Event Date": "",
+        "PIC Name": "",
+        "PIC Phone": "",
+      },
+    },
+    {
+      preview: null,
+      fpbNumber: "F2313210468",
+      createdDate: "1976-04-19T12:59-0500",
+      unit: "Cilandak",
+      doctype: "UNI",
+      total: 22222,
+      expandedProps: {
+        Action: buttonExpandedRow(),
+        Requester: "tes",
+        Department: "UNI-PAFM",
+        Activity: "Non-IO",
+        Budget: "",
+        "Event Name": "",
+        "Event Date": "",
+        "PIC Name": "",
+        "PIC Phone": "",
+      },
+    },
+    {
+      preview: null,
+      fpbNumber: "F2313210468",
+      createdDate: "1976-04-19T12:59-0500",
+      unit: "Cilandak",
+      doctype: "UNI",
+      total: 22222,
+      expandedProps: {
+        Action: buttonExpandedRow(),
         Requester: "tes",
         Department: "UNI-PAFM",
         Activity: "Non-IO",
@@ -128,7 +178,7 @@ export default function FpbPJBudget() {
       <Head>
         <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/next-scm/favicon.ico" />
+        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<CheckBox />} title="Approval PJ Budget" />
       <Box sx={{ p: 2 }}>

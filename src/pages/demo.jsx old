@@ -28,7 +28,7 @@
 //             >
 //               By{" "}
 //               <Image
-//                 src="/next-scm/vercel.svg"
+//                 src="/scm-online/vercel.svg"
 //                 alt="Vercel Logo"
 //                 className={styles.vercelLogo}
 //                 width={100}
@@ -43,7 +43,7 @@
 //           {/* <img src="/next.svg" /> */}
 //           <Image
 //             className={styles.logo}
-//             src="/next-scm/next.svg"
+//             src="/scm-online/next.svg"
 //             alt="Next.js Logo"
 //             width={180}
 //             height={37}
@@ -51,7 +51,7 @@
 //           />
 //           <div className={styles.thirteen}>
 //             <Image
-//               src="/next-scm/thirteen.svg"
+//               src="/scm-online/thirteen.svg"
 //               alt="13"
 //               width={40}
 //               height={31}

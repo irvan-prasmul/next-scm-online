@@ -63,7 +63,7 @@ function Login() {
       <Head>
         <title>Login - SCM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/next-scm/favicon.ico" />
+        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <Box
         sx={{
@@ -223,7 +223,7 @@ function Login() {
                     color="info"
                     startIcon={
                       <Image
-                        src="/next-scm/microsoft-azure.svg"
+                        src="/scm-online/microsoft-azure.svg"
                         alt="azure"
                         width={24}
                         height={24}

@@ -15,6 +15,9 @@ import Refresh from "@mui/icons-material/Refresh";
 import _ from "lodash";
 import TableChartOutlined from "@mui/icons-material/TableChartOutlined";
 import TextField from "@mui/material/TextField";
+import FileDocumentOutlineIcon from "mdi-react/FileDocumentOutlineIcon";
+import FileExcelOutlineIcon from "mdi-react/FileExcelOutlineIcon";
+import FilePowerpointOutlineIcon from "mdi-react/FilePowerpointOutlineIcon";
 
 export default function MainTableMenu({
   handleRefreshTable,
@@ -22,6 +25,12 @@ export default function MainTableMenu({
   handleSearchTable,
   columnSelect,
   handleColumnChange,
+  csvButton = false,
+  csvButtonAction = (e) => console.log("undefined"),
+  excelButton = false,
+  excelButtonAction = (e) => console.log("undefined"),
+  pdfButton = false,
+  pdfButtonAction = (e) => console.log("undefined"),
   customButtons, // array button element with handler
 }) {
   const [openColumnList, setOpenColumnList] = React.useState(false);
@@ -49,11 +58,27 @@ export default function MainTableMenu({
               <Refresh sx={{ mr: 1 }} />
               <Typography variant="bodyCst1">Refresh Table</Typography>
             </Button>
-            {customButtons && customButtons.length > 0 ? (
-              customButtons.map((element) => element)
-            ) : (
-              <></>
-            )}
+            {csvButton ? (
+              <Button size="small" onClick={csvButtonAction}>
+                <FileDocumentOutlineIcon sx={{ mr: 1 }} />
+                <Typography variant="bodyCst1">CSV</Typography>
+              </Button>
+            ) : null}
+            {excelButton ? (
+              <Button size="small" onClick={excelButtonAction}>
+                <FileExcelOutlineIcon sx={{ mr: 1 }} />
+                <Typography variant="bodyCst1">Excel</Typography>
+              </Button>
+            ) : null}
+            {pdfButton ? (
+              <Button size="small" onClick={pdfButtonAction}>
+                <FilePowerpointOutlineIcon sx={{ mr: 1 }} />
+                <Typography variant="bodyCst1">PDF</Typography>
+              </Button>
+            ) : null}
+            {customButtons && customButtons.length > 0
+              ? customButtons.map((element) => element)
+              : null}
             <Button
               size="small"
               aria-controls={openColumnList ? "split-button-menu" : "none"}

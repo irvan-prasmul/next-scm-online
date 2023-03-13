@@ -16,7 +16,7 @@ function Root() {
       <Head>
         <title>SCM Online</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/next-scm/favicon.ico" />
+        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <main className={styles.main}>
         <h1>Redirecting...</h1>

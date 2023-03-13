@@ -116,7 +116,7 @@ export default function MasterMaterialType() {
       <Head>
         <title>Material Type</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/next-scm/favicon.ico" />
+        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<CubeScanIcon />} title="Master Material Type" />
       <Box sx={{ p: 2 }}>
@@ -148,50 +148,30 @@ export default function MasterMaterialType() {
           handleSearchTable={handleSearchTable}
           columnSelect={columnSelect}
           handleColumnChange={handleColumnChange}
-          customButtons={[
-            <Button
-              key="1"
-              size="small"
-              onClick={(e) => {
-                const URL =
-                  "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
-                if (typeof window !== "undefined") {
-                  window.location.href = URL;
-                }
-              }}
-            >
-              <FileDocumentOutlineIcon sx={{ mr: 1 }} />
-              <Typography variant="bodyCst1">CSV</Typography>
-            </Button>,
-            <Button
-              key="21"
-              size="small"
-              onClick={(e) => {
-                const URL =
-                  "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
-                if (typeof window !== "undefined") {
-                  window.location.href = URL;
-                }
-              }}
-            >
-              <FileExcelOutlineIcon sx={{ mr: 1 }} />
-              <Typography variant="bodyCst1">Excel</Typography>
-            </Button>,
-            <Button
-              key="3"
-              size="small"
-              onClick={(e) => {
-                const URL =
-                  "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
-                if (typeof window !== "undefined") {
-                  window.location.href = URL;
-                }
-              }}
-            >
-              <FilePowerpointOutlineIcon sx={{ mr: 1 }} />
-              <Typography variant="bodyCst1">PDF</Typography>
-            </Button>,
-          ]}
+          csvButton
+          csvButtonAction={(e) => {
+            const URL =
+              "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
+            if (typeof window !== "undefined") {
+              window.location.href = URL;
+            }
+          }}
+          excelButton
+          excelButtonAction={(e) => {
+            const URL =
+              "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
+            if (typeof window !== "undefined") {
+              window.location.href = URL;
+            }
+          }}
+          pdfButton
+          pdfButtonAction={(e) => {
+            const URL =
+              "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
+            if (typeof window !== "undefined") {
+              window.location.href = URL;
+            }
+          }}
         />
         <Paper sx={{ width: "100%", mt: 2 }}>
           <MainTable

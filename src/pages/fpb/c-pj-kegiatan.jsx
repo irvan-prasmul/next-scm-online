@@ -145,7 +145,7 @@ export default function FpbAprrovalPJKegiatan() {
       <Head>
         <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/next-scm/favicon.ico" />
+        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<CheckBox />} title="Approval PJ Kegiatan" />
       <Box sx={{ p: 2 }}>

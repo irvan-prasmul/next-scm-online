@@ -2,6 +2,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import ArrowForward from "@mui/icons-material/ArrowForward";
+import { Fragment } from "react";
 
 export default function PageHeader({ icon, title = "text" }) {
   return (
@@ -19,7 +20,7 @@ export default function PageHeader({ icon, title = "text" }) {
         {Array.isArray(title) ? (
           title.map((t, index) => {
             return (
-              <>
+              <Fragment key={index}>
                 <Typography
                   variant="h6"
                   sx={{ marginLeft: index == 0 ? "3px" : "0px" }}
@@ -34,7 +35,7 @@ export default function PageHeader({ icon, title = "text" }) {
                 ) : (
                   <></>
                 )}
-              </>
+              </Fragment>
             );
           })
         ) : (

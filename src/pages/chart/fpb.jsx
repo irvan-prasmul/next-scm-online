@@ -61,7 +61,7 @@ export default function ChartFpb() {
       <Head>
         <title>Chart FPB</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/next-scm/favicon.ico" />
+        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<ChartAreasplineVariantIcon />} title="Chart : FPB" />
       <Box sx={{ p: 2 }}>

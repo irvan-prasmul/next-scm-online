@@ -3,15 +3,15 @@ import TableCell from "@mui/material/TableCell";
 import _ from "lodash";
 import Table from "@mui/material/Table";
 import TableRow from "@mui/material/TableRow";
-import TableContainer from "@mui/material/TableContainer";
+import TableBody from "@mui/material/TableBody";
 
 export function tableExpandedRows({ id }) {
   return {
     id,
     element: (row) => {
       return (
-        <TableContainer>
-          <Table size="small" sx={{ mt: 1, mb: 2, width: 450 }}>
+        <Table size="small" sx={{ mt: 1, mb: 2, width: 450 }}>
+          <TableBody>
             {Object.keys(row.expandedProps).map((key) => {
               let tempRow = {};
               if (typeof row.expandedProps[key] == "function") {
@@ -40,8 +40,8 @@ export function tableExpandedRows({ id }) {
                 </TableRow>
               );
             })}
-          </Table>
-        </TableContainer>
+          </TableBody>
+        </Table>
       );
     },
   };

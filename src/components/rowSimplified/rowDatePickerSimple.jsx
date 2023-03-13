@@ -18,17 +18,22 @@ export default function RowDatePickerSimple({
   datePickerLength = 300, // "-webkit-fill-available" for fullWidth
   isValidate = false,
   errorMessage = "Please select a date.",
+  whiteBackground = false,
+  offset = 0,
+  disablePast = true,
 }) {
   return (
     <Grid container>
+      <Grid item xs={0} md={offset} />
       <Grid item xs={12} md={md} style={{ marginTop: 16 }}>
         <Typography variant="h7">{text}</Typography>
       </Grid>
-      <Grid item xs={12} md={12 - md}>
+      <Grid item xs={12} md={12 - md - offset}>
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <DatePicker
             value={dateValue}
-            disablePast
+            disablePast={disablePast}
+            className={whiteBackground ? "form-white-backgound" : null}
             views={["year", "month", "day"]}
             onChange={dateOnChange}
             renderInput={(params) => (

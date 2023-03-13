@@ -256,7 +256,7 @@ export default function FpbListPurchasingHead() {
       <Head>
         <title>Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/next-scm/favicon.ico" />
+        <link rel="icon" href="/scm-online/favicon.ico" />
       </Head>
       <PageHeader icon={<GradingRounded />} title="Review FPB" />
       <Box sx={{ p: 2 }}>

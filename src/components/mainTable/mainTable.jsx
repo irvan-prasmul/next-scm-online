@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
@@ -145,7 +145,7 @@ export default function MainTable({
     });
     let activeColumn = 0;
     return (
-      <>
+      <Fragment key={index}>
         <TableRow
           hover
           role="checkbox"
@@ -191,20 +191,22 @@ export default function MainTable({
           })}
         </TableRow>
         {open ? (
-          <TableRow key={"expanded-row" + index}>
+          <TableRow
+            style={{ display: open ? "table-row" : "none" }}
+            tabIndex={-1}
+            key={"expanded-row" + index}
+          >
             <TableCell
               colSpan={activeColumn}
               style={{ paddingBottom: 0, paddingTop: 0 }}
             >
-              <Collapse in={open} timeout="auto" unmountOnExit>
-                {customCell[expandId].element(row)}
-              </Collapse>
+              {/* <Collapse in={open} timeout="auto" unmountOnExit> */}
+              {customCell[expandId].element(row, index)}
+              {/* </Collapse> */}
             </TableCell>
           </TableRow>
-        ) : (
-          <></>
-        )}
-      </>
+        ) : null}
+      </Fragment>
     );
   }
 
