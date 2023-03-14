@@ -8,7 +8,7 @@ import _ from "lodash";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import GradingRounded from "@mui/icons-material/GradingRounded";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
+import TableInfomationStatus from "@/components/tableInformationStatus";
 import {
   fpbNumberTextDownload,
   iconView,

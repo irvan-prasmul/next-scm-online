@@ -1,13 +1,9 @@
 import Head from "next/head";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
-import FormControl from "@mui/material/FormControl";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -19,7 +15,6 @@ import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
-import FormHelperText from "@mui/material/FormHelperText";
 import InputAdornment from "@mui/material/InputAdornment";
 import PersonRounded from "@mui/icons-material/PersonRounded";
 import PhoneRounded from "@mui/icons-material/PhoneRounded";
@@ -30,48 +25,20 @@ import RowTextSimple from "@/components/rowSimplified/rowTextSimple";
 import PageHeader from "@/components/pageHeader";
 import RowTextFieldSimple from "@/components/rowSimplified/rowTexfieldSimple";
 import RowDatePickerSimple from "@/components/rowSimplified/rowDatePickerSimple";
-import { testError } from "../api/hello";
-import { client } from "@/globals/axios";
+import { testApi } from "../api/hello";
 import useDeepCompareEffect from "use-deep-compare-effect";
+import { setAuth } from "@/globals/slices";
+import RowDoubleDdl from "@/components/rowSimplified/rowDoubleDdl";
+import { columnNormalize } from "@/globals/column-normalize";
 
 const regexPhone = /^\d+$/;
 
 const columns = [
-  {
-    id: "materialName",
-    label: "Material Name",
-    minWidth: 100,
-    isShow: true,
-  },
-  {
-    id: "price",
-    label: "Price",
-    minWidth: 100,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "qtyPB",
-    label: "Qty PB",
-    minWidth: 100,
-    isShow: true,
-    format: (value) => value.toLocaleString("id"),
-    align: "right",
-  },
-  {
-    id: "uom",
-    label: "UOM",
-    minWidth: 100,
-    isShow: true,
-    align: "center",
-  },
-  {
-    id: "action",
-    label: "Action",
-    minWidth: 100,
-    isShow: true,
-  },
+  columnNormalize.materialName,
+  columnNormalize.price,
+  columnNormalize.qtyPB,
+  columnNormalize.uom,
+  columnNormalize.action2Button,
 ];
 
 const rows = [
@@ -93,46 +60,55 @@ const rows = [
 
 export default function FpbCreate() {
   const auth = useSelector((state) => state.auth);
-  const error = useSelector((state) => state.error);
+  // const error = useSelector((state) => state.error);
   const dispatch = useDispatch();
+  // const axios = defaultClient(dispatch);
   const [userName, setUserName] = React.useState("");
 
-  // useDeepCompareEffect(() => {
-  //   console.log("auth useDeepCompareEffect:", auth);
-  //   setUserName(auth.userName);
-  // }, [auth]);
-
-  React.useEffect(() => {
-    console.log("auth effect:", auth);
+  useDeepCompareEffect(() => {
+    console.log("auth useDeepCompareEffect:", auth);
     setUserName(auth.userName);
-  }, [auth.userName]);
+  }, [auth]);
+  // useAxiosInterceptor(client, dispatch);
 
-  const [profitCenter, setProfitCenter] = React.useState("Choose");
+  // React.useEffect(() => {
+  //   console.log("auth effect:", auth);
+  //   setUserName(auth.userName);
+  // }, [auth.userName]);
+  // useAxiosInterceptor(dispatch);
+
+  const [profitCenter, setProfitCenter] = React.useState("choose");
   const HandleProfitCenterSelect = (event) => {
-    if (event.target.value != "Choose") setProfitCenter(event.target.value);
+    if (event.target.value != "choose") setProfitCenter(event.target.value);
   };
-  const [profitCenterSelect, setProfitCenterSelect] = React.useState([
-    "External Riset",
-    "SBE S1",
-    "SBE S2",
-    "SBE S3",
-    "SHSI S1",
-    "STEM",
-    "UNI",
-    "YPM",
+  const [profitCenterDdl, setProfitCenterSelect] = React.useState([
+    { value: "ER", text: "External Riset" },
+    { value: "SBES1", text: "SBE S1" },
+    { value: "SBES2", text: "SBE S2" },
+    { value: "SBES3", text: "SBE S3" },
+    { value: "SHSIS1", text: "SHSI S1" },
+    { value: "STEM", text: "STEM" },
+    { value: "UNI", text: "UNI" },
+    { value: "YPM", text: "YPM" },
   ]);
 
-  const [plant, setPlant] = React.useState("Choose");
+  const [plant, setPlant] = React.useState("choose");
   const HandlePlantSelect = (event) => {
-    if (event.target.value != "Choose") setPlant(event.target.value);
+    if (event.target.value != "choose") setPlant(event.target.value);
   };
-  const plantSelect = ["R001 - BSD", "R002 - Cilandak"];
+  const plantDdl = [
+    { value: "R001", text: "R001 - BSD" },
+    { value: "R002", text: "R002 - Cilandak" },
+  ];
 
-  const [activity, setActivity] = React.useState("Choose");
+  const [activity, setActivity] = React.useState("choose");
   const HandleActivitySelect = (event) => {
-    if (event.target.value != "Choose") setActivity(event.target.value);
+    if (event.target.value != "choose") setActivity(event.target.value);
   };
-  const activitySelect = ["Non - IO", "IO"];
+  const activityDdl = [
+    { value: "NIO", text: "Non - IO" },
+    { value: "IO", text: "IO" },
+  ];
   const [ioBudget, setIoBudget] = React.useState("");
   const [eventName, setEventName] = React.useState("");
   const [eventDate, setEventDate] = React.useState("");
@@ -276,167 +252,47 @@ export default function FpbCreate() {
       <Divider />
       <Box className="alternate-backgound" sx={{ p: 2 }}>
         <RowTextSimple text="Requester" otherText={": " + userName} />
-        <Grid container sx={{ pt: 2 }}>
-          <Grid
-            item
-            xs={12}
-            md={2}
-            sx={{
-              pt: 1,
-            }}
-          >
-            <Typography variant="h7">Profit Center</Typography>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <FormControl
-              variant="outlined"
-              size="small"
-              margin="normal"
-              className="form-white-backgound form-compact"
-              fullWidth
-            >
-              <Select
-                fullWidth
-                value={profitCenter}
-                onChange={HandleProfitCenterSelect}
-              >
-                <MenuItem value="Choose">
-                  <em>Choose</em>
-                </MenuItem>
-                {profitCenterSelect.map((val, index) => {
-                  return (
-                    <MenuItem value={val} key={index}>
-                      {val}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-              <FormHelperText sx={{ color: "error.main" }}>
-                {isValidate && profitCenter == "Choose"
-                  ? "Please choose an option."
-                  : ""}
-              </FormHelperText>
-            </FormControl>
-          </Grid>
-          <Grid item xs={0} md={2} />
-          <Grid
-            item
-            xs={12}
-            md={2}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Business Area</Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            md={3}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <TextField
-              className="form-white-backgound form-compact"
-              variant="outlined"
-              size="small"
-              fullWidth
-              disabled
-              value={
-                profitCenter == "External Riset"
-                  ? "ZR07 - PO EXTERNAL RISET"
-                  : "Choose profit center"
-              }
-            />
-          </Grid>
-        </Grid>
-        <Grid container sx={{ pt: 2 }}>
-          <Grid
-            item
-            xs={12}
-            md={2}
-            sx={{
-              pt: 1,
-            }}
-          >
-            <Typography variant="h7">Plant</Typography>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <FormControl
-              variant="outlined"
-              size="small"
-              margin="normal"
-              className="form-white-backgound form-compact"
-              fullWidth
-              disabled={profitCenter == "Choose"}
-            >
-              <Select fullWidth value={plant} onChange={HandlePlantSelect}>
-                <MenuItem value="Choose">
-                  <em>Choose</em>
-                </MenuItem>
-                {plantSelect.map((val, index) => {
-                  return (
-                    <MenuItem value={val} key={index}>
-                      {val}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-              <FormHelperText sx={{ color: "error.main" }}>
-                {isValidate && plant == "Choose"
-                  ? "Please choose an option."
-                  : ""}
-              </FormHelperText>
-            </FormControl>
-          </Grid>
-          <Grid item xs={0} md={2} />
-          <Grid
-            item
-            xs={12}
-            md={2}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h7">Activity</Typography>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <FormControl
-              variant="outlined"
-              size="small"
-              margin="normal"
-              className="form-white-backgound form-compact"
-              fullWidth
-              disabled={plant == "Choose"}
-            >
-              <Select
-                fullWidth
-                value={activity}
-                onChange={HandleActivitySelect}
-              >
-                <MenuItem value="Choose">
-                  <em>Choose</em>
-                </MenuItem>
-                {activitySelect.map((val, index) => {
-                  return (
-                    <MenuItem value={val} key={index}>
-                      {val}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-              <FormHelperText sx={{ color: "error.main" }}>
-                {isValidate && activity == "Choose"
-                  ? "Please choose an option."
-                  : ""}
-              </FormHelperText>
-            </FormControl>
-          </Grid>
-        </Grid>
+        <RowDoubleDdl
+          text1="Profit Center"
+          ddlValue1={profitCenter}
+          ddlValues1={profitCenterDdl}
+          ddlOnChange1={HandleProfitCenterSelect}
+          addChoose1
+          text2="Business Area"
+          ddlValue2={profitCenter}
+          ddlValues2={[
+            { value: "choose", text: "Choose Profit center" },
+            { value: "ER", text: "ZR07 - PO EXTERNAL RISET" },
+            { value: "SBES1", text: "ZR03-PO SBE" },
+            { value: "SBES2", text: "ZR03-PO SBE" },
+            { value: "SBES3", text: "ZR03-PO SBE" },
+            { value: "SHSIS1", text: "ZR06-PO SHSI" },
+            { value: "STEM", text: "ZR05-PO STEM" },
+            { value: "UNI", text: "ZR02-PO UNIV" },
+            { value: "YPM", text: "ZR01-PO YAYASAN" },
+          ]}
+          disabled2
+          isValidate={isValidate}
+          whiteBackground
+          gap={2}
+        />
+        <RowDoubleDdl
+          text1="Plant"
+          disabled1={profitCenter == "choose"}
+          ddlValue1={plant}
+          ddlValues1={plantDdl}
+          ddlOnChange1={HandlePlantSelect}
+          addChoose1
+          text2="Activity"
+          ddlValue2={activity}
+          ddlValues2={activityDdl}
+          ddlOnChange2={HandleActivitySelect}
+          addChoose2
+          disabled2={plant == "choose"}
+          isValidate={isValidate}
+          whiteBackground
+          gap={2}
+        />
         <Collapse in={activity == "IO"} timeout={600}>
           {eventForm()}
         </Collapse>
@@ -470,11 +326,14 @@ export default function FpbCreate() {
                 alignItems: "center",
               }}
               onClick={(e) => {
-                console.log("dismiss:", error);
+                // console.log("dismiss:", error);
                 console.log("dismiss:", auth);
-                // dispatch({
-                //   type: "dismissError",
-                // });
+                dispatch(
+                  setAuth({
+                    userToken: "dummy token",
+                    userName: "fpb create",
+                  })
+                );
                 setConfirmType("close");
                 setConfirmDialog(true);
               }}
@@ -491,14 +350,21 @@ export default function FpbCreate() {
                 alignItems: "center",
               }}
               onClick={(e) => {
-                client
-                  .get("/")
-                  .then((res) => {
+                testApi(dispatch)
+                  .then((response) => {
                     console.log("success");
                   })
                   .catch((err) => {
                     console.log("in page error:", err);
                   });
+                // clientPortable
+                //   .get("/")
+                //   .then((res) => {
+                //     console.log("success");
+                //   })
+                //   .catch((err) => {
+                //     console.log("in page error:", err);
+                //   });
                 setValidate(true);
                 // dispatch({
                 //   type: "setAuth",

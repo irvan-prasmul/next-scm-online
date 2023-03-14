@@ -8,7 +8,7 @@ import _ from "lodash";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
+import TableInfomationStatus from "@/components/tableInformationStatus";
 import NewspaperVariantOutlineIcon from "mdi-react/NewspaperVariantOutlineIcon";
 import {
   fpbNumberTextDownload,

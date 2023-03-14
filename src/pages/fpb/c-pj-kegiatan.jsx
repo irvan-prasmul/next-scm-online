@@ -10,7 +10,7 @@ import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
+import TableInfomationStatus from "@/components/tableInformationStatus";
 import {
   iconView,
   imageView,

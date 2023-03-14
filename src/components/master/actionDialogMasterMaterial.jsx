@@ -1,7 +1,5 @@
 import React from "react";
-import AccountTreeRounded from "@mui/icons-material/AccountTreeRounded";
 import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
-import FileUploadRounded from "@mui/icons-material/FileUploadRounded";
 import HighlightOff from "@mui/icons-material/HighlightOff";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,27 +11,16 @@ import DialogContent from "@mui/material/DialogContent";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import FileUpload from "react-mui-fileuploader";
-import BookmarkRounded from "@mui/icons-material/BookmarkRounded";
-import LocalAtmRounded from "@mui/icons-material/LocalAtmRounded";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import SaveRounded from "@mui/icons-material/SaveRounded";
-import Note from "@mui/icons-material/Note";
-import TextField from "@mui/material/TextField";
 import InsertDriveFileRounded from "@mui/icons-material/InsertDriveFileRounded";
 import {
   dialogTypesMasterMaterial,
   dummyDdlChoose,
-  masterMaterialStatus,
   masterStatusDdlValues,
 } from "@/globals/types";
 import NoteEditOutlineIcon from "mdi-react/NoteEditOutlineIcon";
 import Refresh from "@mui/icons-material/Refresh";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormHelperText from "@mui/material/FormHelperText";
 import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
 import RowDdlSimple from "../rowSimplified/rowDdlSimple";
 

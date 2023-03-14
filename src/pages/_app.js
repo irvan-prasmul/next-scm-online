@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Layout from "@/components/layout";
 // import store from "@/store";
 import { Provider } from "react-redux";
-import { useStore } from "@/globals/store";
+import store from "@/globals/store";
 // import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 // import LocalizationProvider from "@mui/x-date-pickers/LocalizationProvider";
 
@@ -66,11 +66,9 @@ const theme = createTheme({
 });
 
 export default function App({ Component, pageProps }) {
-  const store = useStore(pageProps.initialReduxState);
-
   return (
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
         {Component.layout == "none" ? (
           <Component {...pageProps} />
         ) : (
@@ -78,7 +76,7 @@ export default function App({ Component, pageProps }) {
             <Component {...pageProps} />
           </Layout>
         )}
-      </Provider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }

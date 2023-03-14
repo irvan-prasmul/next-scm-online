@@ -27,7 +27,7 @@ import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
 import DriveFileRenameOutlineRounded from "@mui/icons-material/DriveFileRenameOutlineRounded";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
+import TableInfomationStatus from "@/components/tableInformationStatus";
 import {
   fpbNumberTextDownload,
   iconView,

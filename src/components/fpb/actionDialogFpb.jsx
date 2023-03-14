@@ -16,9 +16,6 @@ import Typography from "@mui/material/Typography";
 import FileUpload from "react-mui-fileuploader";
 import BookmarkRounded from "@mui/icons-material/BookmarkRounded";
 import LocalAtmRounded from "@mui/icons-material/LocalAtmRounded";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import SaveRounded from "@mui/icons-material/SaveRounded";
 import Note from "@mui/icons-material/Note";
 import TextField from "@mui/material/TextField";
@@ -70,7 +67,9 @@ export default function ActionDialogFpb({
           >
             {type == dialogTypesFpb.track ? (
               <AccountTreeRounded />
-            ) : type == dialogTypesFpb.pta || type == dialogTypesFpb.other ? (
+            ) : type == dialogTypesFpb.pta ||
+              type == dialogTypesFpb.io ||
+              type == dialogTypesFpb.other ? (
               <FileUploadRounded />
             ) : type == dialogTypesFpb.reviewer ||
               type == dialogTypesFpb.inputPurchasingtype ? (
@@ -99,7 +98,7 @@ export default function ActionDialogFpb({
           >
             {type == dialogTypesFpb.track ? (
               <Typography variant="h6">Track Status</Typography>
-            ) : type == dialogTypesFpb.pta ? (
+            ) : type == dialogTypesFpb.pta || type == dialogTypesFpb.io ? (
               <Typography variant="h6">Upload Dokumen {type}</Typography>
             ) : type == dialogTypesFpb.other ? (
               <Typography variant="h6">Upload Other Documents</Typography>
@@ -165,7 +164,11 @@ export default function ActionDialogFpb({
           />
         </Box>
       );
-    } else if (type == dialogTypesFpb.pta || type == dialogTypesFpb.other)
+    } else if (
+      type == dialogTypesFpb.pta ||
+      type == dialogTypesFpb.io ||
+      type == dialogTypesFpb.other
+    )
       return (
         <Box sx={{ p: 2 }}>
           <Grid container>
@@ -303,7 +306,11 @@ export default function ActionDialogFpb({
           </Button>
         </>
       );
-    } else if (type == dialogTypesFpb.pta || type == dialogTypesFpb.other)
+    } else if (
+      type == dialogTypesFpb.pta ||
+      type == dialogTypesFpb.io ||
+      type == dialogTypesFpb.other
+    )
       return (
         <>
           <Button
@@ -351,7 +358,7 @@ export default function ActionDialogFpb({
           </CardContent>
         </Card>
       </DialogContent>
-      <DialogActions>{renderAction(type)}</DialogActions>
+      <DialogActions sx={{ mb: 1, mr: 1 }}>{renderAction(type)}</DialogActions>
     </Dialog>
   );
 }

@@ -18,32 +18,16 @@ import AddCircle from "@mui/icons-material/AddCircle";
 import RemoveCircle from "@mui/icons-material/RemoveCircle";
 import IconButton from "@mui/material/IconButton";
 import AdfScannerRounded from "@mui/icons-material/AdfScannerRounded";
-import {
-  confirmationType,
-  dialogTypesFpb,
-  dialogTypesMasterMaterial,
-  masterMaterialStatus,
-} from "@/globals/types";
+import { confirmationType, dialogTypesFpb } from "@/globals/types";
 import Switch from "@mui/material/Switch";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import Inventory2Rounded from "@mui/icons-material/Inventory2Rounded";
-
-function renderStatusIcon(status) {
-  return status == "pending" ? (
-    <HourglassFullTwoTone />
-  ) : status == "approved" ? (
-    <CheckBox color="success" />
-  ) : status == "canceled" ? (
-    <Cancel color="warning" />
-  ) : (
-    <CloseRounded color="error" />
-  );
-}
+import RenderIcon from "../renderIcon";
 
 export function textWithEditOrCancelTextButton({
   id,
   handleEdit,
-  setConfirmDialog,
+  handleCancel,
 }) {
   return {
     id,
@@ -65,7 +49,7 @@ export function textWithEditOrCancelTextButton({
           <Button
             variant="text"
             size="small"
-            onClick={(e) => setConfirmDialog(true)}
+            onClick={(e) => handleCancel(row, value)}
           >
             <CloseRounded color="error" /> Cancel
           </Button>
@@ -75,7 +59,7 @@ export function textWithEditOrCancelTextButton({
   };
 }
 
-export function uploadDocument({ id, setDialogType, setOpenDialog }) {
+export function uploadDocument({ id, handleUpload }) {
   return {
     id,
     element: (row, col) => {
@@ -84,10 +68,7 @@ export function uploadDocument({ id, setDialogType, setOpenDialog }) {
           <Button
             variant="text"
             size="small"
-            onClick={(e) => {
-              setDialogType(dialogTypesFpb[col.id]);
-              setOpenDialog(true);
-            }}
+            onClick={(e) => handleUpload(row, col)}
           >
             <FileUploadRounded color="primaryButton" /> Upload
           </Button>
@@ -220,7 +201,8 @@ export function iconView({ id }) {
       const value = row[col.id];
       return (
         <TableCell key={col.id} align="center">
-          {renderStatusIcon(value)}
+          <RenderIcon status={value} />
+          {/* {renderStatusIcon(value)} */}
         </TableCell>
       );
     },

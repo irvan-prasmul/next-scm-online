@@ -1,10 +1,5 @@
-import Add from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import FormControl from "@mui/material/FormControl";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 
 export default function RowTextSimple({
   text = "Text",

@@ -2,30 +2,17 @@ import AddShoppingCartRounded from "@mui/icons-material/AddShoppingCartRounded";
 import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
 import CheckOutlined from "@mui/icons-material/CheckOutlined";
 import HighlightOff from "@mui/icons-material/HighlightOff";
-import SearchRounded from "@mui/icons-material/SearchRounded";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import React from "react";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import FileUpload from "react-mui-fileuploader";
 import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
 import RowDdlSimple from "../rowSimplified/rowDdlSimple";
 import RowDatePickerSimple from "../rowSimplified/rowDatePickerSimple";
@@ -117,7 +104,8 @@ export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
             >
               <Typography variant="h6">Add an item</Typography>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs />
+            <Grid item xs="auto">
               <IconButton variant="text" color="darkBg" onClick={handleClose}>
                 <HighlightOff />
               </IconButton>
@@ -209,7 +197,7 @@ export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
           />
         </Box>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ mb: 1, mr: 1 }}>
         <Button
           onClick={resetAndClose}
           variant="contained"

@@ -27,8 +27,6 @@ const authReducer = (state = authState, { type, payload }) => {
       state.userToken = payload.userToken;
       state.userName = payload.userName;
       return state;
-    case "setError":
-
     default:
       return state;
   }

@@ -9,7 +9,7 @@ import _ from "lodash";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
+import TableInfomationStatus from "@/components/tableInformationStatus";
 import {
   textWithEditOrCancelTextButton,
   imageView,
@@ -19,7 +19,7 @@ import {
   trackStatus,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { paginationPropType } from "@/globals/types";
+import { dialogTypesFpb, paginationPropType } from "@/globals/types";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
@@ -29,6 +29,7 @@ const columns = [
   columnNormalize.created,
   columnNormalize.fpbNumber,
   columnNormalize.pta,
+  columnNormalize.io,
   columnNormalize.other,
   columnNormalize.materialName,
   columnNormalize.category,
@@ -118,11 +119,6 @@ const statusDdlValues = [
   { value: "canceled", text: "Canceled" },
 ];
 
-function handleEdit(row, col) {
-  console.log("handle edit:", col);
-  console.log(row);
-}
-
 export default function FpbRequester() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
@@ -160,13 +156,19 @@ export default function FpbRequester() {
   const customCell = [
     textWithEditOrCancelTextButton({
       id: "fpbNumber",
-      handleEdit,
-      setConfirmDialog,
+      handleEdit: (row, col) => {
+        console.log("handle edit");
+      },
+      handleCancel: (row, col) => {
+        console.log("handle cancel");
+      },
     }),
     uploadDocument({
-      id: ["pta", "other"],
-      setDialogType,
-      setOpenDialog,
+      id: ["pta", "io", "other"],
+      handleUpload: (row, col) => {
+        setDialogType(dialogTypesFpb[col.id]);
+        setOpenDialog(true);
+      },
     }),
     imageView({ id: "file" }),
     longTextWithReadMore({

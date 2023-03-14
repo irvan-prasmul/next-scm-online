@@ -9,7 +9,7 @@ import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import Search from "@mui/icons-material/Search";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/fpb/tableInformationStatus";
+import TableInfomationStatus from "@/components/tableInformationStatus";
 import { openExpandedRow } from "@/components/mainTable/mainTableCustomCells";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import { paginationPropType } from "@/globals/types";

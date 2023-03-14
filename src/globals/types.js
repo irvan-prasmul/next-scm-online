@@ -5,6 +5,7 @@ export const paginationPropType = {
 
 export const dialogTypesFpb = {
   pta: "PTA",
+  io: "IO",
   other: "Other",
   track: "Track",
   requesterNotes: "Requester Notes",
