@@ -102,7 +102,7 @@ export default function MasterVendor() {
     setOpenDialog(true);
   }
 
-  function handleActionDelete(e) {
+  function handleActionDelete() {
     setConfirmType(confirmationType.delete);
     setConfirmDialog(true);
   }

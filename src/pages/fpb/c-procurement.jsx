@@ -17,7 +17,11 @@ import {
   procurementAction,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { paginationPropType } from "@/globals/types";
+import {
+  confirmationType,
+  dialogTypesFpb,
+  paginationPropType,
+} from "@/globals/types";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
@@ -160,7 +164,17 @@ export default function FpbProcurement() {
   const [confirmDialog, setConfirmDialog] = React.useState(false);
 
   const customCell = [
-    procurementAction({ id: "action", setConfirmType, setConfirmDialog }),
+    procurementAction({
+      id: "action",
+      handleCheck: (row, col) => {
+        setConfirmType(confirmationType.approve);
+        setConfirmDialog(true);
+      },
+      handleClose: (row, col) => {
+        setConfirmType(confirmationType.reject);
+        setConfirmDialog(true);
+      },
+    }),
     fpbNumberTextDownload({ id: "fpbNumber" }),
     imageView({ id: ["file", "docPta", "docIo", "docOther"] }),
     longTextWithReadMore({
@@ -179,9 +193,18 @@ export default function FpbProcurement() {
         documentStatus: 135,
       },
       edit: { requesterNotes: true },
-      setDialogType,
-      setDialogBody,
-      setOpenDialog,
+      handleReadMore: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb[col.id]);
+        setDialogBody(value);
+        setOpenDialog(true);
+      },
+      handleEdit: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb[col.id] + "#EDIT#");
+        setDialogBody(value ?? "");
+        setOpenDialog(true);
+      },
     }),
   ];
 

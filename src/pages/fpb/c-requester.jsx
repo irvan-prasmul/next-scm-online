@@ -184,15 +184,20 @@ export default function FpbRequester() {
         purchasingNotes: 60,
         informationStatus: 135,
       },
-      setDialogType,
-      setDialogBody,
-      setOpenDialog,
+      handleReadMore: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb[col.id]);
+        setDialogBody(value);
+        setOpenDialog(true);
+      },
     }),
     iconView({ id: ["approval", "purchase"] }),
     trackStatus({
       id: "trackStatus",
-      setDialogType,
-      setOpenDialog,
+      handleClick: (row, col) => {
+        setDialogType(dialogTypesFpb.track);
+        setOpenDialog(true);
+      },
     }),
   ];
 

@@ -2,30 +2,11 @@ import Head from "next/head";
 import React from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
-import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
-import ImageOutlined from "@mui/icons-material/ImageOutlined";
-import EditRounded from "@mui/icons-material/EditRounded";
-import CheckBox from "@mui/icons-material/CheckBox";
-import CloseRounded from "@mui/icons-material/CloseRounded";
-import Cancel from "@mui/icons-material/Cancel";
-import HourglassFullTwoTone from "@mui/icons-material/HourglassFullTwoTone";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
-import moment from "moment/moment";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import GradingRounded from "@mui/icons-material/GradingRounded";
-import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
-import DriveFileRenameOutlineRounded from "@mui/icons-material/DriveFileRenameOutlineRounded";
-import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/tableInformationStatus";
 import {
@@ -44,7 +25,7 @@ import {
 } from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import ConfirmationDialog from "@/components/confirmationDialog";
-import { columnNormalize } from "@/column-normalize";
+import { columnNormalize } from "@/globals/column-normalize";
 
 const columns = [
   columnNormalize.id,
@@ -282,9 +263,18 @@ export default function FpbPicPurchasingd() {
         documentStatus: 135,
       },
       edit: { purchasingNotes: true },
-      setDialogType,
-      setDialogBody,
-      setOpenDialog,
+      handleReadMore: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb[col.id]);
+        setDialogBody(value);
+        setOpenDialog(true);
+      },
+      handleEdit: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb[col.id] + "#EDIT#");
+        setDialogBody(value ?? "");
+        setOpenDialog(true);
+      },
     }),
   ];
 

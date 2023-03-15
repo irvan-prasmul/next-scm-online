@@ -18,7 +18,11 @@ import {
   pjkAction,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { paginationPropType } from "@/globals/types";
+import {
+  confirmationType,
+  dialogTypesFpb,
+  paginationPropType,
+} from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
 
@@ -116,16 +120,29 @@ export default function FpbAprrovalPJKegiatan() {
   }
 
   const customCell = [
-    pjkAction({ id: "action", setConfirmType, setConfirmDialog }),
+    pjkAction({
+      id: "action",
+      handleApprove: () => {
+        setConfirmType(confirmationType.approve);
+        setConfirmDialog(true);
+      },
+      handleReject: () => {
+        setConfirmType(confirmationType.reject);
+        setConfirmDialog(true);
+      },
+    }),
     imageView({ id: "file" }),
     longTextWithReadMore({
       id: "requesterNotes",
       limit: {
         requesterNotes: 50,
       },
-      setDialogType,
-      setDialogBody,
-      setOpenDialog,
+      handleReadMore: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb[col.id]);
+        setDialogBody(value);
+        setOpenDialog(true);
+      },
     }),
     iconView({ id: ["approval", "purchase"] }),
   ];

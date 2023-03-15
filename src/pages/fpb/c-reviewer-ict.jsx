@@ -153,9 +153,12 @@ export default function FpbReviewerIct() {
         purchasingNotes: 60,
         documentStatus: 135,
       },
-      setDialogType,
-      setDialogBody,
-      setOpenDialog,
+      handleReadMore: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb[col.id]);
+        setDialogBody(value);
+        setOpenDialog(true);
+      },
     }),
   ];
 

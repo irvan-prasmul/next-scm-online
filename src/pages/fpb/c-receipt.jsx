@@ -15,7 +15,11 @@ import {
   warehouseFpbReceipt,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { confirmationType, paginationPropType } from "@/globals/types";
+import {
+  confirmationType,
+  dialogTypesFpb,
+  paginationPropType,
+} from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import { columnNormalize } from "@/globals/column-normalize";
@@ -185,9 +189,12 @@ export default function FpbReceipt() {
         purchasingNotes: 60,
         informationStatus: 135,
       },
-      setDialogType,
-      setDialogBody,
-      setOpenDialog,
+      handleReadMore: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb[col.id]);
+        setDialogBody(value);
+        setOpenDialog(true);
+      },
     }),
   ];
 

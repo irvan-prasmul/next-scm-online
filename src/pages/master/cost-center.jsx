@@ -107,7 +107,7 @@ export default function MasterCostCenter() {
     setOpenDialog(true);
   }
 
-  function handleActionDelete(e) {
+  function handleActionDelete() {
     setConfirmType(confirmationType.delete);
     setConfirmDialog(true);
   }

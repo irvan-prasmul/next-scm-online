@@ -30,6 +30,7 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 import { setAuth } from "@/globals/slices";
 import RowDoubleDdl from "@/components/rowSimplified/rowDoubleDdl";
 import { columnNormalize } from "@/globals/column-normalize";
+import { confirmationType } from "@/globals/types";
 
 const regexPhone = /^\d+$/;
 
@@ -150,9 +151,11 @@ export default function FpbCreate() {
   const customCell = [
     requesterCreateAction({
       id: "action",
-      setAddNewItemDialog,
-      setConfirmType,
-      setConfirmDialog,
+      handleEdit: () => setAddNewItemDialog(true),
+      handleDelete: () => {
+        setConfirmType(confirmationType.delete);
+        setConfirmDialog(true);
+      },
     }),
   ];
 

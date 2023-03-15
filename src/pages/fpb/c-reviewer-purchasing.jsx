@@ -18,7 +18,7 @@ import {
   setReviewerFpb,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { paginationPropType } from "@/globals/types";
+import { dialogTypesFpb, paginationPropType } from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
 
@@ -177,8 +177,17 @@ export default function FpbReviewerPurchasing() {
   }
 
   const customCell = [
-    setReviewerFpb({ id: "reviewer", setDialogType, setOpenDialog }),
-    materialNameEdit({ id: "materialName", setEditItemDialog }),
+    setReviewerFpb({
+      id: "reviewer",
+      handleClick: (row, col) => {
+        setDialogType(dialogTypesFpb[col.id]);
+        setOpenDialog(true);
+      },
+    }),
+    materialNameEdit({
+      id: "materialName",
+      handleClick: (row, col) => setEditItemDialog(true),
+    }),
     imageView({ id: ["file", "docPta", "docIo", "docOther"] }),
     iconView({ id: "status" }),
     longTextWithReadMore({
@@ -194,9 +203,12 @@ export default function FpbReviewerPurchasing() {
         informationStatus: 135,
         documentStatus: 135,
       },
-      setDialogType,
-      setDialogBody,
-      setOpenDialog,
+      handleReadMore: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb[col.id]);
+        setDialogBody(value);
+        setOpenDialog(true);
+      },
     }),
   ];
 

@@ -6,8 +6,6 @@ import ImageOutlined from "@mui/icons-material/ImageOutlined";
 import EditRounded from "@mui/icons-material/EditRounded";
 import CheckBox from "@mui/icons-material/CheckBox";
 import CloseRounded from "@mui/icons-material/CloseRounded";
-import Cancel from "@mui/icons-material/Cancel";
-import HourglassFullTwoTone from "@mui/icons-material/HourglassFullTwoTone";
 import _ from "lodash";
 import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
 import DriveFileRenameOutlineRounded from "@mui/icons-material/DriveFileRenameOutlineRounded";
@@ -18,7 +16,6 @@ import AddCircle from "@mui/icons-material/AddCircle";
 import RemoveCircle from "@mui/icons-material/RemoveCircle";
 import IconButton from "@mui/material/IconButton";
 import AdfScannerRounded from "@mui/icons-material/AdfScannerRounded";
-import { confirmationType, dialogTypesFpb } from "@/globals/types";
 import Switch from "@mui/material/Switch";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import Inventory2Rounded from "@mui/icons-material/Inventory2Rounded";
@@ -26,8 +23,8 @@ import RenderIcon from "../renderIcon";
 
 export function textWithEditOrCancelTextButton({
   id,
-  handleEdit,
-  handleCancel,
+  handleEdit = (row, col) => {},
+  handleCancel = (row, col) => {},
 }) {
   return {
     id,
@@ -59,7 +56,7 @@ export function textWithEditOrCancelTextButton({
   };
 }
 
-export function uploadDocument({ id, handleUpload }) {
+export function uploadDocument({ id, handleUpload = (row, col) => {} }) {
   return {
     id,
     element: (row, col) => {
@@ -129,9 +126,8 @@ export function longTextWithReadMore({
   id,
   limit,
   edit,
-  setDialogType,
-  setDialogBody,
-  setOpenDialog,
+  handleReadMore = (row, col) => {},
+  handleEdit = (row, col) => {},
 }) {
   return {
     id,
@@ -139,7 +135,7 @@ export function longTextWithReadMore({
       const value = row[col.id];
       return (
         <TableCell key={col.id} align="left">
-          {value.length > limit[col.id] ? (
+          {value?.length > limit[col.id] ? (
             <>
               <Typography variant="bodyTable1">
                 {value.substring(0, limit[col.id])}
@@ -149,11 +145,7 @@ export function longTextWithReadMore({
                 variant="text"
                 color="primaryButton"
                 size="small"
-                onClick={(e) => {
-                  setDialogType(dialogTypesFpb[col.id]);
-                  setDialogBody(value);
-                  setOpenDialog(true);
-                }}
+                onClick={(e) => handleReadMore(row, col)}
               >
                 Read More
               </Button>
@@ -162,11 +154,7 @@ export function longTextWithReadMore({
                   variant="text"
                   color="primaryButton"
                   size="small"
-                  onClick={(e) => {
-                    setDialogType(dialogTypesFpb[col.id] + "#EDIT#");
-                    setDialogBody(value);
-                    setOpenDialog(true);
-                  }}
+                  onClick={(e) => handleEdit(row, col)}
                 >
                   Edit
                   <DriveFileRenameOutlineRounded sx={{ fontSize: "1.2rem" }} />
@@ -178,11 +166,7 @@ export function longTextWithReadMore({
               variant="contained"
               size="small"
               color="primaryButton"
-              onClick={(e) => {
-                setDialogType(dialogTypesFpb[col.id] + "#EDIT#");
-                setDialogBody("");
-                setOpenDialog(true);
-              }}
+              onClick={(e) => handleEdit(row, col)}
             >
               <EditRounded fontSize="small" />
               <Typography variant="bodyTable1">Input</Typography>
@@ -209,7 +193,7 @@ export function iconView({ id }) {
   };
 }
 
-export function materialNameEdit({ id, setEditItemDialog }) {
+export function materialNameEdit({ id, handleClick = (row, col) => {} }) {
   return {
     id,
     element: (row, col) => {
@@ -220,7 +204,7 @@ export function materialNameEdit({ id, setEditItemDialog }) {
             variant="text"
             color="primaryButton"
             size="small"
-            onClick={(e) => setEditItemDialog(true)}
+            onClick={(e) => handleClick(row, col)}
           >
             <Typography variant="bodyCst1">{value}</Typography>
             <DriveFileRenameOutlineRounded sx={{ fontSize: "1.25rem" }} />
@@ -285,7 +269,7 @@ export function fpbNumberTextDownload({ id }) {
   };
 }
 
-export function renderSwitch({ id, onChange }) {
+export function renderSwitch({ id, onChange = (event) => {} }) {
   return {
     id,
     element: (row, col) => {
@@ -300,7 +284,7 @@ export function renderSwitch({ id, onChange }) {
 }
 
 // HYBRID TEXT BUTTON
-export function picPurchasingType({ id, handleClick }) {
+export function picPurchasingType({ id, handleClick = (row, col) => {} }) {
   return {
     id,
     element: (row, col) => {
@@ -349,7 +333,7 @@ export function picPurchasingType({ id, handleClick }) {
 }
 
 // BELOW ARE SINGLE BUTTON TO OPEN DIALOG
-export function trackStatus({ id, setDialogType, setOpenDialog }) {
+export function trackStatus({ id, handleClick = (row, col) => {} }) {
   return {
     id,
     element: (row, col) => {
@@ -359,10 +343,7 @@ export function trackStatus({ id, setDialogType, setOpenDialog }) {
             variant="contained"
             size="small"
             color="secondaryButton"
-            onClick={(e) => {
-              setDialogType(dialogTypesFpb.track);
-              setOpenDialog(true);
-            }}
+            onClick={(e) => handleClick(row, col)}
           >
             <AccountTreeRounded fontSize="small" />
             <Typography variant="bodyTable1">Tracking</Typography>
@@ -372,7 +353,7 @@ export function trackStatus({ id, setDialogType, setOpenDialog }) {
     },
   };
 }
-export function setReviewerFpb({ id, setDialogType, setOpenDialog }) {
+export function setReviewerFpb({ id, handleClick = (row, col) => {} }) {
   return {
     id,
     element: (row, col) => {
@@ -382,10 +363,7 @@ export function setReviewerFpb({ id, setDialogType, setOpenDialog }) {
             variant="contained"
             size="small"
             color="primaryButton"
-            onClick={(e) => {
-              setDialogType(dialogTypesFpb[col.id]);
-              setOpenDialog(true);
-            }}
+            onClick={(e) => handleClick(row, col)}
           >
             <EditRounded fontSize="small" />
             <Typography variant="bodyTable1">Input</Typography>
@@ -395,7 +373,7 @@ export function setReviewerFpb({ id, setDialogType, setOpenDialog }) {
     },
   };
 }
-export function ictReviewFpb({ id, handleClick }) {
+export function ictReviewFpb({ id, handleClick = (row, col) => {} }) {
   return {
     id,
     element: (row, col) => {
@@ -421,7 +399,7 @@ export function ictReviewFpb({ id, handleClick }) {
   };
 }
 
-export function warehouseFpbReceipt({ id, handleClick }) {
+export function warehouseFpbReceipt({ id, handleClick = (row, col) => {} }) {
   return {
     id,
     element: (row, col) => {
@@ -459,9 +437,8 @@ export function warehouseFpbReceipt({ id, handleClick }) {
 // BELOW ARE 2 BUTTON ACTIONS
 export function requesterCreateAction({
   id,
-  setAddNewItemDialog,
-  setConfirmType,
-  setConfirmDialog,
+  handleEdit = (row, col) => {},
+  handleDelete = (row, col) => {},
 }) {
   return {
     id,
@@ -473,7 +450,7 @@ export function requesterCreateAction({
             size="small"
             sx={{ mr: 1 }}
             color="primaryButton"
-            onClick={(e) => setAddNewItemDialog(true)}
+            onClick={(e) => handleEdit(row, col)}
           >
             <EditRounded /> Edit
           </Button>
@@ -481,10 +458,7 @@ export function requesterCreateAction({
             variant="contained"
             size="small"
             color="error"
-            onClick={(e) => {
-              setConfirmType(confirmationType.delete);
-              setConfirmDialog(true);
-            }}
+            onClick={(e) => handleDelete(row, col)}
           >
             <DeleteRounded /> Delete
           </Button>
@@ -494,7 +468,11 @@ export function requesterCreateAction({
   };
 }
 
-export function pjkAction({ id, setConfirmType, setConfirmDialog }) {
+export function pjkAction({
+  id,
+  handleApprove = (row, col) => {},
+  handleReject = (row, col) => {},
+}) {
   return {
     id,
     element: (row, col) => {
@@ -505,10 +483,7 @@ export function pjkAction({ id, setConfirmType, setConfirmDialog }) {
             size="small"
             sx={{ mr: 1 }}
             color="success"
-            onClick={(e) => {
-              setConfirmType(confirmationType.approve);
-              setConfirmDialog(true);
-            }}
+            onClick={(e) => handleApprove(row, col)}
           >
             <CheckBox /> Approve
           </Button>
@@ -516,10 +491,7 @@ export function pjkAction({ id, setConfirmType, setConfirmDialog }) {
             variant="contained"
             size="small"
             color="error"
-            onClick={(e) => {
-              setConfirmType(confirmationType.reject);
-              setConfirmDialog(true);
-            }}
+            onClick={(e) => handleReject(row, col)}
           >
             <DeleteRounded /> Reject
           </Button>
@@ -529,7 +501,11 @@ export function pjkAction({ id, setConfirmType, setConfirmDialog }) {
   };
 }
 
-export function procurementAction({ id, setConfirmType, setConfirmDialog }) {
+export function procurementAction({
+  id,
+  handleCheck = (row, col) => {},
+  handleClose = (row, col) => {},
+}) {
   return {
     id,
     element: (row, col) => {
@@ -540,10 +516,7 @@ export function procurementAction({ id, setConfirmType, setConfirmDialog }) {
             size="small"
             sx={{ mr: 1 }}
             color="success"
-            onClick={(e) => {
-              setConfirmType(confirmationType.approve);
-              setConfirmDialog(true);
-            }}
+            onClick={(e) => handleCheck(row, col)}
           >
             <CheckBox />
           </IconButton>
@@ -551,10 +524,7 @@ export function procurementAction({ id, setConfirmType, setConfirmDialog }) {
             variant="contained"
             size="small"
             color="error"
-            onClick={(e) => {
-              setConfirmType(confirmationType.reject);
-              setConfirmDialog(true);
-            }}
+            onClick={(e) => handleClose(row, col)}
           >
             <CloseRounded />
           </IconButton>
@@ -564,7 +534,11 @@ export function procurementAction({ id, setConfirmType, setConfirmDialog }) {
   };
 }
 
-export function editAndDeleteAction({ id, handleEdit, handleDelete }) {
+export function editAndDeleteAction({
+  id,
+  handleEdit = (row, col) => {},
+  handleDelete = (row, col) => {},
+}) {
   return {
     id,
     element: (row, col) => {
@@ -576,7 +550,7 @@ export function editAndDeleteAction({ id, handleEdit, handleDelete }) {
             sx={{ mr: 1 }}
             color="primaryButton"
             onClick={(e) => {
-              handleEdit(row);
+              handleEdit(row, col);
             }}
           >
             <EditRounded /> Edit
@@ -585,7 +559,7 @@ export function editAndDeleteAction({ id, handleEdit, handleDelete }) {
             variant="contained"
             size="small"
             color="error"
-            onClick={handleDelete}
+            onClick={(e) => handleDelete(row, col)}
           >
             <DeleteRounded /> Delete
           </Button>

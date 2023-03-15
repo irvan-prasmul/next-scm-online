@@ -99,7 +99,7 @@ export default function MasterDepartment() {
     setOpenDialog(true);
   }
 
-  function handleActionDelete(e) {
+  function handleActionDelete() {
     setConfirmType(confirmationType.delete);
     setConfirmDialog(true);
   }

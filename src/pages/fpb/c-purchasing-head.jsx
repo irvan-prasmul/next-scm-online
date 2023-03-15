@@ -16,7 +16,11 @@ import {
   longTextWithReadMore,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/pageHeader";
-import { confirmationType, paginationPropType } from "@/globals/types";
+import {
+  confirmationType,
+  dialogTypesFpb,
+  paginationPropType,
+} from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import ConfirmationDialog from "@/components/confirmationDialog";
 import { columnNormalize } from "@/globals/column-normalize";
@@ -223,9 +227,12 @@ export default function FpbListPurchasingHead() {
         informationStatus: 135,
         documentStatus: 135,
       },
-      setDialogType,
-      setDialogBody,
-      setOpenDialog,
+      handleReadMore: (row, col) => {
+        const value = row[col.id];
+        setDialogType(dialogTypesFpb[col.id]);
+        setDialogBody(value);
+        setOpenDialog(true);
+      },
     }),
   ];
 

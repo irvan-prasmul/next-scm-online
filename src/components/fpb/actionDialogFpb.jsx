@@ -223,12 +223,11 @@ export default function ActionDialogFpb({
             rows={5}
             variant="outlined"
             size="small"
-            // sx={{ width: 450 }}
             fullWidth
-            value={bodyValue}
-            // onChange={(e) => {
-            //   setInformation(e.target.value);
-            // }}
+            defaultValue={bodyValue}
+            onChange={(e) => {
+              console.log("text:", e.target.value);
+            }}
           />
         </Box>
       );

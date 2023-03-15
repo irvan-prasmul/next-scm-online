@@ -89,7 +89,7 @@ export default function MasterMaterialHead() {
     setOpenDialog(true);
   }
 
-  function handleActionDelete(e) {
+  function handleActionDelete() {
     setConfirmType(confirmationType.delete);
     setConfirmDialog(true);
   }
