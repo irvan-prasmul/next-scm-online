@@ -9,14 +9,14 @@ import _ from "lodash";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import CubeScanIcon from "mdi-react/CubeScanIcon";
 import { openExpandedRow } from "@/components/mainTable/mainTableCustomCells";
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesMasterMaterial,
   masterStatusDdlValues,
 } from "@/globals/types";
 import ActionDialogMasterMaterial from "@/components/master/actionDialogMasterMaterial";
-import ConfirmationDialog from "@/components/confirmationDialog";
+import ConfirmationDialog from "@/components/general/confirmationDialog";
 import DeleteRounded from "@mui/icons-material/DeleteRounded";
 import EditRounded from "@mui/icons-material/EditRounded";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";

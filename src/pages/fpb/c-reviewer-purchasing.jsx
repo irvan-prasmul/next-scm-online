@@ -9,7 +9,7 @@ import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import GradingRounded from "@mui/icons-material/GradingRounded";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/tableInformationStatus";
+import TableInfomationStatus from "@/components/general/tableInformationStatus";
 import {
   iconView,
   imageView,
@@ -17,7 +17,7 @@ import {
   materialNameEdit,
   setReviewerFpb,
 } from "@/components/mainTable/mainTableCustomCells";
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import { dialogTypesFpb, paginationPropType } from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";

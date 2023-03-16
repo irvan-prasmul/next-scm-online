@@ -11,14 +11,14 @@ import {
   editAndDeleteAction,
   renderSwitch,
 } from "@/components/mainTable/mainTableCustomCells";
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesMasterMaterial,
   masterStatusDdlValues,
 } from "@/globals/types";
 import ActionDialogMasterMaterial from "@/components/master/actionDialogMasterMaterial";
-import ConfirmationDialog from "@/components/confirmationDialog";
+import ConfirmationDialog from "@/components/general/confirmationDialog";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";

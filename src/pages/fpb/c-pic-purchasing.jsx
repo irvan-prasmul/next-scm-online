@@ -8,7 +8,7 @@ import _ from "lodash";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import GradingRounded from "@mui/icons-material/GradingRounded";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/tableInformationStatus";
+import TableInfomationStatus from "@/components/general/tableInformationStatus";
 import {
   fpbNumberTextDownload,
   iconView,
@@ -16,7 +16,7 @@ import {
   longTextWithReadMore,
   picPurchasingType,
 } from "@/components/mainTable/mainTableCustomCells";
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesFpb,
@@ -24,7 +24,7 @@ import {
   purchasingTypeDdlValues,
 } from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
-import ConfirmationDialog from "@/components/confirmationDialog";
+import ConfirmationDialog from "@/components/general/confirmationDialog";
 import { columnNormalize } from "@/globals/column-normalize";
 
 const columns = [

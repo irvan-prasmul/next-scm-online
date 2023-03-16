@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -7,9 +7,9 @@ import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
-import ConfirmationDialog from "@/components/confirmationDialog";
+import ConfirmationDialog from "@/components/general/confirmationDialog";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/tableInformationStatus";
+import TableInfomationStatus from "@/components/general/tableInformationStatus";
 import {
   textWithEditOrCancelTextButton,
   imageView,
@@ -18,11 +18,12 @@ import {
   iconView,
   trackStatus,
 } from "@/components/mainTable/mainTableCustomCells";
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import { dialogTypesFpb, paginationPropType } from "@/globals/types";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
+import { getUserDataReservationDetails } from "../api/fpb/user";
 
 const columns = [
   columnNormalize.id,
@@ -200,6 +201,23 @@ export default function FpbRequester() {
       },
     }),
   ];
+
+  function getTableData() {
+    getUserDataReservationDetails({
+      draw: 1,
+      start: 0,
+      length: 10,
+      txtIsStock: "F",
+    })
+      .then((res) => {
+        console.log("api return:", res);
+      })
+      .catch((e) => {});
+  }
+
+  useEffect(() => {
+    getTableData();
+  }, []);
 
   return (
     <>

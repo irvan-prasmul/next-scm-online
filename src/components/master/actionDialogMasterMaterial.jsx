@@ -23,6 +23,11 @@ import Refresh from "@mui/icons-material/Refresh";
 import InputAdornment from "@mui/material/InputAdornment";
 import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
 import RowDdlSimple from "../rowSimplified/rowDdlSimple";
+import Slide from "@mui/material/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
 
 export default function ActionDialogMasterMaterial({
   type,
@@ -356,6 +361,7 @@ export default function ActionDialogMasterMaterial({
 
   return (
     <Dialog
+      TransitionComponent={Transition}
       fullWidth
       disableEscapeKeyDown
       maxWidth={

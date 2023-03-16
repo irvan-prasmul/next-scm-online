@@ -27,6 +27,11 @@ import {
 import RowDdlSimple from "../rowSimplified/rowDdlSimple";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
+import Slide from "@mui/material/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
 
 export default function ActionDialogFpb({
   type,
@@ -330,6 +335,7 @@ export default function ActionDialogFpb({
 
   return (
     <Dialog
+      TransitionComponent={Transition}
       maxWidth={
         type == dialogTypesFpb.reviewerIct
           ? "md"

@@ -7,14 +7,14 @@ import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import { editAndDeleteAction } from "@/components/mainTable/mainTableCustomCells";
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesMaster,
   masterStatusDdlValues,
 } from "@/globals/types";
 import ActionDialogMaster from "@/components/master/actionDialogMaster";
-import ConfirmationDialog from "@/components/confirmationDialog";
+import ConfirmationDialog from "@/components/general/confirmationDialog";
 import ClosedCaptionOutlined from "@mui/icons-material/ClosedCaptionOutlined";
 import RowImportSimple from "@/components/rowSimplified/rowImportSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";

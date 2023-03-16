@@ -4,10 +4,11 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Layout from "@/components/layout";
+import DefaultLayout from "@/components/layout/defaultLayout";
 // import store from "@/store";
 import { Provider } from "react-redux";
 import store from "@/globals/store";
+import AxiosProvider from "@/components/general/axiosProvider";
 // import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 // import LocalizationProvider from "@mui/x-date-pickers/LocalizationProvider";
 
@@ -68,15 +69,17 @@ const theme = createTheme({
 export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        {Component.layout == "none" ? (
-          <Component {...pageProps} />
-        ) : (
-          <Layout>
+      <AxiosProvider>
+        <ThemeProvider theme={theme}>
+          {Component.layout == "none" ? (
             <Component {...pageProps} />
-          </Layout>
-        )}
-      </ThemeProvider>
+          ) : (
+            <DefaultLayout>
+              <Component {...pageProps} />
+            </DefaultLayout>
+          )}
+        </ThemeProvider>
+      </AxiosProvider>
     </Provider>
   );
 }

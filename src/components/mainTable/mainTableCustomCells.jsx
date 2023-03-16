@@ -19,7 +19,7 @@ import AdfScannerRounded from "@mui/icons-material/AdfScannerRounded";
 import Switch from "@mui/material/Switch";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import Inventory2Rounded from "@mui/icons-material/Inventory2Rounded";
-import RenderIcon from "../renderIcon";
+import RenderIcon from "../general/renderIcon";
 
 export function textWithEditOrCancelTextButton({
   id,

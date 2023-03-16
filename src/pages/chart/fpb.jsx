@@ -1,4 +1,4 @@
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import RowDateRangePickerSimple from "@/components/rowSimplified/rowDateRangePickerSimple";
 import RowLineChartSimple from "@/components/rowSimplified/rowLineChartSimple";
 import Box from "@mui/material/Box";

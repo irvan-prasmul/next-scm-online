@@ -1,4 +1,4 @@
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import RowImportSimple from "@/components/rowSimplified/rowImportSimple";
 import Box from "@mui/material/Box";
 import ArrowTopRightBoldBoxIcon from "mdi-react/ArrowTopRightBoldBoxIcon";

@@ -22,6 +22,7 @@ import LockOutlined from "@mui/icons-material/LockOutlined";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useSelector, useDispatch } from "react-redux";
+import { testApi } from "../api/global";
 
 function Login() {
   const auth = useSelector((state) => state.auth);
@@ -48,6 +49,10 @@ function Login() {
 
   const router = useRouter();
   const login = () => {
+    console.log("NEXT_PUBLIC_BASE_URL env:", process.env.NEXT_PUBLIC_BASE_URL);
+    testApi().catch((e) => {
+      console.log("error login:", e);
+    });
     dispatch({
       type: "setAuth",
       payload: {
@@ -63,6 +68,11 @@ function Login() {
       <Head>
         <title>Login - SCM</title>
       </Head>
+      {/* <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div className="loader-section section-left"></div>
+        <div className="loader-section section-right"></div>
+      </div> */}
       <Box
         sx={{
           display: "flex",
@@ -221,7 +231,7 @@ function Login() {
                     color="info"
                     startIcon={
                       <Image
-                        src={`${process.env.REACT_APP_BASE_URL}/microsoft-azure.svg`}
+                        src={`${process.env.NEXT_PUBLIC_BASE_URL}/microsoft-azure.svg`}
                         alt="azure"
                         width={24}
                         height={24}

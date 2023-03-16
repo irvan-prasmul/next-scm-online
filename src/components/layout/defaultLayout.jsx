@@ -33,9 +33,8 @@ import ChartAreasplineVariantIcon from "mdi-react/ChartAreasplineVariantIcon";
 import ArrowTopRightBoldBoxIcon from "mdi-react/ArrowTopRightBoldBoxIcon";
 import { roles } from "@/globals/roles";
 import { useSelector, useDispatch } from "react-redux";
-import { setAuth, unsetError } from "@/globals/slices";
-import Alert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar";
+import { setAuth } from "@/globals/slices";
+import PageFooter from "../general/pageFooter";
 
 const drawerWidth = 256;
 const closedWidth = 65;
@@ -152,9 +151,9 @@ const generateIcon = (icon) => {
   }
 };
 
-export default function Layout({ children }) {
+export default function DefaultLayout({ children }) {
   const auth = useSelector((state) => state.auth);
-  const error = useSelector((state) => state.error);
+  // const error = useSelector((state) => state.error);
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -260,7 +259,7 @@ export default function Layout({ children }) {
           userName: "Login name",
         })
       );
-      console.log("auth layout done:", auth);
+      // console.log("auth layout done:", auth);
     }
   }, [router]);
 
@@ -331,29 +330,7 @@ export default function Layout({ children }) {
         <Paper variant="outlined" elevation={0} square className="main-box">
           {children}
         </Paper>
-        <Snackbar
-          open={error.isError}
-          autoHideDuration={6000}
-          onClose={(event, reason) => {
-            if (reason === "clickaway") {
-              return;
-            }
-            dispatch(unsetError());
-          }}
-        >
-          <Alert
-            onClose={(event, reason) => {
-              if (reason === "clickaway") {
-                return;
-              }
-              dispatch(unsetError());
-            }}
-            severity="error"
-            sx={{ width: "100%" }}
-          >
-            {error.message}
-          </Alert>
-        </Snackbar>
+        <PageFooter />
       </Main>
     </Box>
   );

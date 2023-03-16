@@ -8,7 +8,7 @@ import _ from "lodash";
 import ActionDialogFpb from "@/components/fpb/actionDialogFpb";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/tableInformationStatus";
+import TableInfomationStatus from "@/components/general/tableInformationStatus";
 import NewspaperVariantOutlineIcon from "mdi-react/NewspaperVariantOutlineIcon";
 import {
   fpbNumberTextDownload,
@@ -16,13 +16,13 @@ import {
   longTextWithReadMore,
   procurementAction,
 } from "@/components/mainTable/mainTableCustomCells";
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesFpb,
   paginationPropType,
 } from "@/globals/types";
-import ConfirmationDialog from "@/components/confirmationDialog";
+import ConfirmationDialog from "@/components/general/confirmationDialog";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
 

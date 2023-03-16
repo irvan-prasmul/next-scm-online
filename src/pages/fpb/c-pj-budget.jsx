@@ -9,11 +9,11 @@ import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
 import Search from "@mui/icons-material/Search";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
-import TableInfomationStatus from "@/components/tableInformationStatus";
+import TableInfomationStatus from "@/components/general/tableInformationStatus";
 import { openExpandedRow } from "@/components/mainTable/mainTableCustomCells";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
 import { paginationPropType } from "@/globals/types";
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
 

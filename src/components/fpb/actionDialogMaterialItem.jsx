@@ -17,6 +17,11 @@ import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
 import RowDdlSimple from "../rowSimplified/rowDdlSimple";
 import RowDatePickerSimple from "../rowSimplified/rowDatePickerSimple";
 import RowSearchList from "../rowSimplified/rowSearchList";
+import Slide from "@mui/material/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
 
 export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
   const [materialSearch, setMaterialSearch] = React.useState("");
@@ -66,6 +71,7 @@ export default function ActionDialogMaterialItem({ isOpen, handleClose }) {
 
   return (
     <Dialog
+      TransitionComponent={Transition}
       maxWidth="md"
       fullWidth
       scroll="body"

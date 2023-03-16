@@ -8,14 +8,14 @@ import _ from "lodash";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import CubeScanIcon from "mdi-react/CubeScanIcon";
 import { editAndDeleteAction } from "@/components/mainTable/mainTableCustomCells";
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesMaster,
   masterStatusDdlValues,
 } from "@/globals/types";
 import ActionDialogMaster from "@/components/master/actionDialogMaster";
-import ConfirmationDialog from "@/components/confirmationDialog";
+import ConfirmationDialog from "@/components/general/confirmationDialog";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
 

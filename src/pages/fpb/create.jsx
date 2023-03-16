@@ -13,7 +13,7 @@ import SaveRounded from "@mui/icons-material/SaveRounded";
 import DoNotDisturbOutlined from "@mui/icons-material/DoNotDisturbOutlined";
 import MainTable from "@/components/mainTable/mainTable";
 import _ from "lodash";
-import ConfirmationDialog from "@/components/confirmationDialog";
+import ConfirmationDialog from "@/components/general/confirmationDialog";
 import ActionDialogMaterialItem from "@/components/fpb/actionDialogMaterialItem";
 import InputAdornment from "@mui/material/InputAdornment";
 import PersonRounded from "@mui/icons-material/PersonRounded";
@@ -22,10 +22,10 @@ import Collapse from "@mui/material/Collapse";
 import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import { requesterCreateAction } from "@/components/mainTable/mainTableCustomCells";
 import RowTextSimple from "@/components/rowSimplified/rowTextSimple";
-import PageHeader from "@/components/pageHeader";
+import PageHeader from "@/components/general/pageHeader";
 import RowTextFieldSimple from "@/components/rowSimplified/rowTexfieldSimple";
 import RowDatePickerSimple from "@/components/rowSimplified/rowDatePickerSimple";
-import { testApi } from "../api/hello";
+import { testApi } from "../api/global";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import { setAuth } from "@/globals/slices";
 import RowDoubleDdl from "@/components/rowSimplified/rowDoubleDdl";
@@ -330,7 +330,7 @@ export default function FpbCreate() {
               }}
               onClick={(e) => {
                 // console.log("dismiss:", error);
-                console.log("dismiss:", auth);
+                // console.log("dismiss:", auth);
                 dispatch(
                   setAuth({
                     userToken: "dummy token",
@@ -353,7 +353,7 @@ export default function FpbCreate() {
                 alignItems: "center",
               }}
               onClick={(e) => {
-                testApi(dispatch)
+                testApi()
                   .then((response) => {
                     console.log("success");
                   })

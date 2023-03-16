@@ -3,7 +3,7 @@ import { setAuth, setError } from "./slices";
 
 export default function defaultClient(dispatch) {
   const client = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {
       Accept: "application/json",
       // Authorization: `Bearer ${token}`,
@@ -31,7 +31,7 @@ export default function defaultClient(dispatch) {
 }
 
 // export const clientPortable = axios.create({
-//   baseURL: process.env.REACT_APP_API_URL,
+//   baseURL: process.env.NEXT_PUBLIC_API_URL,
 //   headers: {
 //     Accept: "application/json",
 //     // Authorization: `Bearer ${token}`,
@@ -79,6 +79,6 @@ export default function defaultClient(dispatch) {
 // );
 
 // export default axios.create({
-//   baseURL: process.env.REACT_APP_API_URL,
+//   baseURL: process.env.NEXT_PUBLIC_API_URL,
 // });
 // export default client;
