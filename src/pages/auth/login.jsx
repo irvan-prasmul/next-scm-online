@@ -23,6 +23,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useSelector, useDispatch } from "react-redux";
 import { testApi } from "../api/global";
+import { login } from "../api/auth";
+import { setAuth } from "@/globals/slices";
 
 function Login() {
   const auth = useSelector((state) => state.auth);
@@ -48,19 +50,22 @@ function Login() {
   };
 
   const router = useRouter();
-  const login = () => {
+  const userLogin = () => {
     console.log("NEXT_PUBLIC_BASE_URL env:", process.env.NEXT_PUBLIC_BASE_URL);
-    testApi().catch((e) => {
-      console.log("error login:", e);
-    });
-    dispatch({
-      type: "setAuth",
-      payload: {
-        userToken: "dummy token",
-        userName: "Login name",
-      },
-    });
-    router.replace("/home/dashboard");
+    login({ email: "no-reply@pmbs.ac.id", password: "Pr@smul1234" })
+      .then((res) => {
+        console.log("login res:", res);
+        dispatch(
+          setAuth({
+            userToken: res.data.access_token,
+            userName: res.data.name,
+          })
+        );
+        router.replace("/home/dashboard");
+      })
+      .catch((e) => {
+        console.log("error login:", e);
+      });
   };
 
   return (
@@ -187,7 +192,7 @@ function Login() {
               <Grid container sx={{ pt: 5, mx: 1, mb: 0, pb: 0 }}>
                 <Grid xs={12} sx={{ mb: 0, pb: 0 }}>
                   <Button
-                    onClick={login}
+                    onClick={userLogin}
                     variant="contained"
                     fullWidth
                     color="primary"
