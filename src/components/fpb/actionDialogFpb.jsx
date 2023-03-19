@@ -28,10 +28,19 @@ import RowDdlSimple from "../rowSimplified/rowDdlSimple";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import RowTextFieldSimple from "../rowSimplified/rowTexfieldSimple";
 import Slide from "@mui/material/Slide";
+import { columnNormalize } from "@/globals/column-normalize";
+import MainTable from "../mainTable/mainTable";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
+
+const columns = [
+  columnNormalize.id,
+  columnNormalize.dateGeneric,
+  columnNormalize.informationGeneric,
+  columnNormalize.status,
+];
 
 export default function ActionDialogFpb({
   type,
@@ -48,6 +57,8 @@ export default function ActionDialogFpb({
     setFileInput([...files]);
   };
   const [statusSelect, setStatusSelect] = React.useState("all");
+
+  const customCell = [];
 
   function renderHeader(type) {
     return (
@@ -132,7 +143,13 @@ export default function ActionDialogFpb({
     if (type == dialogTypesFpb.track)
       return (
         <Box sx={{ p: 2 }}>
-          <Typography> table here</Typography>
+          <MainTable
+            columns={columns}
+            rows={bodyValue}
+            maxHeight={400}
+            customCell={customCell}
+            isPagination={false}
+          />
         </Box>
       );
     if (type == dialogTypesFpb.reviewer) {

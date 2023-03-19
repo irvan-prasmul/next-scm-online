@@ -38,9 +38,9 @@ const columns = [
   columnNormalize.total,
   columnNormalize.noPo,
   columnNormalize.vendor,
-  columnNormalize.constCenter,
+  columnNormalize.costCenter,
   columnNormalize.planDate,
-  columnNormalize.file,
+  columnNormalize.img,
   columnNormalize.requesterNotes,
   columnNormalize.createdDate,
   columnNormalize.requesterName,
@@ -75,7 +75,7 @@ const rows = [
     total: 898989,
     noPo: "409338102",
     vendor: "Fatmajaya Cipta Media",
-    constCenter: "SBE Dekanat",
+    costCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
     requesterNotes:
@@ -119,7 +119,7 @@ const rows = [
     total: 898989,
     noPo: "409338102",
     vendor: "Fatmajaya Cipta Media",
-    constCenter: "SBE Dekanat",
+    costCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
     requesterNotes:
@@ -210,14 +210,14 @@ export default function FpbListPurchasingHead() {
 
   const customCell = [
     fpbNumberTextDownload({ id: "fpbNumer" }),
-    imageView({ id: ["file", "docPta", "docIo", "docOther"] }),
+    imageView({ id: ["img", "docPta", "docIo", "docOther"] }),
     iconView({ id: "status" }),
     longTextWithReadMore({
       id: [
-        "requesterNotes",
-        "ictNotes",
-        "purchasingNotes",
-        "informationStatus",
+        "x_req_notes",
+        "x_ict_notes",
+        "x_purc_notes",
+        "notes_x",
         "documentStatus",
       ],
       limit: {

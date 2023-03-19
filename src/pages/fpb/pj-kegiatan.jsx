@@ -35,9 +35,9 @@ const columns = [
   columnNormalize.qty,
   columnNormalize.uom,
   columnNormalize.total,
-  columnNormalize.constCenter,
+  columnNormalize.costCenter,
   columnNormalize.planDate,
-  columnNormalize.file,
+  columnNormalize.img,
   columnNormalize.requesterName,
   columnNormalize.department,
   columnNormalize.requesterNotes,
@@ -56,7 +56,7 @@ const rows = [
     qty: 1,
     uom: "UN",
     total: 898989,
-    constCenter: "SBE Dekanat",
+    costCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
     requesterName: "Irvan",
@@ -131,9 +131,9 @@ export default function FpbAprrovalPJKegiatan() {
         setConfirmDialog(true);
       },
     }),
-    imageView({ id: "file" }),
+    imageView({ id: "img" }),
     longTextWithReadMore({
-      id: "requesterNotes",
+      id: "x_req_notes",
       limit: {
         requesterNotes: 50,
       },
@@ -144,7 +144,7 @@ export default function FpbAprrovalPJKegiatan() {
         setOpenDialog(true);
       },
     }),
-    iconView({ id: ["approval", "purchase"] }),
+    iconView({ id: ["status_x", "s_adm"] }),
   ];
 
   return (

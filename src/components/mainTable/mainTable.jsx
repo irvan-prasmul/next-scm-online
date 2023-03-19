@@ -20,6 +20,7 @@ export default function MainTable({
   qty = 0,
   total = 0,
   isExpandable = false,
+  isPagination = true,
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -214,75 +215,78 @@ export default function MainTable({
     return (
       <TableBody>
         {rows
-          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map((row, index) => {
-            if (isExpandable) return ExpandableTableRow(row, index);
-            else return normalTableRow(row, index);
-          })}
+          ? rows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => {
+                if (isExpandable) return ExpandableTableRow(row, index);
+                else return normalTableRow(row, index);
+              })
+          : null}
       </TableBody>
     );
   }
 
   function generateTableFooter() {
-    return (
-      <Grid container>
-        <Grid
-          item
-          xs
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          {paginationProp == paginationPropType.qtyAndTotal ? (
-            <Grid
-              container
-              sx={{
-                pl: 3,
-              }}
-            >
+    if (isPagination)
+      return (
+        <Grid container>
+          <Grid
+            item
+            xs
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {paginationProp == paginationPropType.qtyAndTotal ? (
               <Grid
-                item
-                xs
+                container
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
                   pl: 3,
                 }}
               >
-                <Typography variant="h7">Total qty: {qty}</Typography>
+                <Grid
+                  item
+                  xs
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    pl: 3,
+                  }}
+                >
+                  <Typography variant="h7">Total qty: {qty}</Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    pl: 3,
+                  }}
+                >
+                  <Typography variant="h7">Total price: {total}</Typography>
+                </Grid>
               </Grid>
-              <Grid
-                item
-                xs
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  pl: 3,
-                }}
-              >
-                <Typography variant="h7">Total price: {total}</Typography>
-              </Grid>
-            </Grid>
-          ) : (
-            <></>
-          )}
+            ) : (
+              <></>
+            )}
+          </Grid>
+          <Grid item xs="auto">
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              showFirstButton
+              showLastButton
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs="auto">
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            showFirstButton
-            showLastButton
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Grid>
-      </Grid>
-    );
+      );
   }
 
   return (

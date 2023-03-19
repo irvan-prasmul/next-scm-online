@@ -36,7 +36,7 @@ const columns = [
   columnNormalize.total,
   columnNormalize.fpbNo,
   columnNormalize.noPo,
-  columnNormalize.constCenter,
+  columnNormalize.costCenter,
   columnNormalize.planDate,
   columnNormalize.requesterNotes,
   columnNormalize.picPurc,
@@ -56,7 +56,7 @@ const rows = [
     total: 898989,
     fpbNumber: "F23100468",
     noPo: "4020006810",
-    constCenter: "SBE Dekanat",
+    costCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -79,7 +79,7 @@ const rows = [
     total: 898989,
     fpbNumber: "F23100468",
     noPo: "4020006810",
-    constCenter: "SBE Dekanat",
+    costCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -102,7 +102,7 @@ const rows = [
     total: 898989,
     fpbNumber: "F23100468",
     noPo: "4020006810",
-    constCenter: "SBE Dekanat",
+    costCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -177,12 +177,7 @@ export default function FpbReceipt() {
     }),
     iconView({ id: "status" }),
     longTextWithReadMore({
-      id: [
-        "requesterNotes",
-        "ictNotes",
-        "purchasingNotes",
-        "informationStatus",
-      ],
+      id: ["x_req_notes", "x_ict_notes", "x_purc_notes", "notes_x"],
       limit: {
         requesterNotes: 50,
         ictNotes: 50,

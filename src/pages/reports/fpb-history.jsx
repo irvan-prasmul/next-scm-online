@@ -32,7 +32,7 @@ const columns = [
   columnNormalize.totalEst,
   columnNormalize.netPrice,
   columnNormalize.totalNet,
-  columnNormalize.constCenter,
+  columnNormalize.costCenter,
   columnNormalize.image,
   columnNormalize.planDate,
   columnNormalize.picPurc,

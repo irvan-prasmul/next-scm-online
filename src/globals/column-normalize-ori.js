@@ -1,41 +1,28 @@
 import moment from "moment/moment";
 
 export const columnNormalize = {
-  id: { id: "number", label: "#", minWidth: 22, isShow: true, align: "center" },
-  dateGeneric: {
-    id: "date",
-    label: "Date",
-    minWidth: 100,
-    isShow: true,
-    format: (value) => moment(value).format("YYYY-MM-DD"),
-  },
-  informationGeneric: {
-    id: "info",
-    label: "Information",
-    minWidth: 150,
-    isShow: true,
-  },
+  id: { id: "id", label: "#", minWidth: 22, isShow: true, align: "center" },
   created: {
-    id: "created_date",
+    id: "created",
     label: "Created",
     minWidth: 100,
     isShow: true,
     format: (value) => moment(value).format("YYYY-MM-DD"),
   },
   fpbNumber: {
-    id: "noFpb",
+    id: "fpbNumber",
     label: "FPB Number",
     minWidth: 175,
     isShow: true,
   },
   fpbNo: {
-    id: "noFpb",
+    id: "fpbNumber",
     label: "No. FPB",
     minWidth: 175,
     isShow: true,
   },
   resvFpbNumber: {
-    id: "noFpb",
+    id: "fpbNumber",
     label: "Resv./FPB Number",
     minWidth: 175,
     isShow: true,
@@ -43,7 +30,7 @@ export const columnNormalize = {
   pta: {
     id: "pta",
     label: "PTA",
-    minWidth: 145,
+    minWidth: 110,
     isShow: true,
     align: "left",
     group: "Upload Document",
@@ -51,14 +38,14 @@ export const columnNormalize = {
   io: {
     id: "io",
     label: "IO",
-    minWidth: 145,
+    minWidth: 110,
     isShow: true,
     group: "Upload Document",
   },
-  otherDoc: {
-    id: "otherDoc",
+  other: {
+    id: "other",
     label: "Other",
-    minWidth: 145,
+    minWidth: 110,
     isShow: true,
     group: "Upload Document",
   },
@@ -75,7 +62,7 @@ export const columnNormalize = {
     isShow: true,
   },
   category: {
-    id: "x_f_ict",
+    id: "category",
     label: "Category",
     minWidth: 90,
     isShow: true,
@@ -89,7 +76,7 @@ export const columnNormalize = {
     align: "right",
   },
   qtyPB: {
-    id: "qty_pb",
+    id: "qtyPB",
     label: "Qty PB",
     minWidth: 100,
     isShow: true,
@@ -103,7 +90,7 @@ export const columnNormalize = {
     isShow: true,
   },
   total: {
-    id: "totPrice",
+    id: "total",
     label: "Total",
     minWidth: 121,
     isShow: true,
@@ -123,20 +110,20 @@ export const columnNormalize = {
     isShow: true,
     format: (value) => moment(value).format("YYYY-MM-DD"),
   },
-  img: {
-    id: "img",
+  file: {
+    id: "file",
     label: "File",
     minWidth: 115,
     isShow: true,
   },
   requesterNotes: {
-    id: "x_req_notes",
+    id: "requesterNotes",
     label: "Requester Notes",
     minWidth: 202,
     isShow: true,
   },
   ictNotes: {
-    id: "x_ict_notes",
+    id: "ictNotes",
     label: "ICT Notes",
     minWidth: 202,
     isShow: true,
@@ -148,7 +135,7 @@ export const columnNormalize = {
     isShow: true,
   },
   purchasingNotes: {
-    id: "x_purc_notes",
+    id: "purchasingNotes",
     label: "Purchasing Notes",
     minWidth: 256,
     isShow: true,
@@ -162,27 +149,27 @@ export const columnNormalize = {
     align: "right",
   },
   approval: {
-    id: "status_x",
+    id: "approval",
     label: "Approval",
     minWidth: 100,
     isShow: true,
     group: "Status",
   },
   purchase: {
-    id: "s_adm",
+    id: "purchase",
     label: "Purchase",
     minWidth: 100,
     isShow: true,
     group: "Status",
   },
   informationStatus: {
-    id: "notes_x",
+    id: "informationStatus",
     label: "Information Status",
     minWidth: 500,
     isShow: true,
   },
   trackStatus: {
-    id: "tracking",
+    id: "trackStatus",
     label: "Track Status",
     minWidth: 100,
     isShow: true,

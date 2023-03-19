@@ -60,47 +60,15 @@ export function uploadDocument({ id, handleUpload = (row, col) => {} }) {
   return {
     id,
     element: (row, col) => {
-      const value = row[col.id];
       return (
         <TableCell key={col.id} align="center">
-          {value ? (
-            <>
-              <Button variant="text" size="small">
-                <Link
-                  href={process.env.NEXT_PUBLIC_API_URL + value}
-                  target="_blank"
-                  underline="none"
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <ImageOutlined color="primaryButton" fontSize="small" />
-                  <Typography variant="bodyTable1" color="blue">
-                    View
-                  </Typography>
-                </Link>
-              </Button>
-              |
-              <Button
-                variant="text"
-                color="primaryButton"
-                size="small"
-                onClick={(e) => handleUpload(row, col)}
-              >
-                Edit
-                <DriveFileRenameOutlineRounded sx={{ fontSize: "1.2rem" }} />
-              </Button>
-            </>
-          ) : (
-            <Button
-              variant="text"
-              size="small"
-              onClick={(e) => handleUpload(row, col)}
-            >
-              <FileUploadRounded color="primaryButton" /> Upload
-            </Button>
-          )}
+          <Button
+            variant="text"
+            size="small"
+            onClick={(e) => handleUpload(row, col)}
+          >
+            <FileUploadRounded color="primaryButton" /> Upload
+          </Button>
         </TableCell>
       );
     },
@@ -595,22 +563,6 @@ export function editAndDeleteAction({
           >
             <DeleteRounded /> Delete
           </Button>
-        </TableCell>
-      );
-    },
-  };
-}
-
-// TRACK MODAL
-export function tackingId({ id }) {
-  return {
-    id,
-    element: (row, col) => {
-      const value = row[col.id];
-      return (
-        <TableCell key={col.id} align="center">
-          {/* <RenderIcon status={value} /> */}
-          {}
         </TableCell>
       );
     },

@@ -39,9 +39,9 @@ const columns = [
   columnNormalize.total,
   columnNormalize.noPo,
   columnNormalize.vendor,
-  columnNormalize.constCenter,
+  columnNormalize.costCenter,
   columnNormalize.planDate,
-  columnNormalize.file,
+  columnNormalize.img,
   columnNormalize.requesterNotes,
   columnNormalize.created,
   columnNormalize.requesterName,
@@ -77,7 +77,7 @@ const rows = [
     total: 898989,
     noPo: null,
     vendor: null,
-    constCenter: "SBE Dekanat",
+    costCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
     file: "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14181676451233.png",
     requesterNotes:
@@ -99,7 +99,7 @@ const rows = [
     informationStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     reviewIct: "test",
-    ictNotes: "ictNotes",
+    ictNotes: "x_ict_notes",
     docPta:
       "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14151233.png",
     docIo:
@@ -175,14 +175,14 @@ export default function FpbProcurement() {
         setConfirmDialog(true);
       },
     }),
-    fpbNumberTextDownload({ id: "fpbNumber" }),
-    imageView({ id: ["file", "docPta", "docIo", "docOther"] }),
+    fpbNumberTextDownload({ id: "noFpb" }),
+    imageView({ id: ["img", "docPta", "docIo", "docOther"] }),
     longTextWithReadMore({
       id: [
-        "requesterNotes",
-        "ictNotes",
-        "purchasingNotes",
-        "informationStatus",
+        "x_req_notes",
+        "x_ict_notes",
+        "x_purc_notes",
+        "notes_x",
         "documentStatus",
       ],
       limit: {
