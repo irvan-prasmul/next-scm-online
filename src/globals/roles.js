@@ -11,7 +11,7 @@ export const roles = {
           icon: "Home",
         },
         {
-          href: "/fpb/c-requester",
+          href: "/fpb/requester",
           name: "FPB",
           icon: "ShoppingCart",
         },
@@ -23,7 +23,7 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/fpb/c-reviewer-purchasing",
+          href: "/fpb/reviewer-purchasing",
           name: "Home",
           icon: "Home",
         },
@@ -35,7 +35,7 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/fpb/c-pj-kegiatan",
+          href: "/fpb/pj-kegiatan",
           name: "Home",
           icon: "Home",
         },
@@ -47,7 +47,7 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/fpb/c-pj-budget",
+          href: "/fpb/pj-budget",
           name: "Home",
           icon: "Home",
         },
@@ -64,7 +64,7 @@ export const roles = {
           icon: "Home",
         },
         {
-          href: "/fpb/c-procurement",
+          href: "/fpb/procurement",
           name: "Approval FPB",
           icon: "NewspaperVariantMultipleOutlineIcon",
         },
@@ -206,7 +206,7 @@ export const roles = {
           icon: "Home",
         },
         {
-          href: "/fpb/c-reviewer-ict",
+          href: "/fpb/reviewer-ict",
           name: "Review FPB",
           icon: "ShoppingCart",
         },
@@ -223,7 +223,7 @@ export const roles = {
           icon: "Home",
         },
         {
-          href: "/fpb/c-purchasing-head",
+          href: "/fpb/purchasing-head",
           name: "FPB List",
           icon: "ShoppingCart",
         },
@@ -328,7 +328,7 @@ export const roles = {
           isOpen: false,
           child: [
             {
-              href: "/fpb/c-receipt",
+              href: "/fpb/receipt",
               icon: "Shortcut",
               name: "Receipt",
             },
@@ -354,7 +354,7 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/fpb/c-pic-purchasing",
+          href: "/fpb/pic-purchasing",
           name: "Home",
           icon: "Home",
         },
@@ -373,28 +373,28 @@ export const roles = {
       icon: "Home",
     },
     {
-      href: "/fpb/c-requester",
+      href: "/fpb/requester",
       name: "FPB",
       icon: "ShoppingCart",
     },
   ],
   "Reviewer Purchasing": [
     {
-      href: "/fpb/c-reviewer-purchasing",
+      href: "/fpb/reviewer-purchasing",
       name: "Home",
       icon: "Home",
     },
   ],
   PJK: [
     {
-      href: "/fpb/c-pj-kegiatan",
+      href: "/fpb/pj-kegiatan",
       name: "Home",
       icon: "Home",
     },
   ],
   PJB: [
     {
-      href: "/fpb/c-pj-budget",
+      href: "/fpb/pj-budget",
       name: "Home",
       icon: "Home",
     },
@@ -411,7 +411,7 @@ export const roles = {
       isOpen: false,
       child: [
         {
-          href: "/fpb/c-receipt",
+          href: "/fpb/receipt",
           icon: "Shortcut",
           name: "Receipt",
         },
@@ -437,7 +437,7 @@ export const roles = {
       icon: "Home",
     },
     {
-      href: "/fpb/c-procurement",
+      href: "/fpb/procurement",
       name: "Approval FPB",
       icon: "NewspaperVariantMultipleOutlineIcon",
     },
@@ -574,7 +574,7 @@ export const roles = {
       icon: "Home",
     },
     {
-      href: "/fpb/c-purchasing-head",
+      href: "/fpb/purchasing-head",
       name: "FPB List",
       icon: "ShoppingCart",
     },
@@ -676,7 +676,7 @@ export const roles = {
   ],
   "PIC Purchasing": [
     {
-      href: "/fpb/c-pic-purchasing",
+      href: "/fpb/pic-purchasing",
       name: "Home",
       icon: "Home",
     },

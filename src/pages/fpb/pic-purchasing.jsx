@@ -199,7 +199,7 @@ const statusDdlValues = [
   { value: "keuangan", text: "Keuangan" },
 ];
 
-export default function FpbPicPurchasingd() {
+export default function FpbPicPurchasing() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();

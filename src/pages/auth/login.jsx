@@ -52,20 +52,27 @@ function Login() {
   const router = useRouter();
   const userLogin = () => {
     console.log("NEXT_PUBLIC_BASE_URL env:", process.env.NEXT_PUBLIC_BASE_URL);
-    login({ email: "no-reply@pmbs.ac.id", password: "Pr@smul1234" })
-      .then((res) => {
-        console.log("login res:", res);
-        dispatch(
-          setAuth({
-            userToken: res.data.access_token,
-            userName: res.data.name,
-          })
-        );
-        router.replace("/home/dashboard");
+    // login({ email: "no-reply@pmbs.ac.id", password: "Pr@smul1234" })
+    //   .then((res) => {
+    //     console.log("login res:", res);
+    //     dispatch(
+    //       setAuth({
+    //         userToken: res.data.access_token,
+    //         userName: res.data.name,
+    //       })
+    //     );
+    //     router.replace("/home/dashboard");
+    //   })
+    //   .catch((e) => {
+    //     console.log("error login:", e);
+    //   });
+    dispatch(
+      setAuth({
+        userToken: "res.data.access_token",
+        userName: "test name",
       })
-      .catch((e) => {
-        console.log("error login:", e);
-      });
+    );
+    router.replace("/home/dashboard");
   };
 
   return (
