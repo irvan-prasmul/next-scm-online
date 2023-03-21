@@ -162,7 +162,7 @@ export const columnNormalize = {
     align: "right",
   },
   approval: {
-    id: "status_x",
+    id: "approval",
     label: "Approval",
     minWidth: 100,
     isShow: true,

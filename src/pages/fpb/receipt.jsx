@@ -18,6 +18,7 @@ import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesFpb,
+  informationStatusIcon,
   paginationPropType,
 } from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
@@ -46,15 +47,15 @@ const columns = [
 
 const rows = [
   {
-    id: 1,
+    number: 1,
     action: "waiting",
-    status: "active",
+    status: informationStatusIcon.approved,
     materialName: "Fuel Cell",
     qtyPo: 1,
     uom: "UN",
     price: 898987,
     total: 898989,
-    fpbNumber: "F23100468",
+    noFpb: "F23100468",
     noPo: "4020006810",
     costCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
@@ -69,15 +70,15 @@ const rows = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    id: 2,
+    number: 2,
     action: "ready",
-    status: "active",
+    status: informationStatusIcon.approved,
     materialName: "Fuel Cell",
     qtyPo: 1,
     uom: "UN",
     price: 898987,
     total: 898989,
-    fpbNumber: "F23100468",
+    noFpb: "F23100468",
     noPo: "4020006810",
     costCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
@@ -92,15 +93,15 @@ const rows = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    id: 3,
+    number: 3,
     action: "received",
-    status: "active",
+    status: informationStatusIcon.approved,
     materialName: "Fuel Cell",
     qtyPo: 1,
     uom: "UN",
     price: 898987,
     total: 898989,
-    fpbNumber: "F23100468",
+    noFpb: "F23100468",
     noPo: "4020006810",
     costCenter: "SBE Dekanat",
     planDate: "1976-04-19T12:59-0500",
@@ -231,7 +232,11 @@ export default function FpbReceipt() {
         </Paper>
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
-            statusList={["Purchase Order", "Goods Receipt", "Goods Issue"]}
+            statusList={[
+              informationStatusIcon.purchaseOrder,
+              informationStatusIcon.goodsReceipt,
+              informationStatusIcon.goodsIssue,
+            ]}
           />
         </Paper>
       </Box>

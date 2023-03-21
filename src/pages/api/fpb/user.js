@@ -1,4 +1,7 @@
+import ArrowDownwardRounded from "@mui/icons-material/ArrowDownwardRounded";
+import ArrowRightRounded from "@mui/icons-material/ArrowRightRounded";
 import axios from "axios";
+import moment from "moment";
 import { formatFormData } from "../global";
 
 export function getUserDataReservationDetails(payload) {
@@ -9,7 +12,230 @@ export function getUserDataReservationDetails(payload) {
 }
 
 export function getUserModalTracking(payload) {
-  return mockRest2;
+  const res = mockRest2;
+
+  let tableColumns = [
+    {
+      number: "down",
+      date: res.tracking_pjk[0].createdDate,
+      info: "FPB Created",
+      status: "-",
+    },
+  ];
+  const track = res.tracking_pjk[0];
+  const f_pjk = track.flag_pjk;
+  const f_pjk_level = track.flag_pjk_level;
+  const f_status = track.flag_status;
+  const dateNow = moment.now();
+  /////APPROVAL PJK/////
+  if (
+    f_status == "N" ||
+    f_status == "A" ||
+    f_status == "AP" ||
+    f_status == "P" ||
+    f_status == "F" ||
+    f_status == "D"
+  ) {
+    //////REVIEWER PURCHASING//////////////
+    if (track.flag_reviewer == "F") {
+      tableColumns.push({
+        number: "right",
+        date: dateNow,
+        info: "Review: Purchasing",
+        status: "Waiting",
+      });
+    } else {
+      tableColumns.push({
+        number: "down",
+        date: track.date_review,
+        info: `Reviewer ${track.reviewer}`,
+        status: "Done",
+      });
+      /////CHECKER///////
+      if (track.flag_checker == "N") {
+        tableColumns.push({
+          number: "right",
+          date: dateNow,
+          info: "Checker: Checker",
+          status: "Waiting",
+        });
+      } else {
+        if (f_pjk == null || f_pjk == "N") {
+          tableColumns.push({
+            number: "",
+            date: dateNow,
+            info: `PJK: ${track.pjk_1}`,
+            status: "Waiting",
+          });
+        }
+        //////////APPROVAL PJB//////////
+        else if (f_pjk == "A") {
+          const track_pjb = res.tracking_pjb[0];
+          const f_pjb = track_pjb.flag_pjb;
+          const f_pjb_level = track_pjb.flag_pjb_level;
+          const dateProcur = track_pjb.date_procurement;
+          if (f_pjk_level == "1" || f_pjk_level == "2" || f_pjk_level == "3") {
+            tableColumns.push({
+              number: "down",
+              date: track.date_appv_pjk1,
+              info: `PJK: ${track.pjk_1}`,
+              status: "Done",
+            });
+            if (f_pjk_level == "2" || f_pjk_level == "3") {
+              tableColumns.push({
+                number: "down",
+                date: track.date_appv_pjk2,
+                info: `PJK: ${track.pjk_2}`,
+                status: "Done",
+              });
+            } else if (f_pjk_level == "3") {
+              tableColumns.push({
+                number: "down",
+                date: track.date_appv_pjk3,
+                info: `PJK: ${track.pjk_3}`,
+                status: "Done",
+              });
+            }
+            /////////APPROVAL PJB//////////
+            if (f_pjb == "N") {
+              tableColumns.push({
+                number: "",
+                date: dateNow,
+                info: `PJB: ${track_pjb.pjb_1}`,
+                status: "Waiting",
+              });
+            } else if (f_pjb == "A") {
+              if (parseInt(f_pjb_level) >= 1) {
+                tableColumns.push({
+                  number: "down",
+                  date: track_pjb.date_appv_pjb1,
+                  info: `PJB: ${track_pjb.pjb_1}`,
+                  status: "Done",
+                });
+                if (parseInt(f_pjb_level) >= 2) {
+                  tableColumns.push({
+                    number: "down",
+                    date: track_pjb.date_appv_pjb2,
+                    info: `PJB: ${track_pjb.pjb_2}`,
+                    status: "Done",
+                  });
+                }
+                if (parseInt(f_pjb_level) >= 3) {
+                  tableColumns.push({
+                    number: "down",
+                    date: track_pjb.date_appv_pjb3,
+                    info: `PJB: ${track_pjb.pjb_3}`,
+                    status: "Done",
+                  });
+                }
+                if (parseInt(f_pjb_level) >= 4) {
+                  tableColumns.push({
+                    number: "down",
+                    date: track_pjb.date_appv_pjb4,
+                    info: `PJB: ${track_pjb.pjb_4}`,
+                    status: "Done",
+                  });
+                }
+                if (f_pjb_level == "5") {
+                  tableColumns.push({
+                    number: "down",
+                    date: track_pjb.date_appv_pjb5,
+                    info: `PJB: ${track_pjb.pjb_5}`,
+                    status: "Done",
+                  });
+                }
+                if (f_status == "A") {
+                  tableColumns.push({
+                    number: "right",
+                    date: dateNow,
+                    info: `PROCUREMENT`,
+                    status: "Waiting",
+                  });
+                } else if (
+                  f_status == "AP" ||
+                  f_status == "P" ||
+                  f_status == "F" ||
+                  f_status == "D"
+                ) {
+                  tableColumns.push({
+                    number: "",
+                    date: dateProcur,
+                    info: `PROCUREMENT`,
+                    status: "Done",
+                  });
+                }
+              }
+            } else if (f_pjb == "T") {
+              tableColumns.push({
+                number: "down",
+                date: track_pjb.date_appv_pjb1,
+                info: `PJB: ${track_pjb.pjb_1}`,
+                status: "Done",
+              });
+              if (parseInt(f_pjb_level) >= 1) {
+                tableColumns.push({
+                  number: parseInt(f_pjb_level) >= 2 ? "down" : "right",
+                  date: parseInt(f_pjb_level) >= 2 ? track_pjb.pjb_2 : dateNow,
+                  info: `PJB: ${track_pjb.pjb_2}`,
+                  status: parseInt(f_pjb_level) >= 2 ? "Done" : "Waiting",
+                });
+              }
+              if (parseInt(f_pjb_level) >= 2) {
+                tableColumns.push({
+                  number: parseInt(f_pjb_level) >= 3 ? "down" : "right",
+                  date: parseInt(f_pjb_level) >= 3 ? track_pjb.pjb_3 : dateNow,
+                  info: `PJB: ${track_pjb.pjb_3}`,
+                  status: parseInt(f_pjb_level) >= 3 ? "Done" : "Waiting",
+                });
+              }
+              if (parseInt(f_pjb_level) >= 3) {
+                tableColumns.push({
+                  number: parseInt(f_pjb_level) >= 4 ? "down" : "right",
+                  date: parseInt(f_pjb_level) >= 4 ? track_pjb.pjb_4 : dateNow,
+                  info: `PJB: ${track_pjb.pjb_4}`,
+                  status: parseInt(f_pjb_level) >= 4 ? "Done" : "Waiting",
+                });
+              }
+              if (parseInt(f_pjb_level) >= 4) {
+                tableColumns.push({
+                  number: parseInt(f_pjb_level) >= 5 ? "down" : "right",
+                  date: parseInt(f_pjb_level) >= 5 ? track_pjb.pjb_5 : dateNow,
+                  info: `PJB: ${track_pjb.pjb_5}`,
+                  status: parseInt(f_pjb_level) >= 5 ? "Done" : "Waiting",
+                });
+              }
+            }
+          }
+        } else if (f_pjk == "T") {
+          if (parseInt(f_pjk_level) >= 1) {
+            tableColumns.push({
+              number: "down",
+              date: track.date_appv_pjk1,
+              info: `PJK: ${track.pjk_1}`,
+              status: "Done",
+            });
+            tableColumns.push({
+              number: parseInt(f_pjk_level) >= 2 ? "down" : "right",
+              date: parseInt(f_pjk_level) >= 2 ? track.date_appv_pjk2 : dateNow,
+              info: `PJK: ${track.pjk_2}`,
+              status: parseInt(f_pjk_level) >= 2 ? "Done" : "Waiting",
+            });
+          }
+          if (parseInt(f_pjk_level) >= 2) {
+            tableColumns.push({
+              number: parseInt(f_pjk_level) >= 3 ? "down" : "right",
+              date: parseInt(f_pjk_level) >= 3 ? track.date_appv_pjk3 : dateNow,
+              info: `PJK: ${track.pjk_3}`,
+              status: parseInt(f_pjk_level) >= 3 ? "Done" : "Waiting",
+            });
+          }
+        }
+      }
+    }
+  }
+  //////////////////////
+
+  return tableColumns;
 }
 
 const mockRest1 = {
@@ -175,48 +401,98 @@ const mockRest1 = {
 const mockRest2 = {
   tracking_pjk: [
     {
-      idUser: "1418",
-      createdDate: "2023-03-20 23:23:02",
-      flag_status: "N",
-      noFpb: "F23200194",
-      flag_pjk: null,
-      flag_pjk_level: "0",
-      pjk_1: "Moorly Cinny",
+      idUser: "1360",
+      createdDate: "2023-02-24 14:11:02",
+      flag_status: "F",
+      noFpb: "F23100577",
+      flag_pjk: "A",
+      flag_pjk_level: "1",
+      pjk_1: "Ida Juda",
       pjk_2: null,
       pjk_3: null,
       date_appv_pjk1: null,
       date_appv_pjk2: null,
       date_appv_pjk3: null,
-      flag_pjb: "N",
-      flag_pjb_level: "0",
-      flag_procurement: "N",
-      flag_reviewer: "F",
-      flag_checker: "N",
-      date_review: null,
-      date_checker: null,
-      reviewer: null,
-      checker: null,
+      flag_pjb: "A",
+      flag_pjb_level: "1",
+      flag_procurement: "A",
+      flag_reviewer: "T",
+      flag_checker: "F",
+      date_review: "2023-02-27 06:47:55",
+      date_checker: "2023-02-27 06:47:55",
+      reviewer: "DIL",
+      checker: "V. Febi Amalia",
     },
   ],
   tracking_pjb: [
     {
-      flag_status: "N",
-      flag_pjb: "N",
-      flag_pjb_level: "0",
-      company: "SBE",
-      pjb_1: "Adrian Teja",
-      pjb_2: "Fathony Rahman",
-      pjb_3: "Djoko Wintoro",
-      pjb_4: "Djisman Simandjuntak",
-      pjb_5: "Prasasto Sudyatmiko",
+      flag_status: "F",
+      flag_pjb: "A",
+      flag_pjb_level: "1",
+      company: "UNI",
+      pjb_1: "Djoko Wintoro",
+      pjb_2: "Djisman Simandjuntak",
+      pjb_3: "Prasasto Sudyatmiko",
+      pjb_4: null,
+      pjb_5: null,
       date_appv_pjb1: null,
       date_appv_pjb2: null,
       date_appv_pjb3: null,
       date_appv_pjb4: null,
       date_appv_pjb5: null,
-      date_procurement: null,
+      date_procurement: "2023-03-03 11:10:20",
     },
   ],
   max_pjkLevel: "1",
-  max_pjbLevel: "5",
+  max_pjbLevel: "3",
 };
+/*
+{
+  tracking_pjk: [
+    {
+      idUser: "1360",
+      createdDate: "2023-03-21 09:25:08",
+      flag_status: "F",
+      noFpb: "F23100651",
+      flag_pjk: "A",
+      flag_pjk_level: "1",
+      pjk_1: "Ida Juda",
+      pjk_2: null,
+      pjk_3: null,
+      date_appv_pjk1: "2023-03-21 03:35:48",
+      date_appv_pjk2: null,
+      date_appv_pjk3: null,
+      flag_pjb: "A",
+      flag_pjb_level: "1",
+      flag_procurement: "A",
+      flag_reviewer: "T",
+      flag_checker: "F",
+      date_review: "2023-03-21 03:33:31",
+      date_checker: "2023-03-21 03:33:31",
+      reviewer: "PNK",
+      checker: "V. Febi Amalia",
+    },
+  ],
+  tracking_pjb: [
+    {
+      flag_status: "F",
+      flag_pjb: "A",
+      flag_pjb_level: "1",
+      company: "UNI",
+      pjb_1: "Djoko Wintoro",
+      pjb_2: "Djisman Simandjuntak",
+      pjb_3: "Prasasto Sudyatmiko",
+      pjb_4: null,
+      pjb_5: null,
+      date_appv_pjb1: "2023-03-21 03:36:36",
+      date_appv_pjb2: null,
+      date_appv_pjb3: null,
+      date_appv_pjb4: null,
+      date_appv_pjb5: null,
+      date_procurement: "2023-03-21 09:37:41",
+    },
+  ],
+  max_pjkLevel: "1",
+  max_pjbLevel: "3",
+};
+*/

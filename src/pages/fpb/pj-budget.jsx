@@ -12,7 +12,7 @@ import MainTableMenu from "@/components/mainTable/mainTableMenu";
 import TableInfomationStatus from "@/components/general/tableInformationStatus";
 import { openExpandedRow } from "@/components/mainTable/mainTableCustomCells";
 import { tableExpandedRows } from "@/components/mainTable/maintableCustomRows";
-import { paginationPropType } from "@/globals/types";
+import { informationStatusIcon, paginationPropType } from "@/globals/types";
 import PageHeader from "@/components/general/pageHeader";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
@@ -73,7 +73,7 @@ export default function FpbPJBudget() {
   const rows = [
     {
       preview: null,
-      fpbNumber: "F23100468",
+      noFpb: "F23100468",
       createdDate: "1976-04-19T12:59-0500",
       unit: "BSD",
       doctype: "UNI",
@@ -92,7 +92,7 @@ export default function FpbPJBudget() {
     },
     {
       preview: null,
-      fpbNumber: "F2313210468",
+      noFpb: "F2313210468",
       createdDate: "1976-04-19T12:59-0500",
       unit: "Cilandak",
       doctype: "UNI",
@@ -111,7 +111,7 @@ export default function FpbPJBudget() {
     },
     {
       preview: null,
-      fpbNumber: "F2313210468",
+      noFpb: "F2313210468",
       createdDate: "1976-04-19T12:59-0500",
       unit: "Cilandak",
       doctype: "UNI",
@@ -130,7 +130,7 @@ export default function FpbPJBudget() {
     },
     {
       preview: null,
-      fpbNumber: "F2313210468",
+      noFpb: "F2313210468",
       createdDate: "1976-04-19T12:59-0500",
       unit: "Cilandak",
       doctype: "UNI",
@@ -149,7 +149,7 @@ export default function FpbPJBudget() {
     },
     {
       preview: null,
-      fpbNumber: "F2313210468",
+      noFpb: "F2313210468",
       createdDate: "1976-04-19T12:59-0500",
       unit: "Cilandak",
       doctype: "UNI",
@@ -211,7 +211,11 @@ export default function FpbPJBudget() {
         </Paper>
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
-            statusList={["Waiting For Approval", "Approved", "Rejected"]}
+            statusList={[
+              informationStatusIcon.waitingForApproval,
+              informationStatusIcon.approved,
+              informationStatusIcon.rejected,
+            ]}
           />
         </Paper>
       </Box>

@@ -44,14 +44,14 @@ const columns = [
 
 const rows = [
   {
-    id: 1,
+    number: 1,
     materialName: "Fuel Cell",
     price: 321312312,
     qtyPB: 11111,
     uom: "UN",
   },
   {
-    id: 2,
+    number: 2,
     materialName: "C Clamp Cell",
     price: 1133334455,
     qtyPB: 11111,

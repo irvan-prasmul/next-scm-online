@@ -11,6 +11,7 @@ import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesMaster,
+  informationStatusIcon,
   masterStatusDdlValues,
 } from "@/globals/types";
 import ActionDialogMaster from "@/components/master/actionDialogMaster";
@@ -82,7 +83,7 @@ export default function MasterCostCenter() {
       controllingArea: "STEM",
       description: "SBE BVDI",
       profitCenter: "SBE",
-      status: "active",
+      status: informationStatusIcon.approved,
     },
     {
       action: null,
@@ -91,7 +92,7 @@ export default function MasterCostCenter() {
       controllingArea: "STEM",
       description: "SBE Dekanat",
       profitCenter: "SBE",
-      status: "active",
+      status: informationStatusIcon.approved,
     },
   ];
 

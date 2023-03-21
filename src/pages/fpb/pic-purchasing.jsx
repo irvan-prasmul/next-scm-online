@@ -20,6 +20,7 @@ import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesFpb,
+  informationStatusIcon,
   paginationPropType,
   purchasingTypeDdlValues,
 } from "@/globals/types";
@@ -56,9 +57,9 @@ const columns = [
 
 const rows = [
   {
-    id: 1,
+    number: 1,
     purchasingType: "waiting",
-    fpbNumber: "F23100468",
+    noFpb: "F23100468",
     noPo: "409338102",
     materialName: "Fuel Cell",
     price: 898987,
@@ -82,16 +83,16 @@ const rows = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     picPurc: "None",
     purchasingNotes: "",
-    status: "waiting",
+    status: informationStatusIcon.waiting,
     informationStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     documentStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    id: 2,
+    number: 2,
     purchasingType: "PO",
-    fpbNumber: "F23100468",
+    noFpb: "F23100468",
     noPo: "409338102",
     materialName: "Fuel Cell",
     price: 898987,
@@ -116,16 +117,16 @@ const rows = [
     picPurc: "None",
     purchasingNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    status: "active",
+    status: informationStatusIcon.approved,
     informationStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     documentStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    id: 3,
+    number: 3,
     purchasingType: "Petty Cash",
-    fpbNumber: "F23100468",
+    noFpb: "F23100468",
     noPo: "409338102",
     materialName: "Fuel Cell",
     price: 898987,
@@ -157,9 +158,9 @@ const rows = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    id: 4,
+    number: 4,
     purchasingType: "CC",
-    fpbNumber: "F23100468",
+    noFpb: "F23100468",
     noPo: "409338102",
     materialName: "Fuel Cell",
     price: 898987,
@@ -324,11 +325,11 @@ export default function FpbPicPurchasing() {
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
             statusList={[
-              "Waiting",
-              "Purchase Order",
-              "Finance",
-              "Goods Receipt",
-              "Goods Issue",
+              informationStatusIcon.waiting,
+              informationStatusIcon.purchaseOrder,
+              informationStatusIcon.finance,
+              informationStatusIcon.goodsReceipt,
+              informationStatusIcon.goodsIssue,
             ]}
           />
         </Paper>

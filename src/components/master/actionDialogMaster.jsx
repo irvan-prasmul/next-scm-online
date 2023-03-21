@@ -114,21 +114,24 @@ export default function ActionDialogMaster({
               pr: 1,
             }}
           >
-            {type == dialogTypesMaster.addDepartment ||
-            type == dialogTypesMaster.addCostCenter ||
-            type == dialogTypesMaster.addUser ||
-            type == dialogTypesMaster.addPjb ||
-            type == dialogTypesMaster.addVendor ? (
-              <InsertDriveFileRounded />
-            ) : type == dialogTypesMaster.editDepartment ||
-              type == dialogTypesMaster.editCostCenter ||
-              type == dialogTypesMaster.editUser ||
-              type == dialogTypesMaster.editPjb ||
-              type == dialogTypesMaster.editVendor ? (
-              <NoteEditOutlineIcon />
-            ) : (
-              <></>
-            )}
+            {(() => {
+              switch (type) {
+                case dialogTypesMaster.addDepartment:
+                case dialogTypesMaster.addCostCenter:
+                case dialogTypesMaster.addUser:
+                case dialogTypesMaster.addPjb:
+                case dialogTypesMaster.addVendor:
+                  return <InsertDriveFileRounded />;
+                case dialogTypesMaster.editDepartment:
+                case dialogTypesMaster.editCostCenter:
+                case dialogTypesMaster.editUser:
+                case dialogTypesMaster.editPjb:
+                case dialogTypesMaster.editVendor:
+                  return <NoteEditOutlineIcon />;
+                default:
+                  return null;
+              }
+            })()}
           </Grid>
           <Grid
             item
@@ -152,333 +155,334 @@ export default function ActionDialogMaster({
   }
 
   function statusRow(type) {
-    return type == dialogTypesMaster.editDepartment ||
-      type == dialogTypesMaster.editCostCenter ||
-      type == dialogTypesMaster.editUser ||
-      type == dialogTypesMaster.editVendor ? (
-      <RowDdlSimple
-        md={3}
-        fullWidth
-        text="Status"
-        ddlValue={rowStatusSelect}
-        ddlValues={masterStatusDdlValues}
-        ddlOnChange={(e) => setRowStatusSelect(e.target.value)}
-      />
-    ) : (
-      <></>
-    );
+    switch (type) {
+      case dialogTypesMaster.editDepartment:
+      case dialogTypesMaster.editCostCenter:
+      case dialogTypesMaster.editUser:
+      case dialogTypesMaster.editVendor:
+        return (
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Status"
+            ddlValue={rowStatusSelect}
+            ddlValues={masterStatusDdlValues}
+            ddlOnChange={(e) => setRowStatusSelect(e.target.value)}
+          />
+        );
+      default:
+        return null;
+    }
   }
 
   function renderBody(type) {
-    if (
-      type == dialogTypesMaster.addDepartment ||
-      type == dialogTypesMaster.editDepartment
-    )
-      return (
-        <Box sx={{ p: 2 }}>
-          <RowTextFieldSimple
-            text="ID Unit"
-            textFieldValue={idUnit}
-            textFieldOnChange={(e) => setIdUnit(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Company"
-            textFieldValue={company}
-            textFieldOnChange={(e) => setCompany(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Unit Name"
-            textFieldValue={unitName}
-            textFieldOnChange={(e) => setUnitName(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          {statusRow(type)}
-        </Box>
-      );
-    if (
-      type == dialogTypesMaster.addCostCenter ||
-      type == dialogTypesMaster.editCostCenter
-    )
-      return (
-        <Box sx={{ p: 2 }}>
-          <RowTextFieldSimple
-            text="Cost Center Id"
-            textFieldValue={costCenterId}
-            textFieldOnChange={(e) => setCostCenterId(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Controlling Area"
-            textFieldValue={controllingArea}
-            textFieldOnChange={(e) => setControllingArea(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="Company Code"
-            ddlValue={companyCode}
-            ddlValues={dummyDdlChoose}
-            ddlOnChange={(e) => setCompanyCode(e.target.value)}
-            isValidate={isValidate}
-          />
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="Profit Center"
-            ddlValue={profitCenter}
-            ddlValues={dummyDdlChoose}
-            ddlOnChange={(e) => setProfitCenter(e.target.value)}
-            isValidate={isValidate}
-          />
-          <RowTextFieldSimple
-            text="Description"
-            textFieldValue={description}
-            textFieldOnChange={(e) => setDescription(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          {statusRow(type)}
-        </Box>
-      );
-    if (type == dialogTypesMaster.addUser || type == dialogTypesMaster.editUser)
-      return (
-        <Box sx={{ p: 2 }}>
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="Role"
-            ddlValue={role}
-            ddlValues={[
-              { value: "choose", text: "Choose" },
-              { value: "pjb", text: "PJB" },
-              { value: "pjk", text: "PJK" },
-            ]}
-            ddlOnChange={(e) => setRole(e.target.value)}
-            isValidate={isValidate}
-          />
-          <RowTextFieldSimple
-            text="NIK"
-            textFieldValue={nik}
-            textFieldOnChange={(e) => setNik(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Name"
-            textFieldValue={name}
-            textFieldOnChange={(e) => setName(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Initial"
-            textFieldValue={nik}
-            textFieldOnChange={(e) => setInitial(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Email 1"
-            textFieldValue={email1}
-            textFieldOnChange={(e) => setEmail1(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-            placeholder="Email@pmbs"
-          />
-          <RowTextFieldSimple
-            text="Email 2"
-            textFieldValue={email2}
-            textFieldOnChange={(e) => setEmail2(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-            placeholder="Email@prasetiyamulya"
-          />
-          <RowTextFieldSimple
-            text="Password"
-            textFieldValue={password}
-            textFieldOnChange={(e) => setPassword(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-            type="password"
-          />
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="Department"
-            ddlValue={department}
-            ddlValues={dummyDdlChoose}
-            ddlOnChange={(e) => setDepartment(e.target.value)}
-            isValidate={isValidate}
-          />
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="Position"
-            ddlValue={position}
-            ddlValues={[
-              { value: "choose", text: "Choose" },
-              { value: "dk", text: "Dekan" },
-              { value: "pjk", text: "PJK" },
-            ]}
-            ddlOnChange={(e) => setPosition(e.target.value)}
-            isValidate={isValidate}
-          />
-          {statusRow(type)}
-        </Box>
-      );
-    if (type == dialogTypesMaster.addPjb || type == dialogTypesMaster.editPjb)
-      return (
-        <Box sx={{ p: 2 }}>
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="User"
-            ddlValue={user}
-            ddlValues={dummyDdlChoose}
-            ddlOnChange={(e) => setUser(e.target.value)}
-            isValidate={isValidate}
-          />
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="Company"
-            ddlValue={company}
-            ddlValues={dummyDdlChoose}
-            ddlOnChange={(e) => setCompany(e.target.value)}
-            isValidate={isValidate}
-          />
-          <RowTextFieldSimple
-            text="Level"
-            textFieldValue={level}
-            textFieldOnChange={(e) => setLevel(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-            type="number"
-          />
-        </Box>
-      );
-    if (
-      type == dialogTypesMaster.addVendor ||
-      type == dialogTypesMaster.editVendor
-    )
-      return (
-        <Box sx={{ p: 2 }}>
-          <RowTextFieldSimple
-            text="Name"
-            textFieldValue={vendor}
-            textFieldOnChange={(e) => setVendor(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Telp"
-            textFieldValue={telp}
-            textFieldOnChange={(e) => setTelp(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="E-mail"
-            textFieldValue={email}
-            textFieldOnChange={(e) => setEmail(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Address"
-            textFieldValue={address}
-            textFieldOnChange={(e) => setAddress(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowSearchList
-            text="Material"
-            textFieldValue={material}
-            textFieldOnChange={(e) => setMaterial(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-            placeholder="Search by material name"
-            searchNote="*If the item name is not available, please contact warehouse."
-          />
-          {statusRow(type)}
-        </Box>
-      );
+    switch (type) {
+      case dialogTypesMaster.addDepartment:
+      case dialogTypesMaster.editDepartment:
+        return (
+          <Box sx={{ p: 2 }}>
+            <RowTextFieldSimple
+              text="ID Unit"
+              textFieldValue={idUnit}
+              textFieldOnChange={(e) => setIdUnit(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Company"
+              textFieldValue={company}
+              textFieldOnChange={(e) => setCompany(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Unit Name"
+              textFieldValue={unitName}
+              textFieldOnChange={(e) => setUnitName(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            {statusRow(type)}
+          </Box>
+        );
+      case dialogTypesMaster.addCostCenter:
+      case dialogTypesMaster.editCostCenter:
+        return (
+          <Box sx={{ p: 2 }}>
+            <RowTextFieldSimple
+              text="Cost Center Id"
+              textFieldValue={costCenterId}
+              textFieldOnChange={(e) => setCostCenterId(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Controlling Area"
+              textFieldValue={controllingArea}
+              textFieldOnChange={(e) => setControllingArea(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="Company Code"
+              ddlValue={companyCode}
+              ddlValues={dummyDdlChoose}
+              ddlOnChange={(e) => setCompanyCode(e.target.value)}
+              isValidate={isValidate}
+            />
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="Profit Center"
+              ddlValue={profitCenter}
+              ddlValues={dummyDdlChoose}
+              ddlOnChange={(e) => setProfitCenter(e.target.value)}
+              isValidate={isValidate}
+            />
+            <RowTextFieldSimple
+              text="Description"
+              textFieldValue={description}
+              textFieldOnChange={(e) => setDescription(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            {statusRow(type)}
+          </Box>
+        );
+      case dialogTypesMaster.addUser:
+      case dialogTypesMaster.editUser:
+        return (
+          <Box sx={{ p: 2 }}>
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="Role"
+              ddlValue={role}
+              ddlValues={[
+                { value: "choose", text: "Choose" },
+                { value: "pjb", text: "PJB" },
+                { value: "pjk", text: "PJK" },
+              ]}
+              ddlOnChange={(e) => setRole(e.target.value)}
+              isValidate={isValidate}
+            />
+            <RowTextFieldSimple
+              text="NIK"
+              textFieldValue={nik}
+              textFieldOnChange={(e) => setNik(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Name"
+              textFieldValue={name}
+              textFieldOnChange={(e) => setName(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Initial"
+              textFieldValue={nik}
+              textFieldOnChange={(e) => setInitial(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Email 1"
+              textFieldValue={email1}
+              textFieldOnChange={(e) => setEmail1(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+              placeholder="Email@pmbs"
+            />
+            <RowTextFieldSimple
+              text="Email 2"
+              textFieldValue={email2}
+              textFieldOnChange={(e) => setEmail2(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+              placeholder="Email@prasetiyamulya"
+            />
+            <RowTextFieldSimple
+              text="Password"
+              textFieldValue={password}
+              textFieldOnChange={(e) => setPassword(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+              type="password"
+            />
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="Department"
+              ddlValue={department}
+              ddlValues={dummyDdlChoose}
+              ddlOnChange={(e) => setDepartment(e.target.value)}
+              isValidate={isValidate}
+            />
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="Position"
+              ddlValue={position}
+              ddlValues={[
+                { value: "choose", text: "Choose" },
+                { value: "dk", text: "Dekan" },
+                { value: "pjk", text: "PJK" },
+              ]}
+              ddlOnChange={(e) => setPosition(e.target.value)}
+              isValidate={isValidate}
+            />
+            {statusRow(type)}
+          </Box>
+        );
+      case dialogTypesMaster.addPjb:
+      case dialogTypesMaster.editPjb:
+        return (
+          <Box sx={{ p: 2 }}>
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="User"
+              ddlValue={user}
+              ddlValues={dummyDdlChoose}
+              ddlOnChange={(e) => setUser(e.target.value)}
+              isValidate={isValidate}
+            />
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="Company"
+              ddlValue={company}
+              ddlValues={dummyDdlChoose}
+              ddlOnChange={(e) => setCompany(e.target.value)}
+              isValidate={isValidate}
+            />
+            <RowTextFieldSimple
+              text="Level"
+              textFieldValue={level}
+              textFieldOnChange={(e) => setLevel(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+              type="number"
+            />
+          </Box>
+        );
+      case dialogTypesMaster.addVendor:
+      case dialogTypesMaster.editVendor:
+        return (
+          <Box sx={{ p: 2 }}>
+            <RowTextFieldSimple
+              text="Name"
+              textFieldValue={vendor}
+              textFieldOnChange={(e) => setVendor(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Telp"
+              textFieldValue={telp}
+              textFieldOnChange={(e) => setTelp(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="E-mail"
+              textFieldValue={email}
+              textFieldOnChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Address"
+              textFieldValue={address}
+              textFieldOnChange={(e) => setAddress(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowSearchList
+              text="Material"
+              textFieldValue={material}
+              textFieldOnChange={(e) => setMaterial(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+              placeholder="Search by material name"
+              searchNote="*If the item name is not available, please contact warehouse."
+            />
+            {statusRow(type)}
+          </Box>
+        );
+      default:
+        return null;
+    }
   }
 
   function renderAction(type) {
-    if (
-      type == dialogTypesMaster.addDepartment ||
-      type == dialogTypesMaster.addCostCenter ||
-      type == dialogTypesMaster.addUser ||
-      type == dialogTypesMaster.addPjb ||
-      type == dialogTypesMaster.addVendor
-    ) {
-      return (
-        <>
-          <Button
-            onClick={handleClose}
-            variant="contained"
-            color="secondaryButton"
-          >
-            <DoNotDisturbOutlined sx={{ mr: 1 }} />
-            Close
-          </Button>
-          <Button onClick={action} variant="contained" color="success">
-            <SaveRounded sx={{ mr: 1 }} />
-            Save
-          </Button>
-        </>
-      );
-    }
-    if (
-      type == dialogTypesMaster.editDepartment ||
-      type == dialogTypesMaster.editCostCenter ||
-      type == dialogTypesMaster.editUser ||
-      type == dialogTypesMaster.editPjb ||
-      type == dialogTypesMaster.editVendor
-    ) {
-      return (
-        <>
-          <Button
-            onClick={handleClose}
-            variant="contained"
-            color="secondaryButton"
-          >
-            <DoNotDisturbOutlined sx={{ mr: 1 }} />
-            Close
-          </Button>
-          <Button onClick={action} variant="contained" color="success">
-            <Refresh sx={{ mr: 1 }} />
-            Update
-          </Button>
-        </>
-      );
+    switch (type) {
+      case dialogTypesMaster.addDepartment:
+      case dialogTypesMaster.addCostCenter:
+      case dialogTypesMaster.addUser:
+      case dialogTypesMaster.addPjb:
+      case dialogTypesMaster.addVendor:
+        return (
+          <>
+            <Button
+              onClick={handleClose}
+              variant="contained"
+              color="secondaryButton"
+            >
+              <DoNotDisturbOutlined sx={{ mr: 1 }} />
+              Close
+            </Button>
+            <Button onClick={action} variant="contained" color="success">
+              <SaveRounded sx={{ mr: 1 }} />
+              Save
+            </Button>
+          </>
+        );
+      case dialogTypesMaster.editDepartment:
+      case dialogTypesMaster.editCostCenter:
+      case dialogTypesMaster.editUser:
+      case dialogTypesMaster.editPjb:
+      case dialogTypesMaster.editVendor:
+        return (
+          <>
+            <Button
+              onClick={handleClose}
+              variant="contained"
+              color="secondaryButton"
+            >
+              <DoNotDisturbOutlined sx={{ mr: 1 }} />
+              Close
+            </Button>
+            <Button onClick={action} variant="contained" color="success">
+              <Refresh sx={{ mr: 1 }} />
+              Update
+            </Button>
+          </>
+        );
+      default:
+        return null;
     }
   }
 

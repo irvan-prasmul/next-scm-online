@@ -6,7 +6,7 @@ export const paginationPropType = {
 export const dialogTypesFpb = {
   pta: "PTA",
   io: "IO",
-  other: "Other",
+  otherDoc: "Other",
   track: "Track",
   requesterNotes: "Requester Notes",
   ictNotes: "ICT Notes",
@@ -68,6 +68,27 @@ export const masterStatus = {
   choose: "Choose",
 };
 
+export const informationStatusIcon = {
+  waiting: "Waiting",
+  waitingForApproval: "Waiting For Approval",
+  canceled: "Cancelled",
+  cancelledByUser: "Canceled by User",
+  approved: "Approved",
+  approvedByProcurement: "Approved by Procurement",
+  reviewed: "Reviewed",
+  rejected: "Rejected",
+  poProcess: "PO Process",
+  purchaseOrder: "Purchase Order",
+  ready: "Ready",
+  readyForPickup: "Ready for pick up",
+  goodsReceipt: "Goods Receipt",
+  delivered: "Delivered",
+  goodsIssue: "Goods Issue",
+  finance: "Finance",
+  none: "None",
+};
+
+////// DDL /////////////////////////////////////////
 export const masterStatusDdlValues = [
   { value: "all", text: "All" },
   { value: "active", text: "Active" },
@@ -125,3 +146,4 @@ export const dummyDdlAll = [
     text: "opt3",
   },
 ];
+////////// DDL /////////////////////////////

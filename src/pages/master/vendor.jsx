@@ -12,6 +12,7 @@ import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesMaster,
+  informationStatusIcon,
   masterStatusDdlValues,
 } from "@/globals/types";
 import ActionDialogMaster from "@/components/master/actionDialogMaster";
@@ -77,7 +78,7 @@ export default function MasterVendor() {
       telp: "2139810938",
       address: "SBE BVDI",
       material: "SBE",
-      status: "active",
+      status: informationStatusIcon.approved,
     },
     {
       action: null,
@@ -86,7 +87,7 @@ export default function MasterVendor() {
       telp: "1313123123",
       address: "SBE Dekanat",
       material: "SBE",
-      status: "active",
+      status: informationStatusIcon.approved,
     },
   ];
 

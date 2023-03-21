@@ -12,6 +12,7 @@ import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesMaster,
+  informationStatusIcon,
   masterStatusDdlValues,
 } from "@/globals/types";
 import ActionDialogMaster from "@/components/master/actionDialogMaster";
@@ -128,7 +129,7 @@ export default function MasterUser() {
       email1: "acc@pmbs.ac.id",
       role: "pjb",
       password: "1234",
-      status: "active",
+      status: informationStatusIcon.approved,
       Position: "DK",
       expandedProps: {
         Action: buttonExpandedRow,
@@ -145,7 +146,7 @@ export default function MasterUser() {
       role: "Requester",
       password: "1234",
       Position: "",
-      status: "active",
+      status: informationStatusIcon.approved,
       expandedProps: {
         Action: buttonExpandedRow,
         Department: "YPM - Keuangan",

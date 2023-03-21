@@ -19,7 +19,11 @@ import {
   trackStatus,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/general/pageHeader";
-import { dialogTypesFpb, paginationPropType } from "@/globals/types";
+import {
+  dialogTypesFpb,
+  informationStatusIcon,
+  paginationPropType,
+} from "@/globals/types";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
@@ -57,9 +61,9 @@ const columns = [
 
 // const rows = [
 //   {
-//     id: 1,
+//     number: 1,
 //     created: "1976-04-19T12:59-0500",
-//     fpbNumber: "F23100468",
+//     noFpb: "F23100468",
 //     pta: null,
 //     io: null,
 //     other: null,
@@ -89,9 +93,9 @@ const columns = [
 //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 //   },
 //   {
-//     id: 2,
+//     number: 2,
 //     created: "1976-04-19T12:59-0500",
-//     fpbNumber: "F23100469",
+//     noFpb: "F23100469",
 //     pta: null,
 //     io: null,
 //     other: null,
@@ -198,18 +202,7 @@ export default function FpbRequester() {
       id: "tracking",
       handleClick: async (row, col) => {
         try {
-          const res = await getUserModalTracking();
-          let fullTrack = [{ id: "firstRowDummy" }];
-          res.tracking_pjk.map((pjk, index) => {
-            if (pjk.flag_pjk_level == "A") {
-              res.tracking_pjb.map((pjb, index) => {
-                fullTrack.push({ ...pjk, ...pjb });
-              });
-            } else {
-              fullTrack.push(pjk);
-            }
-          });
-          res.fullTrack = fullTrack;
+          const res = await getUserModalTracking("tes");
           setDialogBody(res);
           setDialogType(dialogTypesFpb.track);
           setOpenDialog(true);
@@ -288,13 +281,13 @@ export default function FpbRequester() {
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
             statusList={[
-              "Waiting",
-              "Canceled by User",
-              "Approved",
-              "Rejected",
-              "PO Process",
-              "Ready for pick up",
-              "Delivered",
+              informationStatusIcon.waiting,
+              informationStatusIcon.cancelledByUser,
+              informationStatusIcon.approved,
+              informationStatusIcon.rejected,
+              informationStatusIcon.poProcess,
+              informationStatusIcon.readyForPickup,
+              informationStatusIcon.delivered,
             ]}
           />
         </Paper>

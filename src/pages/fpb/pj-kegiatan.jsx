@@ -21,6 +21,7 @@ import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesFpb,
+  informationStatusIcon,
   paginationPropType,
 } from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
@@ -48,9 +49,9 @@ const columns = [
 
 const rows = [
   {
-    id: 1,
+    number: 1,
     action: null,
-    fpbNumber: "F23100468",
+    noFpb: "F23100468",
     materialName: "Fuel Cell",
     price: 898987,
     qty: 1,
@@ -185,13 +186,13 @@ export default function FpbAprrovalPJKegiatan() {
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
             statusList={[
-              "Waiting",
-              "Approved",
-              "Rejected",
-              "Purchase Order",
-              "Ready for pick up",
-              "Delivered",
-              "None",
+              informationStatusIcon.waiting,
+              informationStatusIcon.approved,
+              informationStatusIcon.rejected,
+              informationStatusIcon.purchaseOrder,
+              informationStatusIcon.readyForPickup,
+              informationStatusIcon.delivered,
+              informationStatusIcon.none,
             ]}
           />
         </Paper>

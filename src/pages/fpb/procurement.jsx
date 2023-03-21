@@ -20,6 +20,7 @@ import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesFpb,
+  informationStatusIcon,
   paginationPropType,
 } from "@/globals/types";
 import ConfirmationDialog from "@/components/general/confirmationDialog";
@@ -65,10 +66,10 @@ const columns = [
 
 const rows = [
   {
-    id: 1,
+    number: 1,
     action: null,
-    status: "pending",
-    fpbNumber: "F23100468",
+    status: informationStatusIcon.waitingForApproval,
+    noFpb: "F23100468",
     materialName: "Fuel Cell",
     category: "Non-ICT",
     qtyPo: 1,
@@ -246,12 +247,12 @@ export default function FpbProcurement() {
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
             statusList={[
-              "Waiting",
-              "Approved",
-              "Rejected",
-              "Purchase Order",
-              "Goods Receipt",
-              "Delivered",
+              informationStatusIcon.waiting,
+              informationStatusIcon.approved,
+              informationStatusIcon.rejected,
+              informationStatusIcon.purchaseOrder,
+              informationStatusIcon.goodsReceipt,
+              informationStatusIcon.delivered,
             ]}
           />
         </Paper>

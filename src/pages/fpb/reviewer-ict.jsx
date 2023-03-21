@@ -19,6 +19,7 @@ import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesFpb,
+  informationStatusIcon,
   paginationPropType,
 } from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
@@ -47,9 +48,9 @@ const columns = [
 
 const rows = [
   {
-    id: 1,
+    number: 1,
     action: false,
-    fpbnumber: "F23100468",
+    noFpb: "F23100468",
     materialName: "Fuel Cell",
     qtyPo: 1,
     uom: "UN",
@@ -70,9 +71,9 @@ const rows = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   {
-    id: 2,
+    number: 2,
     action: true,
-    fpbnumber: "F23100468",
+    noFpb: "F23100468",
     materialName: "Fuel Cell",
     qtyPo: 1,
     uom: "UN",
@@ -201,10 +202,10 @@ export default function FpbReviewerIct() {
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
             statusList={[
-              "Reviewed",
-              "Purchase Order",
-              "Ready for pick up",
-              "Delivered",
+              informationStatusIcon.reviewed,
+              informationStatusIcon.purchaseOrder,
+              informationStatusIcon.readyForPickup,
+              informationStatusIcon.delivered,
             ]}
           />
         </Paper>

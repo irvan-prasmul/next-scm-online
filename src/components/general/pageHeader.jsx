@@ -43,9 +43,6 @@ export default function PageHeader({ icon, title = "text" }) {
             {title}
           </Typography>
         )}
-        {/* <Typography variant="h6" sx={{ marginLeft: "3px" }}>
-          {title}
-        </Typography> */}
       </Box>
       <Divider />
     </>

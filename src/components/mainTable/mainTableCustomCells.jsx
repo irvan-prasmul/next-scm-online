@@ -20,6 +20,8 @@ import Switch from "@mui/material/Switch";
 import SearchRounded from "@mui/icons-material/SearchRounded";
 import Inventory2Rounded from "@mui/icons-material/Inventory2Rounded";
 import RenderIcon from "../general/renderIcon";
+import ArrowDownwardRounded from "@mui/icons-material/ArrowDownwardRounded";
+import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
 
 export function textWithEditOrCancelTextButton({
   id,
@@ -602,15 +604,32 @@ export function editAndDeleteAction({
 }
 
 // TRACK MODAL
-export function tackingId({ id }) {
+export function trackingId({ id }) {
   return {
     id,
     element: (row, col) => {
       const value = row[col.id];
       return (
         <TableCell key={col.id} align="center">
-          {/* <RenderIcon status={value} /> */}
-          {}
+          {value == "down" ? <ArrowDownwardRounded /> : <ArrowForwardRounded />}
+        </TableCell>
+      );
+    },
+  };
+}
+export function trackingStatus({ id }) {
+  return {
+    id,
+    element: (row, col) => {
+      const value = row[col.id];
+      return (
+        <TableCell key={col.id} align="center">
+          <Typography
+            variant="bodyTable1"
+            color={value == "Waiting" ? "orange" : "green"}
+          >
+            {value}
+          </Typography>
         </TableCell>
       );
     },

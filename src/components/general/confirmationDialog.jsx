@@ -39,12 +39,18 @@ function warningVariant(type, isValue) {
           justifyContent: "center",
         }}
       >
+        {/* FIRST LINE */}
         <Typography variant="h5">
-          {type == confirmationType.flagIct ||
-          type == confirmationType.save ||
-          type == confirmationType.ready
-            ? "Confirmation"
-            : "Are you sure you want to " + type + "?"}
+          {(() => {
+            switch (type) {
+              case confirmationType.flagIct:
+              case confirmationType.save:
+              case confirmationType.ready:
+                return "Confirmation";
+              default:
+                return `Are you sure you want to ${type}?`;
+            }
+          })()}
         </Typography>
       </Grid>
       <Grid
@@ -57,32 +63,50 @@ function warningVariant(type, isValue) {
         }}
       >
         <Typography variant="bodyCst1">
-          {type == confirmationType.close
-            ? "Your changes will be lost!"
-            : type == confirmationType.cancel || type == confirmationType.delete
-            ? "This action cannot be undone!"
-            : type == confirmationType.reject
-            ? "Once reject, you will not be able to recovery this data!\n*** Please write the reason in the column below : "
-            : type == confirmationType.flagIct
-            ? (isValue ? "Unset" : "Set") + ' as "ICT" Material Group?'
-            : type == confirmationType.save
-            ? "Are you sure you want to save?"
-            : type == confirmationType.ready
-            ? "Are you sure the item have been taken?"
-            : ""}
+          {/* SECOND LINE */}
+          {(() => {
+            switch (type) {
+              case confirmationType.close:
+                return "Your changes will be lost!";
+              case confirmationType.cancel:
+              case confirmationType.delete:
+                return "This action cannot be undone!";
+              case confirmationType.reject:
+                return "Once reject, you will not be able to recovery this data!\n*** Please write the reason in the column below : ";
+              case confirmationType.flagIct:
+                return (
+                  (isValue ? "Unset" : "Set") + ' as "ICT" Material Group?'
+                );
+              case confirmationType.save:
+                return "Are you sure you want to save?";
+              case confirmationType.ready:
+                return "Are you sure the item have been taken?";
+              default:
+                return "";
+            }
+          })()}
         </Typography>
       </Grid>
-      {type == confirmationType.reject ? (
-        <Grid item xs={12} sx={{ pt: 2 }}>
-          <TextField size="small" label="Reason" fullWidth />
-        </Grid>
-      ) : type == confirmationType.ready ? (
-        <Grid item xs={12} sx={{ pt: 2 }}>
-          <TextField size="small" label="Recipient's Name" fullWidth />
-        </Grid>
-      ) : (
-        <></>
-      )}
+      {/* THIRD LINE */}
+      {(() => {
+        console.log("type ", type);
+        switch (type) {
+          case confirmationType.reject:
+            return (
+              <Grid item xs={12} sx={{ pt: 2 }}>
+                <TextField size="small" label="Reason" fullWidth />
+              </Grid>
+            );
+          case confirmationType.ready:
+            return (
+              <Grid item xs={12} sx={{ pt: 2 }}>
+                <TextField size="small" label="Recipient's Name" fullWidth />
+              </Grid>
+            );
+          default:
+            return null;
+        }
+      })()}
     </Grid>
   );
 }
@@ -103,17 +127,22 @@ export default function ConfirmationDialog({
       disableScrollLock={true}
     >
       <DialogContent>
-        {type == confirmationType.cancel ||
-        type == confirmationType.delete ||
-        type == confirmationType.close ||
-        type == confirmationType.approve ||
-        type == confirmationType.reject ||
-        type == confirmationType.flagIct ||
-        type == confirmationType.save ||
-        type == confirmationType.receipt ||
-        type == confirmationType.ready
-          ? warningVariant(type, isValue)
-          : noType()}
+        {(() => {
+          switch (type) {
+            case confirmationType.cancel:
+            case confirmationType.delete:
+            case confirmationType.close:
+            case confirmationType.approve:
+            case confirmationType.reject:
+            case confirmationType.flagIct:
+            case confirmationType.save:
+            case confirmationType.receipt:
+            case confirmationType.ready:
+              return warningVariant(type, isValue);
+            default:
+              return noType();
+          }
+        })()}
       </DialogContent>
       <DialogActions sx={{ pr: 3, pb: 3 }}>
         <Button

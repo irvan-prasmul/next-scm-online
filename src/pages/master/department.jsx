@@ -12,6 +12,7 @@ import PageHeader from "@/components/general/pageHeader";
 import {
   confirmationType,
   dialogTypesMaster,
+  informationStatusIcon,
   masterStatusDdlValues,
 } from "@/globals/types";
 import ActionDialogMaster from "@/components/master/actionDialogMaster";
@@ -78,14 +79,14 @@ export default function MasterDepartment() {
       unitName: "Pengembangan Ent E E",
       idUnit: "UK98",
       company: "STEM",
-      status: "active",
+      status: informationStatusIcon.approved,
     },
     {
       action: null,
       unitName: "Pengembangan CSE",
       idUnit: "UK99",
       company: "STEM",
-      status: "active",
+      status: informationStatusIcon.approved,
     },
   ];
 

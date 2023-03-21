@@ -18,7 +18,11 @@ import {
   setReviewerFpb,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/general/pageHeader";
-import { dialogTypesFpb, paginationPropType } from "@/globals/types";
+import {
+  dialogTypesFpb,
+  informationStatusIcon,
+  paginationPropType,
+} from "@/globals/types";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
 import { columnNormalize } from "@/globals/column-normalize";
 
@@ -56,9 +60,9 @@ const columns = [
 
 const rows = [
   {
-    id: 1,
+    number: 1,
     reviewer: null,
-    fpbNumber: "F23100468",
+    noFpb: "F23100468",
     noPo: null,
     materialName: "Fuel Cell",
     price: 898987,
@@ -90,16 +94,16 @@ const rows = [
     picPurc: "bukan aku",
     purchasingNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    status: "pending",
+    status: informationStatusIcon.waitingForApproval,
     informationStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     documentStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
   // {
-  //   id: 2,
+  //   number: 2,
   //   reviewer: null,
-  //   fpbNumber: "F23100468",
+  //   noFpb: "F23100468",
   //   noPo: null,
   //   materialName: "Fuel Cell",
   //   price: 898987,
@@ -126,7 +130,7 @@ const rows = [
   //   picPurc: "bukan aku",
   //   purchasingNotes:
   //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  //   status: "pending",
+  //   status: informationStatusIcon.waitingForApproval,
   //   informationStatus:
   //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   //   documetStatus:
@@ -245,11 +249,11 @@ export default function FpbReviewerPurchasing() {
         <Paper sx={{ width: 300, mt: 2 }}>
           <TableInfomationStatus
             statusList={[
-              "Waiting",
-              "Purchase Order",
-              "Finance",
-              "Goods Receipt",
-              "Goods Issue",
+              informationStatusIcon.waiting,
+              informationStatusIcon.purchaseOrder,
+              informationStatusIcon.finance,
+              informationStatusIcon.goodsReceipt,
+              informationStatusIcon.goodsIssue,
             ]}
           />
         </Paper>
