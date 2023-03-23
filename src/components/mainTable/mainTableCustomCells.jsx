@@ -69,7 +69,7 @@ export function uploadDocument({ id, handleUpload = (row, col) => {} }) {
             <>
               <Button variant="text" size="small">
                 <Link
-                  href={process.env.NEXT_PUBLIC_API_URL + value}
+                  href={process.env.NEXT_PUBLIC_BE_URL + value}
                   target="_blank"
                   underline="none"
                   sx={{

@@ -22,8 +22,7 @@ import LockOutlined from "@mui/icons-material/LockOutlined";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useSelector, useDispatch } from "react-redux";
-import { testApi } from "../api/global";
-import { login } from "../api/auth";
+import { getUserDetails, login } from "../api/auth";
 import { setAuth } from "@/globals/slices";
 
 function Login() {
@@ -49,30 +48,44 @@ function Login() {
     event.preventDefault();
   };
 
+  React.useEffect(() => {
+    if (auth.userToken && auth.userToken != "") {
+      console.log("auth.userToken:", auth.userToken);
+      getUserDetails()
+        .then((res) => {
+          dispatch(
+            setAuth({
+              userToken: res.data.access_token,
+              userName: res.data.name,
+            })
+          );
+          router.replace("/home/dashboard");
+        })
+        .catch((err) => {
+          console.log("error getting user details:", err);
+        });
+    }
+  }, [auth.userToken]);
+
   const router = useRouter();
-  const userLogin = () => {
-    console.log("NEXT_PUBLIC_BASE_URL env:", process.env.NEXT_PUBLIC_BASE_URL);
-    // login({ email: "no-reply@pmbs.ac.id", password: "Pr@smul1234" })
-    //   .then((res) => {
-    //     console.log("login res:", res);
-    //     dispatch(
-    //       setAuth({
-    //         userToken: res.data.access_token,
-    //         userName: res.data.name,
-    //       })
-    //     );
-    //     router.replace("/home/dashboard");
-    //   })
-    //   .catch((e) => {
-    //     console.log("error login:", e);
-    //   });
-    dispatch(
-      setAuth({
-        userToken: "res.data.access_token",
-        userName: "test name",
-      })
-    );
-    router.replace("/home/dashboard");
+  const userLogin = async () => {
+    // WORKING EXAMPLE
+    console.log("auth.userToken:", auth.userToken);
+    try {
+      const res = await login({
+        email: email + emailSelect,
+        password: password,
+      });
+      console.log("res:", res);
+      dispatch(
+        setAuth({
+          userToken: res.data.access_token,
+          userName: "res.data.access_token",
+        })
+      );
+    } catch (e) {
+      console.log("error login:", e);
+    }
   };
 
   return (

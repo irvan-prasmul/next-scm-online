@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 
 // INITIAL AUTH STATE
 const authState = {
-  isAuth: true,
+  isAuth: false,
   userToken: "",
   userName: "",
 };

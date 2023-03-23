@@ -252,15 +252,15 @@ export default function DefaultLayout({ children }) {
 
   React.useEffect(() => {
     if (!auth.isAuth) router.replace("/auth/login");
-    if (auth.userToken == "") {
-      dispatch(
-        setAuth({
-          userToken: "dummy token",
-          userName: "Login name",
-        })
-      );
-      // console.log("auth layout done:", auth);
-    }
+    console.log("auth.userToken:", auth.userToken);
+    // if (auth.userToken == "") {
+    //   dispatch(
+    //     setAuth({
+    //       userToken: "dummy token",
+    //       userName: "Login name",
+    //     })
+    //   );
+    // }
   }, [router]);
 
   return (

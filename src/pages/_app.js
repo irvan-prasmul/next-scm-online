@@ -6,9 +6,11 @@ import "@fontsource/roboto/700.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DefaultLayout from "@/components/layout/defaultLayout";
 // import store from "@/store";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "@/globals/store";
 import AxiosProvider from "@/components/general/axiosProvider";
+import { injectDispatch, injectStore } from "@/globals/client";
+import { useEffect } from "react";
 // import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 // import LocalizationProvider from "@mui/x-date-pickers/LocalizationProvider";
 
@@ -65,6 +67,7 @@ const theme = createTheme({
     },
   },
 });
+injectStore(store);
 
 export default function App({ Component, pageProps }) {
   return (

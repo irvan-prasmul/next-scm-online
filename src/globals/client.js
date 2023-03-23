@@ -1,14 +1,24 @@
 import axios from "axios";
 import { setAuth, setError } from "./slices";
 
-export default function defaultClient(dispatch) {
-  const client = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
-    headers: {
-      Accept: "application/json",
-      // Authorization: `Bearer ${token}`,
-    },
+let store;
+let dispatch;
+
+export const injectStore = (_store) => {
+  store = _store;
+};
+
+export const injectDispatch = (_dispatch) => {
+  dispatch = _dispatch;
+};
+
+export default function defaultClient() {
+  const token = store.getState().auth.userToken;
+  let client = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BE_URL,
+    headers: { Accept: "application/json", Authorization: `Bearer ${token}` },
   });
+
   client.interceptors.response.use(
     function (response) {
       // Any status code that lie within the range of 2xx cause this function to trigger
@@ -19,7 +29,7 @@ export default function defaultClient(dispatch) {
       // Any status codes that falls outside the range of 2xx cause this function to trigger
       // Do something with response error
       console.log("intercept error response:", error);
-      await dispatch(
+      dispatch(
         setError({
           message: "intercept error",
         })
@@ -30,8 +40,37 @@ export default function defaultClient(dispatch) {
   return client;
 }
 
+// export default function defaultClient(dispatch, token) {
+//   const client = axios.create({
+//     baseURL: process.env.NEXT_PUBLIC_BE_URL,
+//     headers: {
+//       Accept: "application/json",
+//       // Authorization: `Bearer ${token}`,
+//     },
+//   });
+//   client.interceptors.response.use(
+//     function (response) {
+//       // Any status code that lie within the range of 2xx cause this function to trigger
+//       // Do something with response data
+//       return response;
+//     },
+//     async function (error) {
+//       // Any status codes that falls outside the range of 2xx cause this function to trigger
+//       // Do something with response error
+//       console.log("intercept error response:", error);
+//       await dispatch(
+//         setError({
+//           message: "intercept error",
+//         })
+//       );
+//       return Promise.reject(error);
+//     }
+//   );
+//   return client;
+// }
+
 // export const clientPortable = axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_API_URL,
+//   baseURL: process.env.NEXT_PUBLIC_BE_URL,
 //   headers: {
 //     Accept: "application/json",
 //     // Authorization: `Bearer ${token}`,
@@ -79,6 +118,6 @@ export default function defaultClient(dispatch) {
 // );
 
 // export default axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_API_URL,
+//   baseURL: process.env.NEXT_PUBLIC_BE_URL,
 // });
 // export default client;
