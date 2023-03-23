@@ -146,7 +146,7 @@ export default function ActionDialogFpb({
           >
             {headerText(type)}
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs="auto">
             <IconButton variant="text" color="darkBg" onClick={handleClose}>
               <HighlightOff />
             </IconButton>

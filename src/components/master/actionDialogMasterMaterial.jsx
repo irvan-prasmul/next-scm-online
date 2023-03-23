@@ -83,19 +83,22 @@ export default function ActionDialogMasterMaterial({
               pr: 1,
             }}
           >
-            {type == dialogTypesMasterMaterial.addHead ||
-            type == dialogTypesMasterMaterial.addDetail ||
-            type == dialogTypesMasterMaterial.addType ||
-            type == dialogTypesMasterMaterial.addGroup ? (
-              <InsertDriveFileRounded />
-            ) : type == dialogTypesMasterMaterial.editHead ||
-              type == dialogTypesMasterMaterial.editDetail ||
-              type == dialogTypesMasterMaterial.editType ||
-              type == dialogTypesMasterMaterial.editGroup ? (
-              <NoteEditOutlineIcon />
-            ) : (
-              <></>
-            )}
+            {(() => {
+              switch (type) {
+                case dialogTypesMasterMaterial.addHead:
+                case dialogTypesMasterMaterial.addDetail:
+                case dialogTypesMasterMaterial.addType:
+                case dialogTypesMasterMaterial.addGroup:
+                  return <InsertDriveFileRounded />;
+                case dialogTypesMasterMaterial.editHead:
+                case dialogTypesMasterMaterial.editDetail:
+                case dialogTypesMasterMaterial.editType:
+                case dialogTypesMasterMaterial.editGroup:
+                  return <NoteEditOutlineIcon />;
+                default:
+                  return null;
+              }
+            })()}
           </Grid>
           <Grid
             item
@@ -106,14 +109,9 @@ export default function ActionDialogMasterMaterial({
               justifyContent: "center !important",
             }}
           >
-            {
-              // type == "none" ? (
-              //   <Typography variant="h7">none</Typography>
-              // ) :
-              <Typography variant="h7">{type}</Typography>
-            }
+            <Typography variant="h7">{type}</Typography>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs="auto">
             <IconButton variant="text" color="darkBg" onClick={handleClose}>
               <HighlightOff />
             </IconButton>
@@ -124,238 +122,235 @@ export default function ActionDialogMasterMaterial({
   }
 
   function statusRow(type) {
-    return type == dialogTypesMasterMaterial.editHead ||
-      type == dialogTypesMasterMaterial.editDetail ||
-      type == dialogTypesMasterMaterial.editType ||
-      type == dialogTypesMasterMaterial.editGroup ? (
-      <RowDdlSimple
-        md={3}
-        fullWidth
-        text="Status"
-        ddlValue={rowStatusSelect}
-        ddlValues={masterStatusDdlValues}
-        ddlOnChange={(e) => setRowStatusSelect(e.target.value)}
-      />
-    ) : (
-      <></>
-    );
+    switch (type) {
+      case dialogTypesMasterMaterial.editHead:
+      case dialogTypesMasterMaterial.editDetail:
+      case dialogTypesMasterMaterial.editType:
+      case dialogTypesMasterMaterial.editGroup:
+        return (
+          <RowDdlSimple
+            md={3}
+            fullWidth
+            text="Status"
+            ddlValue={rowStatusSelect}
+            ddlValues={masterStatusDdlValues}
+            ddlOnChange={(e) => setRowStatusSelect(e.target.value)}
+          />
+        );
+      default:
+        return null;
+    }
   }
 
   function renderBody(type) {
-    if (
-      type == dialogTypesMasterMaterial.addHead ||
-      type == dialogTypesMasterMaterial.editHead
-    )
-      return (
-        <Box sx={{ p: 2 }}>
-          <RowTextFieldSimple
-            text="Name"
-            textFieldValue={name}
-            textFieldOnChange={(e) => setName(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Description"
-            textFieldValue={description}
-            textFieldOnChange={(e) => setDescription(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-            multiline
-          />
-          {statusRow(type)}
-        </Box>
-      );
-    if (
-      type == dialogTypesMasterMaterial.addDetail ||
-      type == dialogTypesMasterMaterial.editDetail
-    )
-      return (
-        <Box sx={{ p: 2 }}>
-          <RowTextFieldSimple
-            text="PLU"
-            textFieldValue={plu}
-            textFieldOnChange={(e) => setPlu(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="Material Head"
-            ddlValue={materialHead}
-            ddlValues={dummyDdlChoose}
-            ddlOnChange={(e) => setMaterialHead(e.target.value)}
-            isValidate={isValidate}
-          />
-          <RowTextFieldSimple
-            text="Material Name"
-            textFieldValue={name}
-            textFieldOnChange={(e) => setName(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Price"
-            textFieldValue={price}
-            textFieldOnChange={(e) => setPrice(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            startAdornment={
-              <InputAdornment position="start">Rp.</InputAdornment>
-            }
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Stock"
-            textFieldValue={stock}
-            textFieldOnChange={(e) => setStock(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Reorder Point"
-            textFieldValue={reorderPoint}
-            textFieldOnChange={(e) => setReorderPoint(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="UOM"
-            ddlValue={uom}
-            ddlValues={dummyDdlChoose}
-            ddlOnChange={(e) => setUom(e.target.value)}
-            isValidate={isValidate}
-          />
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="Material Type"
-            ddlValue={materialType}
-            ddlValues={dummyDdlChoose}
-            ddlOnChange={(e) => setMaterialType(e.target.value)}
-            isValidate={isValidate}
-          />
-          <RowDdlSimple
-            md={3}
-            fullWidth
-            text="Material Group"
-            ddlValue={materialGroup}
-            ddlValues={dummyDdlChoose}
-            ddlOnChange={(e) => setMaterialGroup(e.target.value)}
-            isValidate={isValidate}
-          />
-          {statusRow(type)}
-        </Box>
-      );
-    if (
-      type == dialogTypesMasterMaterial.addType ||
-      type == dialogTypesMasterMaterial.editType
-    )
-      return (
-        <Box sx={{ p: 2 }}>
-          <RowTextFieldSimple
-            text="Material Type"
-            textFieldValue={materialType}
-            textFieldOnChange={(e) => setMaterialType(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Description"
-            textFieldValue={description}
-            textFieldOnChange={(e) => setDescription(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-            multiline
-          />
-          {statusRow(type)}
-        </Box>
-      );
-    if (
-      type == dialogTypesMasterMaterial.addGroup ||
-      type == dialogTypesMasterMaterial.editGroup
-    )
-      return (
-        <Box sx={{ p: 2 }}>
-          <RowTextFieldSimple
-            text="Material Group"
-            textFieldValue={materialGroup}
-            textFieldOnChange={(e) => setMaterialGroup(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-          />
-          <RowTextFieldSimple
-            text="Description"
-            textFieldValue={description}
-            textFieldOnChange={(e) => setDescription(e.target.value)}
-            fullWidth
-            isValidate={isValidate}
-            md={3}
-            multiline
-          />
-          {statusRow(type)}
-        </Box>
-      );
+    switch (type) {
+      case dialogTypesMasterMaterial.addHead:
+      case dialogTypesMasterMaterial.editHead:
+        return (
+          <Box sx={{ p: 2 }}>
+            <RowTextFieldSimple
+              text="Name"
+              textFieldValue={name}
+              textFieldOnChange={(e) => setName(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Description"
+              textFieldValue={description}
+              textFieldOnChange={(e) => setDescription(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+              multiline
+            />
+            {statusRow(type)}
+          </Box>
+        );
+      case dialogTypesMasterMaterial.addDetail:
+      case dialogTypesMasterMaterial.editDetail:
+        return (
+          <Box sx={{ p: 2 }}>
+            <RowTextFieldSimple
+              text="PLU"
+              textFieldValue={plu}
+              textFieldOnChange={(e) => setPlu(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="Material Head"
+              ddlValue={materialHead}
+              ddlValues={dummyDdlChoose}
+              ddlOnChange={(e) => setMaterialHead(e.target.value)}
+              isValidate={isValidate}
+            />
+            <RowTextFieldSimple
+              text="Material Name"
+              textFieldValue={name}
+              textFieldOnChange={(e) => setName(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Price"
+              textFieldValue={price}
+              textFieldOnChange={(e) => setPrice(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              startAdornment={
+                <InputAdornment position="start">Rp.</InputAdornment>
+              }
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Stock"
+              textFieldValue={stock}
+              textFieldOnChange={(e) => setStock(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Reorder Point"
+              textFieldValue={reorderPoint}
+              textFieldOnChange={(e) => setReorderPoint(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="UOM"
+              ddlValue={uom}
+              ddlValues={dummyDdlChoose}
+              ddlOnChange={(e) => setUom(e.target.value)}
+              isValidate={isValidate}
+            />
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="Material Type"
+              ddlValue={materialType}
+              ddlValues={dummyDdlChoose}
+              ddlOnChange={(e) => setMaterialType(e.target.value)}
+              isValidate={isValidate}
+            />
+            <RowDdlSimple
+              md={3}
+              fullWidth
+              text="Material Group"
+              ddlValue={materialGroup}
+              ddlValues={dummyDdlChoose}
+              ddlOnChange={(e) => setMaterialGroup(e.target.value)}
+              isValidate={isValidate}
+            />
+            {statusRow(type)}
+          </Box>
+        );
+      case dialogTypesMasterMaterial.addType:
+      case dialogTypesMasterMaterial.editType:
+        return (
+          <Box sx={{ p: 2 }}>
+            <RowTextFieldSimple
+              text="Material Type"
+              textFieldValue={materialType}
+              textFieldOnChange={(e) => setMaterialType(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Description"
+              textFieldValue={description}
+              textFieldOnChange={(e) => setDescription(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+              multiline
+            />
+            {statusRow(type)}
+          </Box>
+        );
+      case dialogTypesMasterMaterial.addGroup:
+      case dialogTypesMasterMaterial.editGroup:
+        return (
+          <Box sx={{ p: 2 }}>
+            <RowTextFieldSimple
+              text="Material Group"
+              textFieldValue={materialGroup}
+              textFieldOnChange={(e) => setMaterialGroup(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+            />
+            <RowTextFieldSimple
+              text="Description"
+              textFieldValue={description}
+              textFieldOnChange={(e) => setDescription(e.target.value)}
+              fullWidth
+              isValidate={isValidate}
+              md={3}
+              multiline
+            />
+            {statusRow(type)}
+          </Box>
+        );
+      default:
+        return null;
+    }
   }
 
   function renderAction(type) {
-    if (
-      type == dialogTypesMasterMaterial.addHead ||
-      type == dialogTypesMasterMaterial.addDetail ||
-      type == dialogTypesMasterMaterial.addType ||
-      type == dialogTypesMasterMaterial.addGroup
-    ) {
-      return (
-        <>
-          <Button
-            onClick={handleClose}
-            variant="contained"
-            color="secondaryButton"
-          >
-            <DoNotDisturbOutlined sx={{ mr: 1 }} />
-            Close
-          </Button>
-          <Button onClick={action} variant="contained" color="success">
-            <SaveRounded sx={{ mr: 1 }} />
-            Save
-          </Button>
-        </>
-      );
-    }
-    if (
-      type == dialogTypesMasterMaterial.editHead ||
-      type == dialogTypesMasterMaterial.editDetail ||
-      type == dialogTypesMasterMaterial.editType ||
-      type == dialogTypesMasterMaterial.editGroup
-    ) {
-      return (
-        <>
-          <Button
-            onClick={handleClose}
-            variant="contained"
-            color="secondaryButton"
-          >
-            <DoNotDisturbOutlined sx={{ mr: 1 }} />
-            Close
-          </Button>
-          <Button onClick={action} variant="contained" color="success">
-            <Refresh sx={{ mr: 1 }} />
-            Update
-          </Button>
-        </>
-      );
+    switch (type) {
+      case dialogTypesMasterMaterial.addHead:
+      case dialogTypesMasterMaterial.addDetail:
+      case dialogTypesMasterMaterial.addType:
+      case dialogTypesMasterMaterial.addGroup:
+        return (
+          <>
+            <Button
+              onClick={handleClose}
+              variant="contained"
+              color="secondaryButton"
+            >
+              <DoNotDisturbOutlined sx={{ mr: 1 }} />
+              Close
+            </Button>
+            <Button onClick={action} variant="contained" color="success">
+              <SaveRounded sx={{ mr: 1 }} />
+              Save
+            </Button>
+          </>
+        );
+      case dialogTypesMasterMaterial.editHead:
+      case dialogTypesMasterMaterial.editDetail:
+      case dialogTypesMasterMaterial.editType:
+      case dialogTypesMasterMaterial.editGroup:
+        return (
+          <>
+            <Button
+              onClick={handleClose}
+              variant="contained"
+              color="secondaryButton"
+            >
+              <DoNotDisturbOutlined sx={{ mr: 1 }} />
+              Close
+            </Button>
+            <Button onClick={action} variant="contained" color="success">
+              <Refresh sx={{ mr: 1 }} />
+              Update
+            </Button>
+          </>
+        );
+      default:
+        return null;
     }
   }
 

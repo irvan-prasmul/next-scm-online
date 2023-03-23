@@ -144,7 +144,7 @@ export default function ActionDialogMaster({
           >
             {<Typography variant="h7">{type}</Typography>}
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs="auto">
             <IconButton variant="text" color="darkBg" onClick={handleClose}>
               <HighlightOff />
             </IconButton>
