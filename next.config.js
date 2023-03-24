@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   basePath: process.env.NEXT_PUBLIC_BASE_URL,
   images: {
     unoptimized: true,

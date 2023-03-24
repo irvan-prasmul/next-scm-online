@@ -4,19 +4,41 @@ import { createSlice } from "@reduxjs/toolkit";
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isAuth: true,
+    isAuth: false,
     userToken: "",
+    refreshToken: "",
     userName: "",
+    email: "",
+    email2: null,
+    initial: "",
+    role: "",
   },
   reducers: {
     setAuth: (state, action) => {
       state.isAuth = true;
       state.userToken = action.payload.userToken;
+      state.refreshToken = action.payload.refreshToken;
+    },
+    setUser: (state, action) => {
       state.userName = action.payload.userName;
+      state.email = action.payload.email;
+      state.email2 = action.payload.email2;
+      state.initial = action.payload.initial;
+      state.role = action.payload.role;
+    },
+    unAuth: (state, action) => {
+      state.isAuth = false;
+      state.userToken = "";
+      state.refreshToken = "";
+      state.userName = "";
+      state.email = "";
+      state.email2 = null;
+      state.initial = "";
+      state.role = "";
     },
   },
 });
-export const { setAuth } = authSlice.actions;
+export const { setAuth, setUser, unAuth } = authSlice.actions;
 export const authReducer = authSlice.reducer;
 
 // global error state

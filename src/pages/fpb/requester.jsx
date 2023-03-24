@@ -146,6 +146,7 @@ export default function FpbRequester() {
       setColumnSelect(temp);
     }
   };
+  const [tableLoading, setTableLoading] = React.useState(false);
 
   const [rows, setRows] = React.useState([]);
 
@@ -215,21 +216,19 @@ export default function FpbRequester() {
 
   async function getTableData() {
     try {
+      setTableLoading(true);
       const res = await getUserDataReservationDetails({
         draw: 1,
         start: 0,
         length: 10,
         txtIsStock: "F",
       });
-      setRows(res.data);
+      if (Array.isArray(res.data.data)) setRows(res.data.data);
       console.log("api return:", res.data);
     } catch (e) {
       console.log(e);
     }
-    // .then((res) => {
-    //   console.log("api return:", res);
-    // })
-    // .catch((e) => {});
+    setTableLoading(false);
   }
 
   useEffect(() => {
@@ -269,6 +268,7 @@ export default function FpbRequester() {
         />
         <Paper sx={{ width: "100%", mt: 2 }}>
           <MainTable
+            isLoading={tableLoading}
             columns={columnSelect}
             rows={rows}
             maxHeight={1000}

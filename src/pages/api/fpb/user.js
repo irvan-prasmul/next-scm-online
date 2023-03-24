@@ -1,3 +1,4 @@
+import defaultClient from "@/globals/client";
 import ArrowDownwardRounded from "@mui/icons-material/ArrowDownwardRounded";
 import ArrowRightRounded from "@mui/icons-material/ArrowRightRounded";
 import axios from "axios";
@@ -5,10 +6,11 @@ import moment from "moment";
 import { formatFormData } from "../global";
 
 export function getUserDataReservationDetails(payload) {
+  const client = defaultClient();
   // const form = formatFormData(payload);
-  // return axios.post("C_user/get_data_reservation_details", form);
+  return client.get("api/user/get-data-reservation-details", payload);
 
-  return mockRest1;
+  // return mockRest1;
 }
 
 export function getUserModalTracking(payload) {

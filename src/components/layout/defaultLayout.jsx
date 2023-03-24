@@ -33,8 +33,10 @@ import ChartAreasplineVariantIcon from "mdi-react/ChartAreasplineVariantIcon";
 import ArrowTopRightBoldBoxIcon from "mdi-react/ArrowTopRightBoldBoxIcon";
 import { roles } from "@/globals/roles";
 import { useSelector, useDispatch } from "react-redux";
-import { setAuth } from "@/globals/slices";
+import { setAuth, unAuth } from "@/globals/slices";
 import PageFooter from "../general/pageFooter";
+import Button from "@mui/material/Button";
+import Logout from "@mui/icons-material/Logout";
 
 const drawerWidth = 256;
 const closedWidth = 65;
@@ -252,7 +254,6 @@ export default function DefaultLayout({ children }) {
 
   React.useEffect(() => {
     if (!auth.isAuth) router.replace("/auth/login");
-    console.log("auth.userToken:", auth.userToken);
     // if (auth.userToken == "") {
     //   dispatch(
     //     setAuth({
@@ -283,6 +284,17 @@ export default function DefaultLayout({ children }) {
               </IconButton>
             </Grid>
             <Grid xs></Grid>
+            <Grid xs="auto">
+              <Button
+                variant="text"
+                onClick={(e) => {
+                  dispatch(unAuth());
+                  router.replace("/auth/login");
+                }}
+              >
+                <Logout />
+              </Button>
+            </Grid>
             <Grid xs="auto">
               <Typography variant="h6" noWrap>
                 Avatar here

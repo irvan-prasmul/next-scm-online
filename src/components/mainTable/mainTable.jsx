@@ -10,17 +10,21 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Collapse from "@mui/material/Collapse";
 import { paginationPropType } from "@/globals/types";
+import Skeleton from "@mui/material/Skeleton";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function MainTable({
   columns,
   rows,
   maxHeight,
+  minHeight = 200,
   customCell,
   paginationProp = paginationPropType.none,
   qty = 0,
   total = 0,
   isExpandable = false,
   isPagination = true,
+  isLoading = false,
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -212,17 +216,55 @@ export default function MainTable({
   }
 
   function generateTableBodyRow() {
+    console.log("rows.length:", rows.length);
     return (
-      <TableBody>
-        {rows
-          ? rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                if (isExpandable) return ExpandableTableRow(row, index);
-                else return normalTableRow(row, index);
-              })
-          : null}
-      </TableBody>
+      <>
+        <TableBody sx={{ display: isLoading ? "none" : "table-row-group" }}>
+          {rows && rows.length > 0
+            ? rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  if (isExpandable) return ExpandableTableRow(row, index);
+                  else return normalTableRow(row, index);
+                })
+            : null}
+        </TableBody>
+        <TableBody sx={{ display: isLoading ? "table-row-group" : "none" }}>
+          <TableRow>
+            <TableCell colSpan={columns.length} sx={{ height: 40 }}>
+              <Skeleton
+                animation="pulse"
+                sx={{
+                  width: "-webkit-fill-available",
+                  height: "-webkit-fill-available",
+                }}
+              />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={columns.length} sx={{ height: 40 }}>
+              <Skeleton
+                animation="pulse"
+                sx={{
+                  width: "-webkit-fill-available",
+                  height: "-webkit-fill-available",
+                }}
+              />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={columns.length} sx={{ height: 40 }}>
+              <Skeleton
+                animation="pulse"
+                sx={{
+                  width: "-webkit-fill-available",
+                  height: "-webkit-fill-available",
+                }}
+              />
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </>
     );
   }
 
@@ -291,9 +333,22 @@ export default function MainTable({
 
   return (
     <>
-      <TableContainer sx={{ maxHeight: maxHeight }}>
+      <TableContainer sx={{ maxHeight: maxHeight, minHeight: minHeight }}>
         <Table>
           {generateTableHeadRow()}
+          {/* <Skeleton
+            animation="wave"
+            sx={{
+              display: isLoading ? "block" : "none",
+              width: "-webkit-fill-available",
+            }}
+          /> */}
+          {/* <CircularProgress
+            sx={{
+              display: isLoading ? "block" : "none",
+              width: "-webkit-fill-available",
+            }}
+          /> */}
           {generateTableBodyRow()}
         </Table>
       </TableContainer>

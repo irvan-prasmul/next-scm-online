@@ -23,7 +23,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserDetails, login } from "../api/auth";
-import { setAuth } from "@/globals/slices";
+import { setAuth, setUser } from "@/globals/slices";
 
 function Login() {
   const auth = useSelector((state) => state.auth);
@@ -50,13 +50,15 @@ function Login() {
 
   React.useEffect(() => {
     if (auth.userToken && auth.userToken != "") {
-      console.log("auth.userToken:", auth.userToken);
       getUserDetails()
         .then((res) => {
           dispatch(
-            setAuth({
-              userToken: res.data.access_token,
+            setUser({
               userName: res.data.name,
+              email: res.data.email,
+              email2: res.data.email2,
+              initial: res.data.initial,
+              role: res.data.role,
             })
           );
           router.replace("/home/dashboard");
@@ -70,7 +72,6 @@ function Login() {
   const router = useRouter();
   const userLogin = async () => {
     // WORKING EXAMPLE
-    console.log("auth.userToken:", auth.userToken);
     try {
       const res = await login({
         email: email + emailSelect,
@@ -80,7 +81,7 @@ function Login() {
       dispatch(
         setAuth({
           userToken: res.data.access_token,
-          userName: "res.data.access_token",
+          refreshToken: res.data.refresh_token,
         })
       );
     } catch (e) {

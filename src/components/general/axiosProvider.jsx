@@ -4,13 +4,16 @@ import Snackbar from "@mui/material/Snackbar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
-import { injectDispatch } from "@/globals/client";
+import { injectDispatch, injectRouter } from "@/globals/client";
+import { useRouter } from "next/router";
 
 export default function AxiosProvider({ children }) {
   const dispatch = useDispatch();
+  const router = useRouter();
   const error = useSelector((state) => state.error);
   useEffect(() => {
     injectDispatch(dispatch);
+    injectRouter(router);
   }, []);
 
   return (

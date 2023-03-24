@@ -1,9 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { useMemo } from "react";
-import { createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunkMiddleware from "redux-thunk";
-import reducers from "./reducers";
 import { authReducer, errorReducer } from "./slices";
 
 export default configureStore({
