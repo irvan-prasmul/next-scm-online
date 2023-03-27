@@ -132,9 +132,9 @@ export default function FpbAprrovalPJKegiatan() {
         setConfirmDialog(true);
       },
     }),
-    imageView({ id: "img" }),
+    imageView({ id: columnNormalize.img.id }),
     longTextWithReadMore({
-      id: "x_req_notes",
+      id: columnNormalize.requesterNotes.id,
       limit: {
         requesterNotes: 50,
       },
@@ -145,7 +145,9 @@ export default function FpbAprrovalPJKegiatan() {
         setOpenDialog(true);
       },
     }),
-    iconView({ id: ["status_x", "s_adm"] }),
+    iconView({
+      id: [columnNormalize.approval.id, columnNormalize.purchase.id],
+    }),
   ];
 
   return (

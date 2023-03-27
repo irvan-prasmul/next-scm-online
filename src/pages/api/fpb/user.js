@@ -8,7 +8,22 @@ import { formatFormData } from "../global";
 export function getUserDataReservationDetails(payload) {
   const client = defaultClient();
   // const form = formatFormData(payload);
-  return client.get("api/user/get-data-reservation-details", payload);
+  // const page = payload.page + 1;
+  // console.log("axios:", page);
+  return client.get(
+    "api/user/get-data-reservation-details?page=" +
+      payload.page +
+      "&limit=" +
+      payload.rowsPerPage +
+      "&orderBy=" +
+      payload.orderBy +
+      "&order=" +
+      payload.order +
+      "&status=" +
+      payload.status +
+      "&search=" +
+      payload.search
+  );
 
   // return mockRest1;
 }

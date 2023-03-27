@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Head from "next/head";
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -17,12 +18,15 @@ import {
   longTextWithReadMore,
   iconView,
   trackStatus,
+  autoIncrementNumber,
+  renderFpbNumber,
 } from "@/components/mainTable/mainTableCustomCells";
 import PageHeader from "@/components/general/pageHeader";
 import {
   dialogTypesFpb,
   informationStatusIcon,
   paginationPropType,
+  tableOrder,
 } from "@/globals/types";
 import RowButtonSimple from "@/components/rowSimplified/rowButtonSimple";
 import RowDdlSimple from "@/components/rowSimplified/rowDdlSimple";
@@ -31,6 +35,17 @@ import {
   getUserDataReservationDetails,
   getUserModalTracking,
 } from "../api/fpb/user";
+import {
+  commonTableProps,
+  handleChangeOrder,
+  handleChangePage,
+  handleChangeRowsPerPage,
+  handleChangeStatus,
+  handleColumnChange,
+  handleSearchTable,
+} from "@/components/mainTable/mainTableCommons";
+import MainTablePaginationRow from "@/components/mainTable/mainTablePaginationRow";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 const columns = [
   columnNormalize.id,
@@ -57,6 +72,14 @@ const columns = [
   columnNormalize.purchase,
   columnNormalize.informationStatus,
   columnNormalize.trackStatus,
+];
+
+const sortableTableHead = [
+  columnNormalize.created.id,
+  columnNormalize.materialName.id,
+  columnNormalize.price.id,
+  columnNormalize.qtyPB.id,
+  columnNormalize.planDate.id,
 ];
 
 // const rows = [
@@ -131,30 +154,13 @@ export default function FpbRequester() {
   // const auth = useSelector((state) => state.auth);
   // const dispatch = useDispatch();
   const router = useRouter();
-  const [statusSelect, setStatusSelect] = React.useState("all");
-
+  // const [statusSelect, setStatusSelect] = React.useState("all");
   const [columnSelect, setColumnSelect] = React.useState(_.cloneDeep(columns));
-  const handleColumnChange = (id) => {
-    if (id == "reset") {
-      setColumnSelect(_.cloneDeep(columns));
-    } else {
-      let temp = [...columnSelect];
-      const index = columnSelect.findIndex((h) => {
-        return h.id == id;
-      });
-      temp[index].isShow = !temp[index].isShow;
-      setColumnSelect(temp);
-    }
-  };
   const [tableLoading, setTableLoading] = React.useState(false);
-
   const [rows, setRows] = React.useState([]);
-
-  const [searchTable, setSearchTable] = React.useState("");
-  function handleSearchTable(e) {
-    setSearchTable(e.target.value);
-    console.log("refresh table");
-  }
+  const [tableProps, setTableProps] = React.useState(
+    _.cloneDeep(commonTableProps)
+  );
 
   const [dialogType, setDialogType] = React.useState("");
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -166,8 +172,9 @@ export default function FpbRequester() {
   }
 
   const customCell = [
-    textWithEditOrCancelTextButton({
-      id: "noFpb",
+    autoIncrementNumber({ id: columnNormalize.id.id }),
+    renderFpbNumber({
+      id: columnNormalize.fpbNumber.id,
       handleEdit: (row, col) => {
         console.log("handle edit");
       },
@@ -176,15 +183,24 @@ export default function FpbRequester() {
       },
     }),
     uploadDocument({
-      id: ["pta", "io", "otherDoc"],
+      id: [
+        columnNormalize.pta.id,
+        columnNormalize.io.id,
+        columnNormalize.otherDoc.id,
+      ],
       handleUpload: (row, col) => {
         setDialogType(dialogTypesFpb[col.id]);
         setOpenDialog(true);
       },
     }),
-    imageView({ id: "img" }),
+    imageView({ id: columnNormalize.img.id }),
     longTextWithReadMore({
-      id: ["x_req_notes", "x_ict_notes", "x_purc_notes", "notes_x"],
+      id: [
+        columnNormalize.requesterNotes.id,
+        columnNormalize.ictNotes.id,
+        columnNormalize.purchasingNotes.id,
+        columnNormalize.informationStatus.id,
+      ],
       limit: {
         requesterNotes: 50,
         ictNotes: 50,
@@ -198,9 +214,11 @@ export default function FpbRequester() {
         setOpenDialog(true);
       },
     }),
-    iconView({ id: ["status_x", "s_adm"] }),
+    iconView({
+      id: [columnNormalize.approval.id, columnNormalize.purchase.id],
+    }),
     trackStatus({
-      id: "tracking",
+      id: columnNormalize.trackStatus.id,
       handleClick: async (row, col) => {
         try {
           const res = await getUserModalTracking("tes");
@@ -217,13 +235,15 @@ export default function FpbRequester() {
   async function getTableData() {
     try {
       setTableLoading(true);
-      const res = await getUserDataReservationDetails({
-        draw: 1,
-        start: 0,
-        length: 10,
-        txtIsStock: "F",
-      });
-      if (Array.isArray(res.data.data)) setRows(res.data.data);
+      const res = await getUserDataReservationDetails(tableProps);
+      if (Array.isArray(res.data.data)) {
+        setRows(res.data.data);
+        setTableProps((prevState) => ({
+          ...prevState,
+          totalRows: res.data.total,
+        }));
+      }
+
       console.log("api return:", res.data);
     } catch (e) {
       console.log(e);
@@ -233,7 +253,13 @@ export default function FpbRequester() {
 
   useEffect(() => {
     getTableData();
-  }, []);
+  }, [
+    tableProps.page,
+    tableProps.rowsPerPage,
+    tableProps.status,
+    tableProps.orderBy,
+    tableProps.order,
+  ]);
 
   return (
     <>
@@ -251,31 +277,52 @@ export default function FpbRequester() {
         <RowDdlSimple
           md={1}
           text="Status"
-          ddlValue={statusSelect}
+          ddlValue={tableProps.status}
           ddlValues={statusDdlValues}
           ddlOnChange={(e) => {
-            setStatusSelect(e.target.value);
+            handleChangeStatus(e.target.value, setTableProps);
           }}
         />
         <MainTableMenu
           handleRefreshTable={(e) => {
-            console.log("refresh table");
+            console.log("refresh table:", tableProps);
+            getTableData();
           }}
-          searchTable={searchTable}
-          handleSearchTable={handleSearchTable}
+          searchTable={tableProps.search}
+          handleSearchTable={(e) =>
+            handleSearchTable(e.target.value, setTableProps)
+          }
           columnSelect={columnSelect}
-          handleColumnChange={handleColumnChange}
+          handleColumnChange={(id) =>
+            handleColumnChange(id, columns, setColumnSelect, columnSelect)
+          }
         />
         <Paper sx={{ width: "100%", mt: 2 }}>
           <MainTable
             isLoading={tableLoading}
             columns={columnSelect}
             rows={rows}
-            maxHeight={1000}
             customCell={customCell}
+            page={tableProps.page}
+            rowsPerPage={tableProps.rowsPerPage}
+            sortableTableHead={sortableTableHead}
+            orderBy={tableProps.orderBy}
+            order={tableProps.order}
+            handleSortableHeader={(colId) => {
+              handleChangeOrder(colId, setTableProps);
+            }}
+          />
+          <MainTablePaginationRow
+            page={tableProps.page}
+            rowsPerPage={tableProps.rowsPerPage}
             paginationProp={paginationPropType.qtyAndTotal}
-            qty={1234567890}
-            total={1234567890}
+            totalRows={tableProps.totalRows}
+            handleChangePage={(event, newPage) => {
+              handleChangePage(newPage, setTableProps);
+            }}
+            handleChangeRowsPerPage={(e) => {
+              handleChangeRowsPerPage(e.target.value, setTableProps);
+            }}
           />
         </Paper>
         <Paper sx={{ width: 300, mt: 2 }}>

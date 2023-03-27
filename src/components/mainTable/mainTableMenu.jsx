@@ -52,7 +52,7 @@ export default function MainTableMenu({
           <ButtonGroup
             variant="contained"
             color="secondaryButton"
-            sx={{ pt: 2 }}
+            sx={{ mt: 2 }}
           >
             <Button size="small" onClick={handleRefreshTable}>
               <Refresh sx={{ mr: 1 }} />

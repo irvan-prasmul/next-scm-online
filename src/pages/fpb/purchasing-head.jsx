@@ -211,14 +211,14 @@ export default function FpbListPurchasingHead() {
 
   const customCell = [
     fpbNumberTextDownload({ id: "fpbNumer" }),
-    imageView({ id: ["img", "docPta", "docIo", "docOther"] }),
+    imageView({ id: [columnNormalize.img.id, "docPta", "docIo", "docOther"] }),
     iconView({ id: "status" }),
     longTextWithReadMore({
       id: [
-        "x_req_notes",
-        "x_ict_notes",
-        "x_purc_notes",
-        "notes_x",
+        columnNormalize.requesterNotes.id,
+        columnNormalize.ictNotes.id,
+        columnNormalize.purchasingNotes.id,
+        columnNormalize.informationStatus.id,
         "documentStatus",
       ],
       limit: {

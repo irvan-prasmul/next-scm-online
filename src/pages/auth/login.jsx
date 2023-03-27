@@ -84,9 +84,7 @@ function Login() {
           refreshToken: res.data.refresh_token,
         })
       );
-    } catch (e) {
-      console.log("error login:", e);
-    }
+    } catch (e) {}
   };
 
   return (

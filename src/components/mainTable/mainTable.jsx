@@ -4,37 +4,40 @@ import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import TablePagination from "@mui/material/TablePagination";
 import TableBody from "@mui/material/TableBody";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Collapse from "@mui/material/Collapse";
-import { paginationPropType } from "@/globals/types";
 import Skeleton from "@mui/material/Skeleton";
-import CircularProgress from "@mui/material/CircularProgress";
+import TableSortLabel from "@mui/material/TableSortLabel";
 
 export default function MainTable({
   columns,
   rows,
-  maxHeight,
   minHeight = 200,
   customCell,
-  paginationProp = paginationPropType.none,
-  qty = 0,
-  total = 0,
   isExpandable = false,
-  isPagination = true,
   isLoading = false,
+  page = 0,
+  rowsPerPage = 10,
+  skeletonHeight = 50,
+  sortableTableHead = [],
+  orderBy = "",
+  order = "",
+  handleSortableHeader = () => {},
 }) {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+  function isSortableHeader(column) {
+    if (sortableTableHead.findIndex((i) => i == column.id) >= 0)
+      return (
+        <TableSortLabel
+          active={orderBy === column.id}
+          direction={orderBy === column.id ? order : "asc"}
+          onClick={(e) => handleSortableHeader(column.id)}
+        >
+          {column.label}
+        </TableSortLabel>
+      );
+    return column.label;
+  }
+
   function generateTableHeadRow() {
     let headerGroupList = [];
     let rowHeader2 = [];
@@ -80,7 +83,7 @@ export default function MainTable({
                     </TableCell>
                   );
                 }
-              } else
+              } else {
                 return (
                   <TableCell
                     key={"normal-head" + column.id}
@@ -88,9 +91,10 @@ export default function MainTable({
                     rowSpan={2}
                     style={{ minWidth: column.minWidth }}
                   >
-                    {column.label}
+                    {isSortableHeader(column)}
                   </TableCell>
                 );
+              }
           })}
         </TableRow>
         <TableRow>
@@ -103,7 +107,7 @@ export default function MainTable({
                   rowSpan={1}
                   style={{ minWidth: column.minWidth }}
                 >
-                  {column.label}
+                  {isSortableHeader(column)}
                 </TableCell>
               );
           })}
@@ -112,31 +116,46 @@ export default function MainTable({
     );
   }
 
+  function customCellIndex(customCell, column) {
+    return customCell.findIndex((i) => {
+      if (Array.isArray(i.id)) {
+        const aid = i.id.findIndex((aid) => {
+          return aid == column.id;
+        });
+        if (aid >= 0) return true;
+        else return false;
+      } else return i.id == column.id;
+    });
+  }
+
+  function normalCell(column, value) {
+    return (
+      <TableCell key={"table-cell" + column.id} align={column.align}>
+        <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+          {column.format && value ? column.format(value) : value}
+        </Typography>
+      </TableCell>
+    );
+  }
+
   function normalTableRow(row, index) {
     return (
-      <TableRow hover role="checkbox" tabIndex={-1} key={"normal-row" + index}>
+      <TableRow hover role="checkbox" tabIndex={-1} key={"table-row" + index}>
         {columns.map((column) => {
           if (column.isShow) {
             if (customCell) {
-              const ccIndex = customCell.findIndex((i) => {
-                if (Array.isArray(i.id)) {
-                  const aid = i.id.findIndex((aid) => {
-                    return aid == column.id;
-                  });
-                  if (aid >= 0) return true;
-                  else return false;
-                } else return i.id == column.id;
-              });
-              if (ccIndex >= 0) return customCell[ccIndex].element(row, column);
+              const ccIndex = customCellIndex(customCell, column);
+              if (ccIndex >= 0)
+                return customCell[ccIndex].element(
+                  row,
+                  column,
+                  index,
+                  page,
+                  rowsPerPage
+                );
             }
             const value = row[column.id];
-            return (
-              <TableCell key={"normal-cell" + column.id} align={column.align}>
-                <Typography variant="bodyTable1" sx={{ pl: 1 }}>
-                  {column.format && value ? column.format(value) : value}
-                </Typography>
-              </TableCell>
-            );
+            return normalCell(column, value);
           } else return null;
         })}
       </TableRow>
@@ -151,25 +170,12 @@ export default function MainTable({
     let activeColumn = 0;
     return (
       <Fragment key={index}>
-        <TableRow
-          hover
-          role="checkbox"
-          tabIndex={-1}
-          key={"expandable-row" + index}
-        >
+        <TableRow hover role="checkbox" tabIndex={-1} key={"table-row" + index}>
           {columns.map((column) => {
             if (column.isShow) {
               activeColumn++;
               if (customCell) {
-                const ccIndex = customCell.findIndex((i) => {
-                  if (Array.isArray(i.id)) {
-                    const aid = i.id.findIndex((aid) => {
-                      return aid == column.id;
-                    });
-                    if (aid >= 0) return true;
-                    else return false;
-                  } else return i.id == column.id;
-                });
+                const ccIndex = customCellIndex(customCell, column);
                 if (ccIndex >= 0) {
                   if (customCell[ccIndex].expandTrigger == true)
                     return customCell[ccIndex].element(
@@ -178,20 +184,18 @@ export default function MainTable({
                       open,
                       setOpen
                     );
-                  else return customCell[ccIndex].element(row, column);
+                  else
+                    return customCell[ccIndex].element(
+                      row,
+                      column,
+                      index,
+                      page,
+                      rowsPerPage
+                    );
                 }
               }
               const value = row[column.id];
-              return (
-                <TableCell
-                  key={"expandable-cell" + column.id}
-                  align={column.align}
-                >
-                  <Typography variant="bodyTable1" sx={{ pl: 1 }}>
-                    {column.format && value ? column.format(value) : value}
-                  </Typography>
-                </TableCell>
-              );
+              return normalCell(column, value);
             } else return null;
           })}
         </TableRow>
@@ -216,13 +220,12 @@ export default function MainTable({
   }
 
   function generateTableBodyRow() {
-    console.log("rows.length:", rows.length);
     return (
       <>
         <TableBody sx={{ display: isLoading ? "none" : "table-row-group" }}>
           {rows && rows.length > 0
             ? rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   if (isExpandable) return ExpandableTableRow(row, index);
                   else return normalTableRow(row, index);
@@ -230,110 +233,36 @@ export default function MainTable({
             : null}
         </TableBody>
         <TableBody sx={{ display: isLoading ? "table-row-group" : "none" }}>
-          <TableRow>
-            <TableCell colSpan={columns.length} sx={{ height: 40 }}>
-              <Skeleton
-                animation="pulse"
-                sx={{
-                  width: "-webkit-fill-available",
-                  height: "-webkit-fill-available",
-                }}
-              />
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={columns.length} sx={{ height: 40 }}>
-              <Skeleton
-                animation="pulse"
-                sx={{
-                  width: "-webkit-fill-available",
-                  height: "-webkit-fill-available",
-                }}
-              />
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell colSpan={columns.length} sx={{ height: 40 }}>
-              <Skeleton
-                animation="pulse"
-                sx={{
-                  width: "-webkit-fill-available",
-                  height: "-webkit-fill-available",
-                }}
-              />
-            </TableCell>
-          </TableRow>
+          {/* {bodySkeleton} */}
+          {(function (cells, i, len) {
+            while (++i <= len) {
+              cells.push(
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    sx={{ height: skeletonHeight }}
+                  >
+                    <Skeleton
+                      animation="pulse"
+                      sx={{
+                        width: "-webkit-fill-available",
+                        height: "-webkit-fill-available",
+                      }}
+                    />
+                  </TableCell>
+                </TableRow>
+              );
+            }
+            return cells;
+          })([], 0, rowsPerPage)}
         </TableBody>
       </>
     );
   }
 
-  function generateTableFooter() {
-    if (isPagination)
-      return (
-        <Grid container>
-          <Grid
-            item
-            xs
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            {paginationProp == paginationPropType.qtyAndTotal ? (
-              <Grid
-                container
-                sx={{
-                  pl: 3,
-                }}
-              >
-                <Grid
-                  item
-                  xs
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    pl: 3,
-                  }}
-                >
-                  <Typography variant="h7">Total qty: {qty}</Typography>
-                </Grid>
-                <Grid
-                  item
-                  xs
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    pl: 3,
-                  }}
-                >
-                  <Typography variant="h7">Total price: {total}</Typography>
-                </Grid>
-              </Grid>
-            ) : (
-              <></>
-            )}
-          </Grid>
-          <Grid item xs="auto">
-            <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
-              showFirstButton
-              showLastButton
-              component="div"
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Grid>
-        </Grid>
-      );
-  }
-
   return (
     <>
-      <TableContainer sx={{ maxHeight: maxHeight, minHeight: minHeight }}>
+      <TableContainer sx={{ minHeight: minHeight }}>
         <Table>
           {generateTableHeadRow()}
           {/* <Skeleton
@@ -352,7 +281,6 @@ export default function MainTable({
           {generateTableBodyRow()}
         </Table>
       </TableContainer>
-      {generateTableFooter()}
     </>
   );
 }

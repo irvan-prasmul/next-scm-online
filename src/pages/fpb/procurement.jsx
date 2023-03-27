@@ -100,7 +100,7 @@ const rows = [
     informationStatus:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     reviewIct: "test",
-    ictNotes: "x_ict_notes",
+    ictNotes: columnNormalize.ictNotes.id,
     docPta:
       "https://ws-dev.prasetiyamulya.ac.id/fpb/assets/upload_img/14151233.png",
     docIo:
@@ -176,14 +176,14 @@ export default function FpbProcurement() {
         setConfirmDialog(true);
       },
     }),
-    fpbNumberTextDownload({ id: "noFpb" }),
-    imageView({ id: ["img", "docPta", "docIo", "docOther"] }),
+    fpbNumberTextDownload({ id: columnNormalize.fpbNumber.id }),
+    imageView({ id: [columnNormalize.img.id, "docPta", "docIo", "docOther"] }),
     longTextWithReadMore({
       id: [
-        "x_req_notes",
-        "x_ict_notes",
-        "x_purc_notes",
-        "notes_x",
+        columnNormalize.requesterNotes.id,
+        columnNormalize.ictNotes.id,
+        columnNormalize.purchasingNotes.id,
+        columnNormalize.informationStatus.id,
         "documentStatus",
       ],
       limit: {

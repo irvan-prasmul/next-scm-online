@@ -90,7 +90,7 @@ const rows = [
     eventContact: "1231412",
     requesterNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    ictNotes: "x_ict_notes",
+    ictNotes: columnNormalize.ictNotes.id,
     picPurc: "bukan aku",
     purchasingNotes:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -126,7 +126,7 @@ const rows = [
   //   eventDate: "1976-04-19T12:59-0500",
   //   eventPic: "test",
   //   requesterNotes: "test",
-  //   ictNotes: "x_ict_notes",
+  //   ictNotes: columnNormalize.ictNotes.id,
   //   picPurc: "bukan aku",
   //   purchasingNotes:
   //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -192,10 +192,15 @@ export default function FpbReviewerPurchasing() {
       id: "materialName",
       handleClick: (row, col) => setEditItemDialog(true),
     }),
-    imageView({ id: ["img", "docPta", "docIo", "docOther"] }),
+    imageView({ id: [columnNormalize.img.id, "docPta", "docIo", "docOther"] }),
     iconView({ id: "status" }),
     longTextWithReadMore({
-      id: ["x_req_notes", "x_purc_notes", "notes_x", "documentStatus"],
+      id: [
+        columnNormalize.requesterNotes.id,
+        columnNormalize.purchasingNotes.id,
+        columnNormalize.informationStatus.id,
+        "documentStatus",
+      ],
       limit: {
         requesterNotes: 50,
         purchasingNotes: 60,

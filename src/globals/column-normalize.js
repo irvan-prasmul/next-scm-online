@@ -220,20 +220,20 @@ export const columnNormalize = {
     isShow: true,
   },
   docPta: {
-    id: "docPta",
+    id: "pta",
     label: "Doc PTA",
     minWidth: 115,
     isShow: true,
   },
   docIo: {
-    id: "docIo",
+    id: "io",
     label: "Doc IO",
     minWidth: 115,
     isShow: true,
     align: "left",
   },
   docOther: {
-    id: "docOther",
+    id: "otherDoc",
     label: "Other Doc",
     minWidth: 115,
     isShow: true,

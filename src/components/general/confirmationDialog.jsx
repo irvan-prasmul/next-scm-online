@@ -89,7 +89,6 @@ function warningVariant(type, isValue) {
       </Grid>
       {/* THIRD LINE */}
       {(() => {
-        console.log("type ", type);
         switch (type) {
           case confirmationType.reject:
             return (

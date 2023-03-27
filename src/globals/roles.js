@@ -365,6 +365,7 @@ export const roles = {
         },
       ],
     },
+    { href: "/dummy", name: "Dummy", icon: "CircleOutlineIcon" },
   ],
   Requester: [
     {

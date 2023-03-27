@@ -56,65 +56,30 @@ export default function defaultClient() {
             refreshToken: newToken.data.refresh_token,
           })
         );
-        console.log("recall api");
         let config = error.config;
         config.headers["Authorization"] =
           "Bearer " + newToken.data.access_token;
         config.baseURL = process.env.NEXT_PUBLIC_BE_URL;
         return client.request(config);
       }
-      dispatch(
-        setError({
-          message: "intercept error",
-        })
-      );
+      console.log("intercept error", error);
+      try {
+        dispatch(
+          setError({
+            message: error.response.data.error_description,
+          })
+        );
+      } catch (e) {
+        dispatch(
+          setError({
+            message: "Please contact admin",
+          })
+        );
+      }
       return Promise.reject(error);
     }
   );
   return client;
-}
-
-async function handleRefreshToken(error) {
-  const newToken = await refreshToken(store.getState().auth.refreshToken).catch(
-    (e) => {
-      console.log("refresh expired");
-      dispatch(unAuth());
-      router.replace("/auth/login");
-    }
-  );
-
-  dispatch(
-    setAuth({
-      userToken: newToken.data.access_token,
-      refreshToken: newToken.data.refresh_token,
-    })
-  );
-
-  let client = axios.create();
-  client.interceptors.response.use(
-    function (response) {
-      return response;
-    },
-    async function (error) {
-      if (error.response.status == 401) {
-        console.log("refresh expired");
-        dispatch(unAuth());
-        router.replace("/auth/login");
-      }
-      console.log("intercept error response:", error);
-      dispatch(
-        setError({
-          message: "intercept error",
-        })
-      );
-      return Promise.reject(error);
-    }
-  );
-  console.log("recall api");
-  let config = error.config;
-  config.headers["Authorization"] = "Bearer " + newToken.data.access_token;
-  config.baseURL = process.env.NEXT_PUBLIC_BE_URL;
-  return client.request(config);
 }
 
 // export default function defaultClient(dispatch, token) {

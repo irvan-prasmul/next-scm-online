@@ -3,6 +3,11 @@ export const paginationPropType = {
   qtyAndTotal: "qtyTotal",
 };
 
+export const tableOrder = {
+  asc: "asc",
+  desc: "desc",
+};
+
 export const dialogTypesFpb = {
   pta: "PTA",
   io: "IO",

@@ -145,7 +145,7 @@ function EnhancedTableHead(props) {
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
+            // sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -329,6 +329,7 @@ export default function EnhancedTable() {
                       tabIndex={-1}
                       key={row.name}
                       selected={isItemSelected}
+                      sx={{ cursor: "pointer" }}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox

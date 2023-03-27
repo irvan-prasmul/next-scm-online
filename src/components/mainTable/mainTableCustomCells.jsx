@@ -22,6 +22,22 @@ import Inventory2Rounded from "@mui/icons-material/Inventory2Rounded";
 import RenderIcon from "../general/renderIcon";
 import ArrowDownwardRounded from "@mui/icons-material/ArrowDownwardRounded";
 import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
+import { columnNormalize } from "@/globals/column-normalize";
+
+export function autoIncrementNumber({ id }) {
+  return {
+    id,
+    element: (row, col, index, page, perPage) => {
+      return (
+        <TableCell key={col.id} align="left">
+          <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+            {(page - 1) * perPage + (index + 1)}
+          </Typography>
+        </TableCell>
+      );
+    },
+  };
+}
 
 export function textWithEditOrCancelTextButton({
   id,
@@ -58,18 +74,141 @@ export function textWithEditOrCancelTextButton({
   };
 }
 
-export function uploadDocument({ id, handleUpload = (row, col) => {} }) {
+export function renderFpbNumber({
+  id,
+  handleEdit = (row, col) => {},
+  handleCancel = (row, col) => {},
+}) {
+  return {
+    id,
+    element: (row, col) => {
+      const value = row[col.id];
+      const xValue = row["x_noFpb"];
+      let bodyValue = [];
+      if (xValue == "print_fpb_pdf") {
+        bodyValue.push(
+          <Button
+            variant="text"
+            size="small"
+            color="primaryButton"
+            onClick={(e) => {
+              const URL =
+                process.env.NEXT_PUBLIC_BE_URL +
+                "fpb/C_item/print_pdf/" +
+                row["idFpbHead"];
+              if (typeof window !== "undefined") {
+                window.location.href = URL;
+              }
+            }}
+          >
+            {value}
+            <AdfScannerRounded
+              color="primaryButton"
+              sx={{ fontSize: "1.2rem" }}
+            />
+          </Button>
+        );
+      } else if (Array.isArray(xValue)) {
+        bodyValue.push(
+          <TableCell key={col.id} align="left">
+            <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+              {value}
+            </Typography>
+            <br />
+            {xValue.findIndex((i) => i == "edit") >= 0 ? (
+              <Button
+                variant="text"
+                size="small"
+                onClick={(e) => handleEdit(row, value)}
+              >
+                <EditRounded color="primaryButton" /> Edit
+              </Button>
+            ) : null}
+            {xValue.findIndex((i) => i == "cancel") >= 0 ? (
+              <Button
+                variant="text"
+                size="small"
+                onClick={(e) => handleCancel(row, value)}
+              >
+                <CloseRounded color="error" /> Cancel
+              </Button>
+            ) : null}
+          </TableCell>
+        );
+      } else {
+        bodyValue.push(
+          <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+            {value}
+          </Typography>
+        );
+      }
+      return (
+        <TableCell key={col.id} align="left">
+          {bodyValue}
+        </TableCell>
+      );
+    },
+  };
+}
+
+// TODO:: DELETE LATER SHOULD BE DEPRECATED
+export function fpbNumberTextDownload({ id }) {
   return {
     id,
     element: (row, col) => {
       const value = row[col.id];
       return (
+        <TableCell key={col.id} align="left">
+          <Button
+            variant="text"
+            size="small"
+            color="primaryButton"
+            onClick={(e) => {
+              const URL =
+                "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
+              if (typeof window !== "undefined") {
+                window.location.href = URL;
+              }
+            }}
+          >
+            {value}{" "}
+            <AdfScannerRounded
+              color="primaryButton"
+              sx={{ fontSize: "1.2rem" }}
+            />
+          </Button>
+        </TableCell>
+      );
+    },
+  };
+}
+
+export function uploadDocument({ id, handleUpload = (row, col) => {} }) {
+  return {
+    id,
+    element: (row, col) => {
+      const value = row[col.id];
+      const docURL =
+        col.id == columnNormalize.pta.id
+          ? "pta"
+          : col.id == columnNormalize.io.id
+          ? "io"
+          : "other_doc";
+      return (
         <TableCell key={col.id} align="center">
-          {value ? (
+          {value == "-" ? (
+            "-"
+          ) : value ? (
             <>
               <Button variant="text" size="small">
                 <Link
-                  href={process.env.NEXT_PUBLIC_BE_URL + value}
+                  href={
+                    process.env.NEXT_PUBLIC_BE_URL +
+                    "assets/upload_img/other_doc/" +
+                    docURL +
+                    "/" +
+                    value
+                  }
                   target="_blank"
                   underline="none"
                   sx={{
@@ -266,37 +405,6 @@ export function openExpandedRow({ id }) {
           >
             {open ? <RemoveCircle /> : <AddCircle />}
           </IconButton>
-        </TableCell>
-      );
-    },
-  };
-}
-
-export function fpbNumberTextDownload({ id }) {
-  return {
-    id,
-    element: (row, col) => {
-      const value = row[col.id];
-      return (
-        <TableCell key={col.id} align="left">
-          <Button
-            variant="text"
-            size="small"
-            color="primaryButton"
-            onClick={(e) => {
-              const URL =
-                "https://ws-dev.prasetiyamulya.ac.id/fpb/C_item/print_pdf/7182";
-              if (typeof window !== "undefined") {
-                window.location.href = URL;
-              }
-            }}
-          >
-            {value}{" "}
-            <AdfScannerRounded
-              color="primaryButton"
-              sx={{ fontSize: "1.2rem" }}
-            />
-          </Button>
         </TableCell>
       );
     },
