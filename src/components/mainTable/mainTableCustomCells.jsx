@@ -108,9 +108,9 @@ export function renderFpbNumber({
             />
           </Button>
         );
-      } else if (Array.isArray(xValue)) {
+      } else if (Array.isArray(xValue) && xValue.length > 0) {
         bodyValue.push(
-          <TableCell key={col.id} align="left">
+          <>
             <Typography variant="bodyTable1" sx={{ pl: 1 }}>
               {value}
             </Typography>
@@ -133,7 +133,7 @@ export function renderFpbNumber({
                 <CloseRounded color="error" /> Cancel
               </Button>
             ) : null}
-          </TableCell>
+          </>
         );
       } else {
         bodyValue.push(
@@ -144,7 +144,9 @@ export function renderFpbNumber({
       }
       return (
         <TableCell key={col.id} align="left">
-          {bodyValue}
+          <Typography variant="bodyTable1" sx={{ pl: 1 }}>
+            {bodyValue}
+          </Typography>
         </TableCell>
       );
     },

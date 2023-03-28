@@ -268,8 +268,8 @@ export default function DefaultLayout({ children }) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar color="lightBg" position="fixed" open={open}>
-        <Toolbar>
-          <Grid container spacing={2} sx={{ width: "100%" }}>
+        <Toolbar disableGutters sx={{ pl: 3 }}>
+          <Grid container sx={{ width: "100%" }}>
             <Grid xs="auto">
               <IconButton
                 color="inherit"
@@ -285,6 +285,11 @@ export default function DefaultLayout({ children }) {
             </Grid>
             <Grid xs></Grid>
             <Grid xs="auto">
+              <Typography variant="h6" noWrap>
+                {auth.userName}
+              </Typography>
+            </Grid>
+            <Grid xs="auto">
               <Button
                 variant="text"
                 onClick={(e) => {
@@ -294,11 +299,6 @@ export default function DefaultLayout({ children }) {
               >
                 <Logout />
               </Button>
-            </Grid>
-            <Grid xs="auto">
-              <Typography variant="h6" noWrap>
-                Avatar here
-              </Typography>
             </Grid>
           </Grid>
         </Toolbar>

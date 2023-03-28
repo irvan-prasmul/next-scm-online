@@ -29,7 +29,9 @@ export function getUserDataReservationDetails(payload) {
 }
 
 export function getUserModalTracking(payload) {
+  const client = defaultClient();
   const res = mockRest2;
+  // const res = await client;
 
   let tableColumns = [
     {
